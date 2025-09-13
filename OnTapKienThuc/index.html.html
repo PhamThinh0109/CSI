@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!-- Dòng này khai báo đây là một tài liệu HTML5 -->
+<html lang="vi">
+<!-- Thuộc tính 'lang="vi"' cho trình duyệt biết ngôn ngữ của trang là tiếng Việt -->
+
+<head>
+    <!-- Phần <head> chứa các thông tin meta về trang web, không hiển thị trực tiếp -->
+    <meta charset="UTF-8">
+    <!-- Dòng này đảm bảo các ký tự tiếng Việt hiển thị đúng -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Dòng này giúp trang web hiển thị tốt trên thiết bị di động -->
+
+    <title>Ôn Tập Khoa Học Máy Tính Căn Bản</title>
+    <!-- Đây là tiêu đề sẽ xuất hiện trên tab của trình duyệt -->
+
+    <link rel="stylesheet" href="styles.css">
+    <!-- Dòng này liên kết tệp HTML với tệp CSS để trang trí cho trang web -->
+</head>
+
+<body>
+    <!-- Phần <body> chứa toàn bộ nội dung mà người dùng sẽ nhìn thấy -->
+
+    <header>
+        <!-- Thẻ <header> thường dùng cho phần đầu trang, chứa tiêu đề chính -->
+        <h1>Ôn Tập Khoa Học Máy Tính Căn Bản</h1>
+        <p>Tổng hợp kiến thức cốt lõi từ Chương 1 và Chương 5</p>
+    </header>
+
+    <nav>
+        <!-- Thẻ <nav> dùng cho khu vực điều hướng, chứa các liên kết -->
+        <ul>
+            <li><a href="#section-models">Mô Hình Nền Tảng</a></li>
+            <li><a href="#section-components">Thành Phần Máy Tính</a></li>
+            <li><a href="#section-organization">Tổ Chức & Hoạt Động</a></li>
+            <li><a href="#section-quiz">Bài Tập Trắc Nghiệm</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Thẻ <main> chứa nội dung chính, độc nhất của trang -->
+
+        <section id="section-models">
+            <!-- Thẻ <section> dùng để nhóm các nội dung liên quan với nhau -->
+            <h2>1. Các Mô Hình Nền Tảng</h2>
+            <article>
+                <h3>Mô hình Turing</h3>
+                <p>Là mô hình lý thuyết đầu tiên, định nghĩa máy tính là một <strong>"bộ xử lý dữ liệu có thể lập trình được"</strong>. Điểm cốt lõi là sự ra đời của khái niệm <strong>chương trình (program)</strong>, quyết định kết quả đầu ra cùng với dữ liệu đầu vào.</p>
+            </article>
+            <article>
+                <h3>Mô hình von Neumann</h3>
+                <p>Là kiến trúc của hầu hết máy tính hiện đại. Điểm đột phá là <strong>"Khái niệm chương trình lưu trữ" (Stored-Program Concept)</strong>, tức là cả chương trình và dữ liệu đều được lưu trong cùng một bộ nhớ dưới dạng nhị phân.</p>
+                <p>Kiến trúc này bao gồm 4 hệ thống con:</p>
+                <ul>
+                    <li><strong>Bộ nhớ (Memory):</strong> Lưu trữ chương trình và dữ liệu.</li>
+                    <li><strong>Bộ Số học & Logic (ALU):</strong> Thực hiện các phép toán.</li>
+                    <li><strong>Bộ Điều khiển (Control Unit):</strong> Điều phối mọi hoạt động.</li>
+                    <li><strong>Hệ thống Xuất/Nhập (I/O):</strong> Giao tiếp với bên ngoài.</li>
+                </ul>
+            </article>
+        </section>
+
+        <section id="section-components">
+            <h2>2. Ba Thành Phần Cốt Lõi Của Máy Tính</h2>
+            <ul>
+                <li><strong>Phần cứng (Hardware):</strong> Các bộ phận vật lý như CPU, RAM, ổ cứng.</li>
+                <li><strong>Dữ liệu (Data):</strong> Thông tin được xử lý. Bên trong máy tính, mọi thứ đều là chuỗi 0 và 1.</li>
+                <li><strong>Phần mềm (Software):</strong> Các chương trình, tập hợp các chỉ thị điều khiển phần cứng.</li>
+            </ul>
+        </section>
+
+        <section id="section-organization">
+            <h2>3. Tổ Chức & Hoạt Động Bên Trong</h2>
+            <article>
+                <h3>Bộ Xử lý Trung tâm (CPU)</h3>
+                <p>CPU là "bộ não" của máy tính, gồm 3 phần chính:</p>
+                <ul>
+                    <li><strong>ALU:</strong> Thực hiện tính toán.</li>
+                    <li><strong>Các thanh ghi (Registers):</strong> Vùng nhớ siêu nhanh nằm trong CPU để lưu trữ tạm thời. Quan trọng nhất là <strong>Program Counter (PC)</strong> giữ địa chỉ lệnh kế tiếp và <strong>Instruction Register (IR)</strong> giữ lệnh đang thực thi.</li>
+                    <li><strong>Bộ Điều khiển (Control Unit):</strong> "Nhạc trưởng" điều khiển mọi thứ.</li>
+                </ul>
+            </article>
+
+            <article>
+                <h3>Chu Kỳ Máy (Machine Cycle) - Demo Tương Tác</h3>
+                <p>Đây là quy trình lặp lại cho mỗi chỉ thị. Hãy nhấn nút để xem các bước!</p>
+                <div class="cycle-container">
+                    <div id="fetch" class="cycle-step">
+                        <h4>1. Tìm nạp (Fetch)</h4>
+                        <p>Lấy lệnh từ bộ nhớ (dựa vào địa chỉ trong PC) đưa vào IR. Tăng PC lên 1.</p>
+                    </div>
+                    <div id="decode" class="cycle-step">
+                        <h4>2. Giải mã (Decode)</h4>
+                        <p>Bộ điều khiển đọc lệnh trong IR để hiểu cần làm gì.</p>
+                    </div>
+                    <div id="execute" class="cycle-step">
+                        <h4>3. Thực thi (Execute)</h4>
+                        <p>Thực hiện lệnh (ví dụ: yêu cầu ALU cộng hai số).</p>
+                    </div>
+                </div>
+                <button id="cycle-btn">Chạy Chu Kỳ Máy</button>
+            </article>
+        </section>
+
+        <section id="section-quiz">
+            <h2>4. Bài Tập Trắc Nghiệm Nhanh</h2>
+            <div id="quiz-container">
+                <p id="question-text">Câu hỏi sẽ hiện ở đây...</p>
+                <div id="answer-buttons" class="btn-grid">
+                    <!-- Các nút trả lời sẽ được tạo bằng JavaScript -->
+                </div>
+                <p id="result-text"></p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <!-- Thẻ <footer> dành cho phần chân trang -->
+        <p>Tạo bởi Gemini AI - 2025 | Chúc bạn học tốt!</p>
+    </footer>
+
+    <!-- Liên kết tới tệp JavaScript đặt ở cuối <body> để đảm bảo trang web đã tải xong trước khi script chạy -->
+    <script src="script.js"></script>
+</body>
+
+</html>
