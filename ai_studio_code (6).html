@@ -293,20 +293,22 @@
         </div>
     </main>
 
-    <!-- ======================= JAVASCRIPT LOGIC (ĐÃ SỬA LỖI) ======================= -->
+    <!-- ======================= JAVASCRIPT LOGIC (ĐÃ SỬA LỖI VÀ TỐI ƯU) ======================= -->
     <script>
         const app = {
             init() {
+                // Theme Toggle Logic
                 this.themeToggleBtn = document.getElementById('theme-toggle-btn');
                 this.currentTheme = localStorage.getItem('theme') || 'light';
                 document.body.setAttribute('data-theme', this.currentTheme);
                 this.updateThemeIcon();
                 this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
 
+                // Accordion Logic
                 this.accordionHeaders = document.querySelectorAll('.accordion-header');
                 this.accordionHeaders.forEach(header => {
                     header.addEventListener('click', () => {
-                        this.toggleAccordion(header.parentElement);
+                        this.handleAccordionClick(header.parentElement);
                     });
                 });
             },
@@ -322,31 +324,62 @@
                 this.themeToggleBtn.textContent = this.currentTheme === 'light' ? '🌙' : '☀️';
             },
             
-            toggleAccordion(itemToToggle) {
-                const content = itemToToggle.querySelector(':scope > .accordion-content');
-                if (!content) return; 
+            handleAccordionClick(clickedItem) {
+                // Lấy ra các mục cùng cấp với mục vừa được nhấn
+                const siblings = [...clickedItem.parentElement.children].filter(
+                    child => child !== clickedItem && child.classList.contains('accordion-item')
+                );
 
-                // Lấy ra mục cha đang chứa mục hiện tại (nếu có)
-                const parentItem = itemToToggle.parentElement.closest('.accordion-item.active');
+                // Đóng tất cả các mục cùng cấp khác đang mở
+                siblings.forEach(sibling => {
+                    if (sibling.classList.contains('active')) {
+                        this.closeAccordion(sibling);
+                    }
+                });
+                
+                // Mở hoặc đóng mục vừa được nhấn
+                this.toggleAccordion(clickedItem);
+            },
 
-                // Logic chính: Mở hoặc Đóng mục được nhấp
-                if (itemToToggle.classList.contains('active')) {
-                    // Nếu mục đang mở, đóng nó lại
-                    itemToToggle.classList.remove('active');
-                    content.style.maxHeight = null; // Trả về giá trị 0 trong CSS
+            toggleAccordion(item) {
+                if (item.classList.contains('active')) {
+                    this.closeAccordion(item);
                 } else {
-                    // Nếu mục đang đóng, mở nó ra
-                    itemToToggle.classList.add('active');
-                    content.style.maxHeight = content.scrollHeight + 'px';
+                    this.openAccordion(item);
                 }
+            },
 
-                // Logic phụ: Cập nhật chiều cao của mục cha (nếu có)
-                // Điều này tạo ra hiệu ứng đẩy lên/xuống mượt mà
+            openAccordion(item) {
+                const content = item.querySelector(':scope > .accordion-content');
+                if (!content) return;
+                
+                item.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px';
+                this.updateParentHeight(item);
+            },
+
+            closeAccordion(item) {
+                const content = item.querySelector(':scope > .accordion-content');
+                if (!content) return;
+
+                // Đóng tất cả các mục con bên trong trước khi đóng mục cha
+                const innerActiveItems = item.querySelectorAll('.accordion-item.active');
+                innerActiveItems.forEach(innerItem => this.closeAccordion(innerItem));
+
+                item.classList.remove('active');
+                content.style.maxHeight = null;
+                this.updateParentHeight(item);
+            },
+
+            updateParentHeight(item) {
+                const parentItem = item.parentElement.closest('.accordion-item.active');
                 if (parentItem) {
                     const parentContent = parentItem.querySelector(':scope > .accordion-content');
                     if (parentContent) {
-                        // Tính toán lại chiều cao của mục cha để bao trọn các con
-                        parentContent.style.maxHeight = parentContent.scrollHeight + 'px';
+                        // Dùng timeout để đợi animation của con hoàn thành một phần
+                        setTimeout(() => {
+                           parentContent.style.maxHeight = parentContent.scrollHeight + 'px';
+                        }, 200);
                     }
                 }
             }
@@ -357,4 +390,4 @@
         });
     </script>
 </body>
-</html>```
+</html>
