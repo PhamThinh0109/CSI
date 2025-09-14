@@ -293,18 +293,16 @@
         </div>
     </main>
 
-    <!-- ======================= JAVASCRIPT LOGIC ======================= -->
+    <!-- ======================= JAVASCRIPT LOGIC (ĐÃ SỬA LỖI) ======================= -->
     <script>
         const app = {
             init() {
-                // Theme Toggle Logic
                 this.themeToggleBtn = document.getElementById('theme-toggle-btn');
                 this.currentTheme = localStorage.getItem('theme') || 'light';
                 document.body.setAttribute('data-theme', this.currentTheme);
                 this.updateThemeIcon();
                 this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
 
-                // Accordion Logic
                 this.accordionHeaders = document.querySelectorAll('.accordion-header');
                 this.accordionHeaders.forEach(header => {
                     header.addEventListener('click', () => {
@@ -326,27 +324,30 @@
             
             toggleAccordion(itemToToggle) {
                 const content = itemToToggle.querySelector(':scope > .accordion-content');
-                if (!content) return;
+                if (!content) return; 
 
-                // Nếu mục được nhấp đang hoạt động, hãy đóng nó lại.
+                // Lấy ra mục cha đang chứa mục hiện tại (nếu có)
+                const parentItem = itemToToggle.parentElement.closest('.accordion-item.active');
+
+                // Logic chính: Mở hoặc Đóng mục được nhấp
                 if (itemToToggle.classList.contains('active')) {
+                    // Nếu mục đang mở, đóng nó lại
                     itemToToggle.classList.remove('active');
-                    content.style.maxHeight = null;
+                    content.style.maxHeight = null; // Trả về giá trị 0 trong CSS
                 } else {
-                    // Nếu mục được nhấp không hoạt động, hãy mở nó ra.
+                    // Nếu mục đang đóng, mở nó ra
                     itemToToggle.classList.add('active');
                     content.style.maxHeight = content.scrollHeight + 'px';
                 }
 
-                // Cập nhật chiều cao của bất kỳ mục cha nào đang hoạt động.
-                // Điều này đảm bảo mục cha co lại hoặc giãn ra để vừa với các con.
-                let parent = itemToToggle.parentElement.closest('.accordion-item.active');
-                while (parent) {
-                    const parentContent = parent.querySelector(':scope > .accordion-content');
+                // Logic phụ: Cập nhật chiều cao của mục cha (nếu có)
+                // Điều này tạo ra hiệu ứng đẩy lên/xuống mượt mà
+                if (parentItem) {
+                    const parentContent = parentItem.querySelector(':scope > .accordion-content');
                     if (parentContent) {
+                        // Tính toán lại chiều cao của mục cha để bao trọn các con
                         parentContent.style.maxHeight = parentContent.scrollHeight + 'px';
                     }
-                    parent = parent.parentElement.closest('.accordion-item.active');
                 }
             }
         };
@@ -356,4 +357,4 @@
         });
     </script>
 </body>
-</html>
+</html>```
