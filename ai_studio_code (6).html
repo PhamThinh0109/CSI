@@ -1,517 +1,554 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Quiz - Chapter 5: Computer Organization</title>
-    
-    <!-- === CSS SECTION === -->
+    <title>Trắc Nghiệm Chương 1: Giới Thiệu Khoa Học Máy Tính</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap');
-
-        :root {
-            --primary-color: #0056b3;
-            --primary-light: #007bff;
-            --secondary-color: #e7f1ff;
-            --correct-bg: #d4edda;
-            --correct-text: #155724;
-            --incorrect-bg: #f8d7da;
-            --incorrect-text: #721c24;
-            --bg-color: #f0f4f8;
-            --card-bg: #ffffff;
-            --text-color: #333;
-            --border-radius: 15px;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
 
         body {
-            font-family: 'Be Vietnam Pro', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 20px;
-        }
-
-        .app-wrapper {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
             display: flex;
-            gap: 20px;
-            max-width: 1200px;
-            margin: auto;
-            align-items: flex-start;
-        }
-
-        #key-terms-sidebar {
-            flex: 0 0 300px;
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            position: sticky;
-            top: 20px;
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--secondary-color);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
 
-        #key-terms-sidebar h2 { font-size: 20px; color: var(--primary-color); }
-        
-        #key-terms-lang-switch-btn {
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 5px 10px;
+        .quiz-container {
+            background-color: #ffffff;
             border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        #key-terms-lang-switch-btn:hover { background-color: #e0e0e0; }
-
-        .term-item { margin-bottom: 10px; }
-
-        .term-title {
-            font-weight: 700;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 5px;
-            transition: background-color 0.2s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .term-title:hover { background-color: var(--secondary-color); }
-        .term-title .toggle-icon { font-weight: bold; transition: transform 0.2s; }
-
-        .term-definition {
-            font-size: 14px;
-            line-height: 1.6;
-            padding: 10px 8px 0 8px;
-            display: none;
-            border-top: 1px solid #eee;
-            margin-top: 5px;
-        }
-        .term-item.active .term-definition { display: block; }
-        .term-item.active .toggle-icon { transform: rotate(45deg); }
-
-        .main-content { flex: 1; }
-        
-        .header-controls { display: flex; justify-content: flex-end; margin-bottom: 10px; }
-
-        #lang-switch-btn {
-            background-color: var(--card-bg);
-            border: 2px solid var(--primary-light);
-            color: var(--primary-light);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        #lang-switch-btn:hover { background-color: var(--primary-light); color: white; }
-
-        .container {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             width: 100%;
-            padding: 30px;
+            max-width: 800px;
             overflow: hidden;
         }
 
-        h1 { font-size: 24px; color: var(--primary-color); text-align: center; margin-bottom: 20px; }
-        #quiz-header { display: flex; justify-content: space-between; font-size: 16px; font-weight: 500; margin-bottom: 20px; }
-        #question { font-size: 20px; font-weight: 500; margin-bottom: 25px; line-height: 1.5; }
-        #answer-buttons { display: flex; flex-direction: column; gap: 10px; }
+        .header {
+            background-color: #4a69bd;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        #start-screen h2, #score-screen h2 {
+            text-align: center;
+            color: #4a69bd;
+        }
+
+        #quiz-screen {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        #question {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        #options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .option-btn {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1em;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .option-btn:hover:not([disabled]) {
+            border-color: #4a69bd;
+            background-color: #e9ecef;
+        }
+        
+        .option-btn.selected {
+            border-color: #4a69bd;
+            background-color: #dcdde1;
+        }
+
+        .option-btn.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .option-btn.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
 
         .btn {
-            background-color: #e7f1ff; border: 2px solid #b3d1ff; border-radius: 8px; color: var(--primary-color);
-            padding: 15px; text-align: left; font-size: 16px; cursor: pointer; transition: all 0.3s ease; width: 100%;
+            display: block;
+            width: 200px;
+            margin: 20px auto 0;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #4a69bd;
+            color: white;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
-        .btn:hover:not(:disabled) { background-color: #b3d1ff; }
 
-        .btn.correct { background-color: var(--correct-bg); color: var(--correct-text); border-color: var(--correct-text); }
-        .btn.incorrect { background-color: var(--incorrect-bg); color: var(--incorrect-text); border-color: var(--incorrect-text); }
-
-        #explanation-container { margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid var(--primary-light); border-radius: 5px; }
-        #tip { font-style: italic; color: #5a6268; margin-top: 10px; }
+        .btn:hover {
+            background-color: #3b528f;
+        }
         
-        #next-btn, #restart-btn {
-            background-color: var(--primary-light); color: white; font-weight: bold; border: none; border-radius: 8px;
-            padding: 15px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 20px;
+        #submit-btn {
+            background-color: #28a745;
         }
-        #next-btn:hover, #restart-btn:hover { background-color: var(--primary-color); }
-        .hide { display: none; }
+        #submit-btn:hover {
+             background-color: #218838;
+        }
+        #submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
 
-        @media (max-width: 900px) {
-            .app-wrapper { flex-direction: column-reverse; }
-            #key-terms-sidebar { position: static; flex: 1; margin-top: 20px; }
+
+        #result-container {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f1f2f6;
+            border: 1px solid #ced6e0;
+            line-height: 1.6;
+        }
+
+        #result-container h3 {
+            margin-top: 0;
+            color: #4a69bd;
+        }
+
+        #final-score {
+            font-size: 1.5em;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .hide {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- === HTML SECTION === -->
-    <div class="app-wrapper">
-        <aside id="key-terms-sidebar">
-            <div class="sidebar-header">
-                <h2 id="key-terms-title">Thuật ngữ chính</h2>
-                <button id="key-terms-lang-switch-btn">Anh / Việt</button>
-            </div>
-            <div id="key-terms-list"></div>
-        </aside>
 
-        <main class="main-content">
-            <div class="header-controls">
-                <button id="lang-switch-btn">Switch Language</button>
+    <div class="quiz-container">
+        <div class="header">
+            <h1>Trắc Nghiệm Chương 1: Giới Thiệu</h1>
+        </div>
+        <div class="main-content">
+            <div id="start-screen">
+                <h2>Chào mừng bạn đến với bài kiểm tra kiến thức Chương 1!</h2>
+                <p style="text-align: center;">Hệ thống sẽ chọn ngẫu nhiên 20 câu hỏi để kiểm tra hiểu biết của bạn về các khái niệm nền tảng của Khoa học Máy tính. Chúc bạn may mắn!</p>
+                <button id="start-btn" class="btn">Bắt đầu</button>
             </div>
-            <div class="container">
-                <h1 id="main-title">Quiz Chapter 5: Computer Organization</h1>
-                <div class="quiz">
-                    <div id="quiz-header">
-                        <span id="question-counter">Question 1/20</span>
-                        <span id="score-label">Score: 0</span>
-                    </div>
-                    <h2 id="question">Question will appear here</h2>
-                    <div id="answer-buttons"></div>
-                    <div id="explanation-container" class="hide">
-                        <h3 id="explanation-title">Giải thích & Mẹo nhớ</h3>
-                        <p id="explanation"></p>
-                        <p id="tip"></p>
-                    </div>
-                    <button id="next-btn" class="hide">Next Question</button>
+
+            <div id="quiz-screen" class="hide">
+                <div id="info">
+                    <span id="question-counter"></span>
+                    <span id="score-counter"></span>
                 </div>
+                <h2 id="question"></h2>
+                <div id="options-container"></div>
+                <button id="submit-btn" class="btn" disabled>Kiểm tra</button>
                 <div id="result-container" class="hide">
-                    <h2 id="result-title">Complete!</h2>
-                    <p id="result-text">Your final score is <span id="final-score"></span>/20.</p>
-                    <p id="result-message"></p>
-                    <button id="restart-btn">Restart Quiz</button>
+                    <h3 id="result-text"></h3>
+                    <p id="explanation-text"></p>
+                    <p id="tip-text"></p>
                 </div>
+                <button id="next-btn" class="btn hide">Câu tiếp theo</button>
             </div>
-        </main>
+
+            <div id="score-screen" class="hide">
+                <h2>Hoàn thành bài kiểm tra!</h2>
+                <p id="final-score"></p>
+                <button id="restart-btn" class="btn">Làm lại</button>
+            </div>
+        </div>
     </div>
 
-    <!-- === JAVASCRIPT SECTION === -->
     <script>
-        // --- DATA ---
-        const keyTermsData = {
-            'subsystems': { term_en: 'Computer Subsystems', term_vi: 'Các hệ thống con', def_vi: 'Ba thành phần cơ bản của máy tính: Bộ xử lý trung tâm (CPU), Bộ nhớ chính, và hệ thống con Nhập/Xuất (I/O).', def_en: 'The three fundamental components of a computer: CPU, Main Memory, and the I/O subsystem.' },
-            'cpu': { term_en: 'CPU', term_vi: 'CPU (Bộ xử lý trung tâm)', def_vi: '"Bộ não" của máy tính, thực hiện các phép tính, thi hành lệnh và điều khiển các thành phần khác.', def_en: 'The "brain" of the computer that performs calculations, executes instructions, and controls other components.' },
-            'alu': { term_en: 'ALU', term_vi: 'ALU (Đơn vị Số học & Logic)', def_vi: 'Một bộ phận của CPU, chuyên thực hiện các phép toán số học (như cộng) và các phép toán logic (như AND, OR).', def_en: 'A part of the CPU that carries out arithmetic and logic operations.' },
-            'control_unit': { term_en: 'Control Unit', term_vi: 'Đơn vị Điều khiển', def_vi: 'Một thành phần của CPU, chỉ đạo và điều phối hầu hết các hoạt động trong máy tính.', def_en: 'A component of the CPU that directs and coordinates operations.' },
-            'registers': { term_en: 'Registers', term_vi: 'Thanh ghi', def_vi: 'Các vị trí lưu trữ nhỏ, tốc độ cao bên trong CPU, dùng để giữ tạm thời dữ liệu và lệnh.', def_en: 'Small, high-speed storage locations within the CPU.' },
-            'pc': { term_en: 'Program Counter (PC)', term_vi: 'Bộ đếm chương trình (PC)', def_vi: 'Một thanh ghi đặc biệt trong CPU, chứa địa chỉ bộ nhớ của lệnh tiếp theo sẽ được thi hành.', def_en: 'A special register holding the memory address of the next instruction.' },
-            'ram': { term_en: 'RAM', term_vi: 'RAM (Bộ nhớ truy cập ngẫu nhiên)', def_vi: 'Bộ nhớ chính, khả biến (mất dữ liệu khi tắt nguồn), dùng để lưu trữ dữ liệu và chương trình đang được sử dụng.', def_en: 'The main, volatile memory for currently used data and programs.' },
-            'rom': { term_en: 'ROM', term_vi: 'ROM (Bộ nhớ chỉ đọc)', def_vi: 'Bộ nhớ bất biến (không mất dữ liệu), lưu trữ vĩnh viễn các chỉ dẫn cho máy tính, ví dụ như BIOS.', def_en: 'Non-volatile memory that permanently stores instructions like the BIOS.' },
-            'cache': { term_en: 'Cache Memory', term_vi: 'Bộ nhớ đệm (Cache)', def_vi: 'Một bộ nhớ nhỏ, rất nhanh, nằm giữa CPU và RAM để tăng tốc độ truy cập vào dữ liệu thường dùng.', def_en: 'A small, very fast memory between the CPU and RAM to speed up access.' },
-            'machine_cycle': { term_en: 'Machine Cycle', term_vi: 'Chu trình máy', def_vi: 'Quy trình hoạt động cơ bản của CPU, bao gồm ba bước: Tìm nạp (Fetch), Giải mã (Decode), và Thực thi (Execute).', def_en: 'The basic operational process of a CPU: Fetch, Decode, and Execute.' },
-            'bus': { term_en: 'Bus', term_vi: 'Bus (Tuyến)', def_vi: 'Hệ thống truyền thông chuyển dữ liệu, địa chỉ, và tín hiệu điều khiển giữa các thành phần bên trong máy tính.', def_en: 'A communication system that transfers data, addresses, and control signals between components.' },
-            'cisc_risc': { term_en: 'CISC vs. RISC', term_vi: 'CISC vs. RISC', def_vi: 'Hai loại kiến trúc tập lệnh. CISC (Phức tạp) có nhiều lệnh phức tạp. RISC (Rút gọn) có ít lệnh đơn giản hơn.', def_en: 'Two instruction set architectures. CISC (Complex) has many complex instructions. RISC (Reduced) has fewer, simpler instructions.' },
-            'pipelining': { term_en: 'Pipelining', term_vi: 'Kỹ thuật đường ống', def_vi: 'Kỹ thuật trong đó nhiều lệnh được thực thi chồng chéo, giống như một dây chuyền lắp ráp, để tăng thông lượng.', def_en: 'A technique where multiple instructions are overlapped in execution to increase throughput.' },
-            'dma': { term_en: 'DMA', term_vi: 'DMA (Truy cập bộ nhớ trực tiếp)', def_vi: 'Cho phép các thiết bị I/O truyền dữ liệu trực tiếp đến/từ bộ nhớ chính mà không cần sự can thiệp liên tục của CPU.', def_en: 'Allows I/O devices to transfer data directly to/from main memory without constant CPU intervention.' }
-        };
-
-        // Full question bank in dual language
-        const fullQuestionBank = [
-             {
-                question_en: "What are the three main subsystems of a stand-alone computer?", question_vi: "Ba hệ thống con chính của một máy tính độc lập là gì?",
-                answers_en: [ { text: "CPU, Keyboard, and Monitor", correct: false }, { text: "CPU, Main Memory, and I/O Subsystem", correct: true }, { text: "ALU, Control Unit, and Registers", correct: false }, { text: "RAM, ROM, and Cache", correct: false } ],
-                answers_vi: [ { text: "CPU, Bàn phím, và Màn hình", correct: false }, { text: "CPU, Bộ nhớ chính, và Hệ thống con I/O", correct: true }, { text: "ALU, Đơn vị điều khiển, và Thanh ghi", correct: false }, { text: "RAM, ROM, và Cache", correct: false } ],
-                explanation_vi: "Một máy tính hoàn chỉnh bao gồm ba khối chức năng cơ bản: Bộ xử lý trung tâm (CPU) để xử lý, Bộ nhớ chính để lưu trữ tạm thời, và hệ thống Nhập/Xuất (I/O) để tương tác với bên ngoài.",
-                tip: "Mẹo nhớ: Hãy tưởng tượng cơ thể người. CPU là bộ não (xử lý), Bộ nhớ là trí nhớ ngắn hạn (lưu trữ), và các giác quan (mắt, tai, tay) là hệ thống I/O (tương tác).",
-                keyTerms: ['subsystems', 'cpu', 'ram']
+        const questionBank = [
+            {
+                question: "Ý tưởng cốt lõi nhất của mô hình Turing là gì?",
+                options: ["Máy tính có 4 thành phần chính", "Chương trình được lưu trong bộ nhớ", "Máy tính là một bộ xử lý dữ liệu có thể lập trình", "Máy tính sử dụng bóng bán dẫn"],
+                answer: "Máy tính là một bộ xử lý dữ liệu có thể lập trình",
+                explanation: "Mô hình Turing giới thiệu khái niệm 'chương trình' (program), biến máy tính từ một thiết bị chuyên dụng thành một thiết bị đa năng có thể thực hiện nhiều tác vụ khác nhau.",
+                tip: "💡 Mẹo nhớ: Turing = Program. Chính chương trình làm cho máy tính trở nên 'vạn năng'."
             },
             {
-                question_en: "Which component of the CPU performs arithmetic and logical operations?", question_vi: "Thành phần nào của CPU thực hiện các phép toán số học và logic?",
-                answers_en: [ { text: "Control Unit", correct: false }, { text: "Registers", correct: false }, { text: "Arithmetic Logic Unit (ALU)", correct: true }, { text: "System Bus", correct: false } ],
-                answers_vi: [ { text: "Đơn vị điều khiển", correct: false }, { text: "Các thanh ghi", correct: false }, { text: "Đơn vị số học và logic (ALU)", correct: true }, { text: "Bus hệ thống", correct: false } ],
-                explanation_vi: "ALU là 'máy tính' bên trong CPU, chuyên thực hiện các phép tính cộng, trừ, và các phép toán logic như AND, OR, NOT.",
-                tip: "Mẹo nhớ: Chữ 'A' trong ALU là 'Arithmetic' (Số học) và chữ 'L' là 'Logic'. Tên của nó đã nói lên chức năng chính.",
-                keyTerms: ['cpu', 'alu', 'control_unit', 'registers']
+                question: "Đột phá mang tính cách mạng của mô hình von Neumann là gì?",
+                options: ["Phát minh ra bóng bán dẫn", "Khái niệm chương trình được lưu trữ (stored-program concept)", "Sử dụng hệ nhị phân", "Phát minh ra Internet"],
+                answer: "Khái niệm chương trình được lưu trữ (stored-program concept)",
+                explanation: "Von Neumann đề xuất rằng cả chương trình và dữ liệu đều nên được lưu trữ trong cùng một bộ nhớ. Điều này giúp việc thay đổi tác vụ của máy tính trở nên cực kỳ linh hoạt, chỉ cần nạp chương trình mới thay vì phải đi dây lại.",
+                tip: "💡 Mẹo nhớ: Von Neumann = Chương trình + Dữ liệu CÙNG ở trong Bộ nhớ."
             },
             {
-                question_en: "What is the function of the Program Counter (PC)?", question_vi: "Chức năng của Bộ đếm chương trình (PC) là gì?",
-                answers_en: [ { text: "To store the current instruction", correct: false }, { text: "To decode instructions", correct: false }, { text: "To hold the address of the next instruction", correct: true }, { text: "To store operation results", correct: false } ],
-                answers_vi: [ { text: "Lưu trữ lệnh hiện tại", correct: false }, { text: "Giải mã lệnh", correct: false }, { text: "Giữ địa chỉ của lệnh tiếp theo", correct: true }, { text: "Lưu trữ kết quả phép toán", correct: false } ],
-                explanation_vi: "Bộ đếm chương trình (PC) là một thanh ghi đặc biệt, luôn trỏ đến địa chỉ bộ nhớ của lệnh kế tiếp mà CPU cần tìm nạp và thực thi.",
-                tip: "Mẹo nhớ: Hãy nghĩ PC như một 'dấu trang sách'. Nó luôn đánh dấu trang (lệnh) tiếp theo bạn cần đọc.",
-                keyTerms: ['cpu', 'registers', 'pc']
+                question: "Thành phần nào trong kiến trúc von Neumann thực hiện các phép tính như cộng, trừ, nhân, chia?",
+                options: ["Control Unit (Đơn vị điều khiển)", "Memory (Bộ nhớ)", "Arithmetic Logic Unit (ALU)", "Input/Output Subsystem (Hệ thống Nhập/Xuất)"],
+                answer: "Arithmetic Logic Unit (ALU)",
+                explanation: "ALU là 'máy tính' thực sự bên trong CPU, chịu trách nhiệm cho tất cả các phép toán số học (Arithmetic) và các phép so sánh logic (Logic).",
+                tip: "💡 Mẹo nhớ: Arithmetic = Số học. ALU làm toán."
             },
             {
-                question_en: "Which type of memory is 'volatile'?", question_vi: "Loại bộ nhớ nào là 'khả biến'?",
-                answers_en: [ { text: "ROM", correct: false }, { text: "RAM", correct: true }, { text: "SSD", correct: false }, { text: "EEPROM", correct: false } ],
-                answers_vi: [ { text: "ROM", correct: false }, { text: "RAM", correct: true }, { text: "SSD", correct: false }, { text: "EEPROM", correct: false } ],
-                explanation_vi: "RAM (Bộ nhớ truy cập ngẫu nhiên) là khả biến, nghĩa là nội dung của nó sẽ mất khi tắt nguồn. ROM và bộ nhớ flash là bất biến.",
-                tip: "Mẹo nhớ: RAM giống như 'bảng nháp' của bạn. Bạn viết lên đó để làm việc, nhưng khi xong việc (tắt máy), bạn sẽ lau sạch nó.",
-                keyTerms: ['ram', 'rom', 'cache']
+                question: "Thành phần nào hoạt động như 'nhạc trưởng' của máy tính, điều phối hoạt động của các bộ phận khác?",
+                options: ["ALU", "Memory", "Control Unit", "I/O"],
+                answer: "Control Unit",
+                explanation: "Đơn vị điều khiển (Control Unit) đọc từng chỉ thị từ bộ nhớ, giải mã nó và gửi tín hiệu điều khiển đến các bộ phận khác để thực thi chỉ thị đó.",
+                tip: "💡 Mẹo nhớ: Control = Điều khiển. Nó là 'bộ não' điều hành mọi thứ."
             },
             {
-                question_en: "What is the primary purpose of Cache Memory?", question_vi: "Mục đích chính của Bộ nhớ đệm (Cache) là gì?",
-                answers_en: [ { text: "To store data permanently", correct: false }, { text: "To speed up data access for the CPU", correct: true }, { text: "To store the BIOS program", correct: false }, { text: "To replace RAM", correct: false } ],
-                answers_vi: [ { text: "Lưu trữ dữ liệu vĩnh viễn", correct: false }, { text: "Tăng tốc độ truy cập dữ liệu cho CPU", correct: true }, { text: "Lưu trữ chương trình BIOS", correct: false }, { text: "Thay thế hoàn toàn RAM", correct: false } ],
-                explanation_vi: "Cache là một bộ nhớ nhỏ, siêu nhanh nằm giữa CPU và RAM. Nó lưu trữ các dữ liệu được truy cập thường xuyên, giúp CPU lấy thông tin nhanh hơn nhiều so với việc phải chờ từ RAM.",
-                tip: "Mẹo nhớ: Cache giống như 'tủ đồ nhỏ' ngay cạnh bàn làm việc của bạn, chứa những công cụ hay dùng nhất để không phải chạy xuống nhà kho (RAM).",
-                keyTerms: ['cache', 'cpu', 'ram']
+                question: "Tất cả các loại dữ liệu (văn bản, hình ảnh, âm thanh) được biểu diễn bên trong máy tính dưới dạng gì?",
+                options: ["Hệ thập phân (0-9)", "Mẫu nhị phân (0 và 1)", "Ký tự Alphabet", "Sóng điện từ"],
+                answer: "Mẫu nhị phân (0 và 1)",
+                explanation: "Vì máy tính là thiết bị điện tử, nó hoạt động dựa trên hai trạng thái (có điện/không có điện), tương ứng với 1 và 0. Mọi thứ đều phải được mã hóa thành chuỗi nhị phân.",
+                tip: "💡 Mẹo nhớ: Máy tính chỉ hiểu hai thứ: Bật (1) và Tắt (0)."
             },
             {
-                question_en: "The CPU's machine cycle consists of which three stages in order?", question_vi: "Chu trình máy của CPU bao gồm ba giai đoạn nào theo thứ tự?",
-                answers_en: [ { text: "Execute, Decode, Fetch", correct: false }, { text: "Fetch, Decode, Execute", correct: true }, { text: "Decode, Fetch, Execute", correct: false }, { text: "Fetch, Store, Decode", correct: false } ],
-                answers_vi: [ { text: "Thực thi, Giải mã, Tìm nạp", correct: false }, { text: "Tìm nạp, Giải mã, Thực thi", correct: true }, { text: "Giải mã, Tìm nạp, Thực thi", correct: false }, { text: "Tìm nạp, Lưu trữ, Giải mã", correct: false } ],
-                explanation_vi: "CPU hoạt động theo chu trình lặp lại: 1. Fetch: Lấy lệnh từ bộ nhớ. 2. Decode: 'Đọc' và hiểu lệnh. 3. Execute: Thực hiện hành động.",
-                tip: "Mẹo nhớ: Tưởng tượng bạn đang gọi món: 1. Fetch (Tìm nạp): Bạn lấy thực đơn. 2. Decode (Giải mã): Bạn đọc và quyết định món. 3. Execute (Thực thi): Nhà bếp thực hiện nó.",
-                keyTerms: ['machine_cycle', 'cpu', 'control_unit']
+                question: "Charles Babbage được xem là 'cha đẻ của máy tính' vì cỗ máy nào của ông có thiết kế tương đồng với máy tính hiện đại?",
+                options: ["Difference Engine", "Pascaline", "Jacquard Loom", "Analytical Engine"],
+                answer: "Analytical Engine",
+                explanation: "Máy Phân tích (Analytical Engine) có thiết kế bao gồm 'store' (bộ nhớ), 'mill' (bộ xử lý/ALU), 'operator' (đơn vị điều khiển), và có thể lập trình bằng thẻ đục lỗ, tương ứng với các thành phần chính của máy tính hiện đại.",
+                tip: "💡 Mẹo nhớ: Analytical = Phân tích. Một cỗ máy có khả năng phân tích phức tạp cần có cấu trúc giống máy tính."
             },
             {
-                question_en: "Which computer architecture uses a large, complex set of instructions?", question_vi: "Kiến trúc máy tính nào sử dụng một tập lệnh lớn và phức tạp?",
-                answers_en: [ { text: "RISC", correct: false }, { text: "CISC", correct: true }, { text: "SIMD", correct: false }, { text: "MIMD", correct: false } ],
-                answers_vi: [ { text: "RISC", correct: false }, { text: "CISC", correct: true }, { text: "SIMD", correct: false }, { text: "MIMD", correct: false } ],
-                explanation_vi: "CISC (Máy tính tập lệnh phức tạp) có mục tiêu hoàn thành một tác vụ trong ít dòng mã hợp ngữ nhất có thể, bằng cách sử dụng các lệnh mạnh mẽ, phức tạp.",
-                tip: "Mẹo nhớ: 'C' trong CISC là 'Complex' (Phức tạp). Ngược lại, 'R' trong RISC là 'Reduced' (Rút gọn).",
-                keyTerms: ['cisc_risc']
+                question: "Công nghệ điện tử nào là đặc trưng của thế hệ máy tính thứ nhất (1950-1959)?",
+                options: ["Bóng bán dẫn (Transistor)", "Mạch tích hợp (IC)", "Vi xử lý (Microprocessor)", "Bóng đèn chân không (Vacuum Tube)"],
+                answer: "Bóng đèn chân không (Vacuum Tube)",
+                explanation: "Máy tính thế hệ đầu tiên như ENIAC sử dụng hàng ngàn bóng đèn chân không, khiến chúng rất lớn, tỏa nhiều nhiệt và kém tin cậy.",
+                tip: "💡 Mẹo nhớ: Thế hệ 1 = Cổ xưa nhất, to nhất = Bóng đèn chân không."
             },
             {
-                question_en: "How does 'Pipelining' improve CPU performance?", question_vi: "Kỹ thuật 'Đường ống' (Pipelining) cải thiện hiệu suất CPU bằng cách nào?",
-                answers_en: [ { text: "By increasing clock speed", correct: false }, { text: "By using multiple cores", correct: false }, { text: "By overlapping the execution of multiple instructions", correct: true }, { text: "By simplifying instructions", correct: false } ],
-                answers_vi: [ { text: "Bằng cách tăng tốc độ xung nhịp", correct: false }, { text: "Bằng cách sử dụng nhiều lõi", correct: false }, { text: "Bằng cách thực thi chồng chéo nhiều lệnh", correct: true }, { text: "Bằng cách đơn giản hóa lệnh", correct: false } ],
-                explanation_vi: "Pipelining hoạt động như một dây chuyền lắp ráp, cho phép các giai đoạn khác nhau (Tìm nạp, Giải mã, Thực thi) của nhiều lệnh được xử lý đồng thời.",
-                tip: "Mẹo nhớ: Hãy nghĩ đến việc rửa bát: một người tráng, một người rửa, một người lau. Ba người làm song song sẽ nhanh hơn nhiều. Đó chính là Pipelining.",
-                keyTerms: ['pipelining', 'cpu', 'machine_cycle']
+                question: "Sự thay thế bóng đèn chân không bằng bóng bán dẫn (transistor) là bước nhảy vọt của thế hệ máy tính nào?",
+                options: ["Thế hệ 1", "Thế hệ 2", "Thế hệ 3", "Thế hệ 4"],
+                answer: "Thế hệ 2",
+                explanation: "Thế hệ thứ hai (1959-1965) sử dụng bóng bán dẫn, giúp máy tính trở nên nhỏ hơn, rẻ hơn, nhanh hơn và tiết kiệm năng lượng hơn đáng kể.",
+                tip: "💡 Mẹo nhớ: Thế hệ 2 = Bước cải tiến đầu tiên = Transistor."
             },
             {
-                question_en: "What does DMA stand for?", question_vi: "DMA là viết tắt của từ gì?",
-                answers_en: [ { text: "Direct Memory Access", correct: true }, { text: "Data Management Array", correct: false }, { text: "Dynamic Memory Allocation", correct: false }, { text: "Digital Media Adapter", correct: false } ],
-                answers_vi: [ { text: "Truy cập bộ nhớ trực tiếp", correct: true }, { text: "Mảng quản lý dữ liệu", correct: false }, { text: "Cấp phát bộ nhớ động", correct: false }, { text: "Bộ điều hợp phương tiện kỹ thuật số", correct: false } ],
-                explanation_vi: "Truy cập bộ nhớ trực tiếp (DMA) cho phép các thiết bị I/O truyền dữ liệu trực tiếp đến/từ bộ nhớ chính mà không cần sự can thiệp liên tục của CPU, giúp giải phóng CPU cho các tác vụ khác.",
-                tip: "Mẹo nhớ: Tên 'Direct Memory Access' đã nói lên tất cả. Dữ liệu đi 'trực tiếp' vào bộ nhớ, không cần CPU 'dẫn đường' từng bước.",
-                keyTerms: ['dma', 'bus', 'ram']
+                question: "Việc phát minh ra mạch tích hợp (Integrated Circuit - IC) đã khởi đầu cho thế hệ máy tính nào?",
+                options: ["Thế hệ 2", "Thế hệ 3", "Thế hệ 4", "Thế hệ 5"],
+                answer: "Thế hệ 3",
+                explanation: "Thế hệ thứ ba (1965-1975) được đánh dấu bằng IC, tích hợp nhiều bóng bán dẫn lên một con chip silicon nhỏ, tiếp tục cuộc cách mạng thu nhỏ hóa máy tính.",
+                tip: "💡 Mẹo nhớ: Thế hệ 3 = Tích hợp nhiều thứ vào một (IC)."
             },
             {
-                question_en: "Which bus carries memory addresses?", question_vi: "Bus nào mang địa chỉ bộ nhớ?",
-                answers_en: [ { text: "Data Bus", correct: false }, { text: "Control Bus", correct: false }, { text: "Address Bus", correct: true }, { text: "I/O Bus", correct: false } ],
-                answers_vi: [ { text: "Bus Dữ liệu", correct: false }, { text: "Bus Điều khiển", correct: false }, { text: "Bus Địa chỉ", correct: true }, { text: "Bus I/O", correct: false } ],
-                explanation_vi: "Bus Địa chỉ là một bus đơn hướng, mang địa chỉ bộ nhớ từ CPU đến các thành phần khác như RAM và bộ điều khiển I/O.",
-                tip: "Mẹo nhớ: Address Bus chỉ 'địa chỉ giao hàng'. Data Bus chở 'hàng hóa'. Control Bus là 'tín hiệu giao thông'.",
-                keyTerms: ['bus']
+                question: "Cuộc cách mạng máy tính cá nhân (microcomputer) bùng nổ ở thế hệ thứ tư nhờ vào sự ra đời của linh kiện nào?",
+                options: ["RAM", "Ổ cứng", "Vi xử lý (Microprocessor)", "Màn hình màu"],
+                answer: "Vi xử lý (Microprocessor)",
+                explanation: "Thế hệ thứ tư (1975-1985) chứng kiến sự ra đời của vi xử lý, tích hợp toàn bộ CPU lên một con chip duy nhất, làm cho máy tính đủ nhỏ và rẻ để trở thành thiết bị cá nhân.",
+                tip: "💡 Mẹo nhớ: Thế hệ 4 = Máy tính cá nhân = Vi xử lý."
+            },
+            {
+                question: "Một giải pháp logic, từng bước để giải quyết một vấn đề được gọi là gì?",
+                options: ["Chương trình (Program)", "Ngôn ngữ lập trình (Language)", "Thuật toán (Algorithm)", "Hệ điều hành (Operating System)"],
+                answer: "Thuật toán (Algorithm)",
+                explanation: "Thuật toán là bản thiết kế, là công thức, là các bước đi tuần tự để giải quyết một bài toán. Lập trình viên phải có thuật toán trước khi viết code.",
+                tip: "💡 Mẹo nhớ: Thuật toán = Công thức nấu ăn. Chương trình = Hành động nấu ăn."
+            },
+            {
+                question: "Máy tính điện tử đa năng, hoàn toàn điện tử đầu tiên có tên là gì?",
+                options: ["EDVAC", "ENIAC", "Colossus", "Mark I"],
+                answer: "ENIAC",
+                explanation: "ENIAC (Electronic Numerical Integrator and Calculator), hoàn thành năm 1946, được công nhận là máy tính điện tử đa năng đầu tiên. Tuy nhiên, nó được lập trình từ bên ngoài bằng cách cắm dây và gạt công tắc.",
+                tip: "💡 Mẹo nhớ: ENIAC có chữ 'E' đầu tiên = Electronic (điện tử) đầu tiên."
+            },
+            {
+                question: "Máy tính đầu tiên được xây dựng dựa trên ý tưởng 'chương trình được lưu trữ' của von Neumann là gì?",
+                options: ["ENIAC", "ABC Computer", "EDVAC", "Z1"],
+                answer: "EDVAC",
+                explanation: "EDVAC (Electronic Discrete Variable Automatic Computer) là một trong những máy tính đầu tiên được thiết kế và xây dựng theo kiến trúc von Neumann, nơi chương trình được lưu trong bộ nhớ.",
+                tip: "💡 Mẹo nhớ: EDVAC có chữ 'V' = Von Neumann."
             },
              {
-                question_en: "What is the key difference between SRAM and DRAM?",
-                question_vi: "Sự khác biệt chính giữa SRAM và DRAM là gì?",
-                answers_en: [ { text: "SRAM is volatile, DRAM is not", correct: false }, { text: "SRAM is faster and more expensive", correct: true }, { text: "DRAM is used for cache, SRAM for main memory", correct: false }, { text: "SRAM needs refreshing", correct: false } ],
-                answers_vi: [ { text: "SRAM khả biến, DRAM thì không", correct: false }, { text: "SRAM nhanh hơn và đắt hơn", correct: true }, { text: "DRAM dùng cho cache, SRAM cho bộ nhớ chính", correct: false }, { text: "SRAM cần làm mới", correct: false } ],
-                explanation_vi: "SRAM (RAM tĩnh) dùng flip-flop, rất nhanh, không cần làm mới, lý tưởng cho cache. DRAM (RAM động) dùng tụ điện, chậm hơn, rẻ hơn, và cần làm mới liên tục, phù hợp cho bộ nhớ chính.",
-                tip: "Mẹo nhớ: 'S' trong SRAM là 'Static' (Tĩnh) - dữ liệu 'đứng yên', không cần làm mới. 'D' trong DRAM là 'Dynamic' (Động) - dữ liệu cần được 'làm mới' liên tục.",
-                keyTerms: ['ram', 'cache']
+                question: "Theo định nghĩa trong sách, một ổ đĩa được coi là thiết bị ĐẦU RA (output device) khi nào?",
+                options: ["Khi nó đọc dữ liệu từ đĩa", "Khi nó đang quay", "Khi nó lưu kết quả xử lý vào đĩa", "Khi nó được format"],
+                answer: "Khi nó lưu kết quả xử lý vào đĩa",
+                explanation: "Khi máy tính ghi dữ liệu ra một thiết bị lưu trữ, nó đang 'xuất' thông tin ra ngoài. Ngược lại, khi đọc dữ liệu vào, nó là thiết bị 'nhập'.",
+                tip: "💡 Mẹo nhớ: Xuất (Output) = Ghi ra. Nhập (Input) = Đọc vào."
+            },
+            {
+                question: "Sự ra đời của các 'gói phần mềm' (software packages) và ngành công nghiệp phần mềm là đặc trưng của thế hệ máy tính nào?",
+                options: ["Thế hệ 2", "Thế hệ 3", "Thế hệ 4", "Thế hệ 5"],
+                answer: "Thế hệ 3",
+                explanation: "Cùng với sự phát triển của máy tính mini ở thế hệ thứ ba, nhu cầu về các chương trình làm sẵn tăng cao, từ đó hình thành nên ngành công nghiệp phần mềm.",
+                tip: "💡 Mẹo nhớ: Thế hệ 3 (máy tính phổ biến hơn) -> Cần phần mềm -> Ngành phần mềm ra đời."
+            },
+            {
+                question: "Lý do ban đầu cho sự ra đời của Hệ điều hành là gì?",
+                options: ["Để chơi game", "Để lướt web", "Để quản lý và tạo điều kiện truy cập vào phần cứng", "Để viết email"],
+                answer: "Để quản lý và tạo điều kiện truy cập vào phần cứng",
+                explanation: "Ban đầu, hệ điều hành được tạo ra như một lớp trung gian để quản lý các tài nguyên phần cứng phức tạp, giúp các chương trình ứng dụng truy cập chúng một cách dễ dàng và hiệu quả hơn.",
+                tip: "💡 Mẹo nhớ: Hệ điều hành = Người quản gia cho phần cứng."
+            },
+            {
+                question: "Máy dệt Jacquard có ý nghĩa lịch sử vì nó là cỗ máy đầu tiên sử dụng ý tưởng nào?",
+                options: ["Lưu trữ và lập trình bằng thẻ đục lỗ", "Sử dụng điện", "Tính toán đa thức", "Có bộ nhớ và bộ xử lý"],
+                answer: "Lưu trữ và lập trình bằng thẻ đục lỗ",
+                explanation: "Máy dệt Jacquard dùng các thẻ gỗ đục lỗ để điều khiển kim dệt, tạo ra các hoa văn phức tạp. Đây là hình thức sơ khai nhất của việc lưu trữ một 'chương trình' (hoa văn) để máy móc tự động thực hiện.",
+                tip: "💡 Mẹo nhớ: Jacquard = Dệt may = Hoa văn trên thẻ đục lỗ."
+            },
+            {
+                question: "Mô hình von Neumann yêu cầu chương trình và dữ liệu cùng nằm trong bộ nhớ. Điều này ngụ ý cả hai phải có cùng...",
+                options: ["Kích thước", "Tầm quan trọng", "Định dạng (Format)", "Tác giả"],
+                answer: "Định dạng (Format)",
+                explanation: "Để được lưu trữ trong cùng một nơi (bộ nhớ), cả chương trình (các chỉ thị máy) và dữ liệu đều phải được mã hóa dưới cùng một định dạng cơ bản, đó là định dạng nhị phân (chuỗi 0 và 1).",
+                tip: "💡 Mẹo nhớ: Cùng một nhà (bộ nhớ) thì phải nói cùng một ngôn ngữ (định dạng nhị phân)."
+            },
+            {
+                question: "Lĩnh vực nào sau đây thuộc 'lĩnh vực hệ thống' (systems areas) của khoa học máy tính?",
+                options: ["Trí tuệ nhân tạo", "Cơ sở dữ liệu", "Kiến trúc máy tính", "Phân tích dữ liệu"],
+                answer: "Kiến trúc máy tính",
+                explanation: "Lĩnh vực hệ thống liên quan đến việc tạo ra và vận hành nền tảng máy tính, bao gồm phần cứng (kiến trúc máy tính), hệ điều hành, mạng, ngôn ngữ lập trình. Các lĩnh vực còn lại là ứng dụng chạy trên nền tảng đó.",
+                tip: "💡 Mẹo nhớ: Hệ thống = Nền móng (phần cứng, HĐH). Ứng dụng = Ngôi nhà xây trên nền móng đó (AI, Database)."
+            },
+            {
+                question: "Theo mô hình Turing, nếu bạn giữ nguyên chương trình nhưng thay đổi dữ liệu đầu vào, kết quả đầu ra sẽ như thế nào?",
+                options: ["Không thay đổi", "Thay đổi", "Gây ra lỗi", "Không thể xác định"],
+                answer: "Thay đổi",
+                explanation: "Nguyên tắc của mô hình Turing là đầu ra phụ thuộc vào cả chương trình VÀ dữ liệu đầu vào. Thay đổi một trong hai yếu tố này sẽ làm thay đổi kết quả. Ví dụ: cùng chương trình tính tổng, nhưng cộng `2+2` sẽ khác với `3+3`.",
+                tip: "💡 Mẹo nhớ: `Output = f(Input, Program)`. Thay đổi `Input` thì `Output` cũng thay đổi."
+            },
+            {
+                question: "Thế hệ máy tính thứ năm (1985-nay) được đặc trưng bởi xu hướng nào?",
+                options: ["Sự ra đời của máy tính cá nhân", "Sự phát triển của laptop, mạng máy tính và đa phương tiện", "Sự thay thế bóng chân không bằng transistor", "Sự ra đời của ngôn ngữ COBOL và FORTRAN"],
+                answer: "Sự phát triển của laptop, mạng máy tính và đa phương tiện",
+                explanation: "Thế hệ thứ năm là một thế hệ mở, chứng kiến sự bùng nổ của máy tính di động (laptop), kết nối toàn cầu (Internet), và các ứng dụng sử dụng nhiều loại dữ liệu như hình ảnh, âm thanh (đa phương tiện).",
+                tip: "💡 Mẹo nhớ: Thế hệ 5 = Thế hệ hiện đại chúng ta đang sống."
+            },
+            {
+                question: "Tại sao việc chương trình phải bao gồm một chuỗi các chỉ thị (a sequence of instructions) lại quan trọng?",
+                options: ["Vì nó làm cho chương trình dài hơn", "Vì nó cho phép tái sử dụng (reusability) các chỉ thị", "Vì nó giúp máy tính chạy nhanh hơn", "Vì đó là yêu cầu của hệ điều hành"],
+                answer: "Vì nó cho phép tái sử dụng (reusability) các chỉ thị",
+                explanation: "Thay vì tạo ra một chương trình độc nhất cho mỗi tác vụ, máy tính có một bộ chỉ thị cơ bản. Lập trình viên có thể kết hợp các chỉ thị này theo vô số cách khác nhau để tạo ra các chương trình khác nhau. Điều này giúp tái sử dụng và làm cho việc lập trình dễ dàng hơn nhiều.",
+                tip: "💡 Mẹo nhớ: Giống như các chữ cái, chúng ta có thể kết hợp chúng để tạo ra vô số từ và câu."
+            },
+            {
+                question: "Nguyên tắc 'thực thi tuần tự' (Sequential execution) trong mô hình von Neumann có nghĩa là gì?",
+                options: ["Máy tính chỉ chạy được một chương trình tại một thời điểm", "Các chỉ thị trong một chương trình được thực thi lần lượt, từ trên xuống dưới", "Máy tính phải được khởi động theo một trình tự nhất định", "Dữ liệu phải được nhập vào một cách tuần tự"],
+                answer: "Các chỉ thị trong một chương trình được thực thi lần lượt, từ trên xuống dưới",
+                explanation: "Mô hình ban đầu yêu cầu đơn vị điều khiển phải nạp và thực thi chỉ thị này xong rồi mới đến chỉ thị tiếp theo trong bộ nhớ (trừ khi có lệnh nhảy).",
+                tip: "💡 Mẹo nhớ: Sequential = Tuần tự = Theo thứ tự 1, 2, 3..."
+            },
+            {
+                question: "Lý do chính cho sự ra đời của các ngôn ngữ lập trình bậc cao (high-level programming languages) là gì?",
+                options: ["Để máy tính chạy nhanh hơn", "Để làm cho việc viết các chương trình lớn trở nên dễ dàng và đỡ tẻ nhạt hơn", "Để tương thích với nhiều loại phần cứng hơn", "Để giảm kích thước của chương trình"],
+                answer: "Để làm cho việc viết các chương trình lớn trở nên dễ dàng và đỡ tẻ nhạt hơn",
+                explanation: "Viết chương trình dài bằng ngôn ngữ máy (chuỗi 0 và 1) rất khó khăn và dễ sai sót. Các ngôn ngữ bậc cao sử dụng các từ và ký hiệu gần với ngôn ngữ tự nhiên, giúp lập trình viên làm việc hiệu quả hơn.",
+                tip: "💡 Mẹo nhớ: Bậc cao = Gần với người hơn. Bậc thấp = Gần với máy hơn."
+            },
+             {
+                question: "Máy tính ABC (Atanasoff-Berry Computer) là một máy tính điện tử sơ khai. Nó được thiết kế cho mục đích gì?",
+                options: ["Phá mã Enigma của Đức", "Giải một hệ phương trình tuyến tính", "Điều khiển máy dệt", "Thực hiện điều tra dân số"],
+                answer: "Giải một hệ phương trình tuyến tính",
+                explanation: "Máy tính ABC là một máy tính chuyên dụng (special-purpose) được thiết kế đặc biệt để giải các hệ phương trình tuyến tính, không phải là máy tính đa năng.",
+                tip: "💡 Mẹo nhớ: ABC là các biến trong phương trình (ax + by = c)."
+            },
+            {
+                question: "So với máy tính chuyên dụng, ưu điểm lớn nhất của máy tính đa năng là gì?",
+                options: ["Rẻ hơn", "Nhỏ gọn hơn", "Linh hoạt hơn", "Bền hơn"],
+                answer: "Linh hoạt hơn",
+                explanation: "Máy tính đa năng có thể thực hiện vô số tác vụ khác nhau chỉ bằng cách thay đổi phần mềm (chương trình), trong khi máy tính chuyên dụng chỉ có thể làm một việc duy nhất mà nó được thiết kế.",
+                tip: "💡 Mẹo nhớ: Đa năng = Đa tài = Linh hoạt."
+            },
+            {
+                question: "Cả hai mô hình Turing và von Neumann đều nhấn mạnh tầm quan trọng của thành phần nào?",
+                options: ["Chương trình (Program)", "Giao diện đồ họa", "Mạng máy tính", "Bóng bán dẫn"],
+                answer: "Chương trình (Program)",
+                explanation: "Turing đưa ra khái niệm lý thuyết về chương trình như một yếu tố quyết định sự đa năng. Von Neumann đưa ra kiến trúc thực tế về cách lưu trữ và thực thi chương trình đó. Cả hai đều xoay quanh 'chương trình'.",
+                tip: "💡 Mẹo nhớ: Linh hồn của máy tính hiện đại chính là chương trình."
+            },
+            {
+                question: "Kỹ thuật phần mềm (Software engineering) là lĩnh vực nghiên cứu về điều gì?",
+                options: ["Cách sửa chữa phần cứng máy tính", "Thiết kế và viết các chương trình có cấu trúc, tuân theo các quy tắc và nguyên tắc chặt chẽ", "Lịch sử của các loại phần mềm", "Cách bẻ khóa phần mềm"],
+                answer: "Thiết kế và viết các chương trình có cấu trúc, tuân theo các quy tắc và nguyên tắc chặt chẽ",
+                explanation: "Kỹ thuật phần mềm áp dụng các nguyên tắc kỹ thuật vào việc phát triển phần mềm, nhằm tạo ra các sản phẩm chất lượng cao, dễ bảo trì và đáng tin cậy, chứ không chỉ đơn thuần là viết code cho chạy được.",
+                tip: "💡 Mẹo nhớ: Engineering = Kỹ thuật = Quy trình, nguyên tắc, cấu trúc."
+            },
+            {
+                question: "FORTRAN và COBOL là hai ngôn ngữ lập trình bậc cao đầu tiên, ra đời ở thế hệ máy tính nào?",
+                options: ["Thế hệ 1", "Thế hệ 2", "Thế hệ 3", "Thế hệ 4"],
+                answer: "Thế hệ 2",
+                explanation: "Sự ra đời của FORTRAN (cho khoa học kỹ thuật) và COBOL (cho kinh doanh) ở thế hệ thứ hai đã giúp tách biệt công việc lập trình khỏi việc vận hành máy tính, cho phép các chuyên gia lĩnh vực khác có thể tự viết chương trình.",
+                tip: "💡 Mẹo nhớ: Ngôn ngữ lập trình đầu tiên ra đời khi máy tính bắt đầu phổ biến hơn một chút (Thế hệ 2)."
+            },
+            {
+                question: "Sự khác biệt cơ bản giữa dữ liệu (data) và phần mềm (software) là gì?",
+                options: ["Dữ liệu được lưu trữ trong bộ nhớ, còn phần mềm thì không", "Dữ liệu là thông tin bị động, còn phần mềm là tập hợp các chỉ thị chủ động để xử lý dữ liệu", "Không có sự khác biệt, chúng là một", "Dữ liệu là số, còn phần mềm là chữ"],
+                answer: "Dữ liệu là thông tin bị động, còn phần mềm là tập hợp các chỉ thị chủ động để xử lý dữ liệu",
+                explanation: "Dữ liệu chỉ là các sự kiện, con số, văn bản... nó không tự làm gì cả. Phần mềm (chương trình) là thứ 'hành động', nó đọc dữ liệu, biến đổi dữ liệu và tạo ra kết quả.",
+                tip: "💡 Mẹo nhớ: Dữ liệu = Nguyên liệu. Phần mềm = Đầu bếp và công thức."
             }
         ];
-        // To ensure we have enough questions for a 20-question quiz
-        const finalQuestionBank = [...fullQuestionBank, ...fullQuestionBank];
 
-        // --- DOM ELEMENTS & STATE ---
-        let mainLang = 'en';
-        let keyTermsLang = 'vi';
-        let shuffledQuestions, currentQuestionIndex;
-        let score = 0;
-        const totalQuestions = 20;
-        let currentKeyTerms = [];
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const nextBtn = document.getElementById('next-btn');
 
-        const elements = {
-            langSwitchBtn: document.getElementById('lang-switch-btn'),
-            keyTermsLangSwitchBtn: document.getElementById('key-terms-lang-switch-btn'),
-            mainTitle: document.getElementById('main-title'),
-            questionCounter: document.getElementById('question-counter'),
-            scoreLabel: document.getElementById('score-label'),
-            question: document.getElementById('question'),
-            answerButtons: document.getElementById('answer-buttons'),
-            explanationContainer: document.getElementById('explanation-container'),
-            explanationTitle: document.getElementById('explanation-title'),
-            explanation: document.getElementById('explanation'),
-            tip: document.getElementById('tip'),
-            nextBtn: document.getElementById('next-btn'),
-            quizContainer: document.querySelector('.quiz'),
-            resultContainer: document.getElementById('result-container'),
-            resultTitle: document.getElementById('result-title'),
-            resultText: document.getElementById('result-text'),
-            finalScore: document.getElementById('final-score'),
-            resultMessage: document.getElementById('result-message'),
-            restartBtn: document.getElementById('restart-btn'),
-            keyTermsTitle: document.getElementById('key-terms-title'),
-            keyTermsList: document.getElementById('key-terms-list')
-        };
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const scoreScreen = document.getElementById('score-screen');
+
+        const questionEl = document.getElementById('question');
+        const optionsContainer = document.getElementById('options-container');
+        const resultContainer = document.getElementById('result-container');
         
-        const uiText = {
-            en: { mainTitle: "Quiz Chapter 5: Computer Organization", questionCounter: "Question", scoreLabel: "Score", nextBtn: "Next Question", resultTitle: "Complete!", resultText: "Your final score is", restartBtn: "Restart Quiz" },
-            vi: { mainTitle: "Trắc nghiệm Chương 5: Tổ chức Máy tính", questionCounter: "Câu", scoreLabel: "Điểm", nextBtn: "Câu tiếp theo", resultTitle: "Hoàn thành!", resultText: "Điểm cuối cùng của bạn là", restartBtn: "Làm lại" }
-        };
-        const resultMessages = {
-            en: { perfect: "Excellent!", great: "Great job!", good: "Good effort!", retry: "Keep trying!" },
-            vi: { perfect: "Xuất sắc!", great: "Rất tốt!", good: "Khá ổn!", retry: "Cần cố gắng hơn!" }
-        };
-
-        // --- FUNCTIONS ---
-        function toggleMainLanguage() {
-            mainLang = (mainLang === 'en') ? 'vi' : 'en';
-            updateMainUIText();
-        }
+        const questionCounterEl = document.getElementById('question-counter');
+        const scoreCounterEl = document.getElementById('score-counter');
+        const finalScoreEl = document.getElementById('final-score');
         
-        function toggleKeyTermsLanguage() {
-            keyTermsLang = (keyTermsLang === 'vi') ? 'en' : 'vi';
-            populateKeyTerms(currentKeyTerms, false); // Re-render terms with new language
-        }
+        const resultTextEl = document.getElementById('result-text');
+        const explanationTextEl = document.getElementById('explanation-text');
+        const tipTextEl = document.getElementById('tip-text');
 
-        function updateMainUIText() {
-            const texts = uiText[mainLang];
-            elements.mainTitle.innerText = texts.mainTitle;
-            elements.scoreLabel.innerText = `${texts.scoreLabel}: ${score}`;
-            elements.nextBtn.innerText = texts.nextBtn;
-            elements.resultTitle.innerText = texts.resultTitle;
-            elements.restartBtn.innerText = texts.restartBtn;
+        let shuffledQuestions, currentQuestionIndex, score;
 
-            if (!elements.quizContainer.classList.contains('hide')) { showQuestion(false); }
-            if (!elements.resultContainer.classList.contains('hide')) { showResult(false); }
-        }
-        
-        function startQuiz() {
-            score = 0;
-            currentQuestionIndex = 0;
-            shuffledQuestions = finalQuestionBank.sort(() => Math.random() - 0.5).slice(0, totalQuestions);
-            
-            elements.quizContainer.classList.remove('hide');
-            elements.resultContainer.classList.add('hide');
-            elements.scoreLabel.innerText = `${uiText[mainLang].scoreLabel}: ${score}`;
-            showQuestion(true);
-        }
-
-        function showQuestion(isNewQuestion = true) {
-            if (isNewQuestion) resetState();
-            else {
-                while (elements.answerButtons.firstChild) {
-                    elements.answerButtons.removeChild(elements.answerButtons.firstChild);
-                }
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
+        }
 
-            let currentQuestion = shuffledQuestions[currentQuestionIndex];
-            currentKeyTerms = currentQuestion.keyTerms; // Store current terms for language switch
-            let questionNo = currentQuestionIndex + 1;
+        function startQuiz() {
+            startScreen.classList.add('hide');
+            scoreScreen.classList.add('hide');
+            quizScreen.classList.remove('hide');
 
-            elements.question.innerHTML = `${questionNo}. ${currentQuestion['question_' + mainLang]}`;
-            elements.questionCounter.innerText = `${uiText[mainLang].questionCounter} ${questionNo}/${totalQuestions}`;
-
-            const answers = currentQuestion['answers_' + mainLang];
-            answers.forEach((answer, index) => {
-                const button = document.createElement('button');
-                button.innerHTML = answer.text;
-                button.classList.add('btn');
-                elements.answerButtons.appendChild(button);
-                if (currentQuestion.answers_en[index].correct) { button.dataset.correct = "true"; }
-                button.addEventListener('click', selectAnswer);
-            });
+            let allQuestions = [...questionBank];
+            shuffleArray(allQuestions);
+            shuffledQuestions = allQuestions.slice(0, 20);
             
-            populateKeyTerms(currentKeyTerms, true);
+            currentQuestionIndex = 0;
+            score = 0;
+            updateScoreCounter();
+            showQuestion();
+        }
+
+        function showQuestion() {
+            resetState();
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            questionEl.innerText = currentQuestion.question;
+            questionCounterEl.innerText = `Câu ${currentQuestionIndex + 1} / 20`;
+
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.innerText = option;
+                button.classList.add('option-btn');
+                button.addEventListener('click', () => selectAnswer(button));
+                optionsContainer.appendChild(button);
+            });
         }
 
         function resetState() {
-            elements.explanationContainer.classList.add('hide');
-            elements.nextBtn.classList.add('hide');
-            while (elements.answerButtons.firstChild) {
-                elements.answerButtons.removeChild(elements.answerButtons.firstChild);
+            while (optionsContainer.firstChild) {
+                optionsContainer.removeChild(optionsContainer.firstChild);
             }
+            submitBtn.disabled = true;
+            submitBtn.classList.remove('hide');
+            nextBtn.classList.add('hide');
+            resultContainer.classList.add('hide');
+        }
+        
+        function selectAnswer(selectedButton) {
+            const allOptions = optionsContainer.querySelectorAll('.option-btn');
+            allOptions.forEach(btn => btn.classList.remove('selected'));
+            selectedButton.classList.add('selected');
+            submitBtn.disabled = false;
         }
 
-        function selectAnswer(e) {
-            const selectedBtn = e.target;
-            const isCorrect = selectedBtn.dataset.correct === "true";
+        function checkAnswer() {
+            const selectedOption = optionsContainer.querySelector('.option-btn.selected');
+            if (!selectedOption) return;
 
+            const isCorrect = selectedOption.innerText === shuffledQuestions[currentQuestionIndex].answer;
+            
             if (isCorrect) {
-                selectedBtn.classList.add('correct');
                 score++;
-                elements.scoreLabel.innerText = `${uiText[mainLang].scoreLabel}: ${score}`;
+                resultTextEl.innerText = "🎉 Chính xác!";
+                resultTextEl.style.color = '#28a745';
             } else {
-                selectedBtn.classList.add('incorrect');
+                resultTextEl.innerText = "😥 Chưa đúng!";
+                resultTextEl.style.color = '#dc3545';
+                selectedOption.classList.add('incorrect');
             }
+            updateScoreCounter();
 
-            Array.from(elements.answerButtons.children).forEach(button => {
-                if (button.dataset.correct === "true") button.classList.add('correct');
+            Array.from(optionsContainer.children).forEach(button => {
+                if (button.innerText === shuffledQuestions[currentQuestionIndex].answer) {
+                    button.classList.add('correct');
+                }
                 button.disabled = true;
             });
             
-            const currentQuestion = shuffledQuestions[currentQuestionIndex];
-            // Explanation and tip are ALWAYS in Vietnamese per requirement
-            elements.explanation.innerText = currentQuestion.explanation_vi;
-            elements.tip.innerText = "💡 " + currentQuestion.tip;
-            elements.explanationContainer.classList.remove('hide');
-            elements.nextBtn.classList.remove('hide');
+            explanationTextEl.innerText = shuffledQuestions[currentQuestionIndex].explanation;
+            tipTextEl.innerText = shuffledQuestions[currentQuestionIndex].tip;
+            resultContainer.classList.remove('hide');
+            
+            submitBtn.classList.add('hide');
+            nextBtn.classList.remove('hide');
         }
 
-        function showResult(updateOnly = false) {
-             if (!updateOnly) {
-                elements.quizContainer.classList.add('hide');
-                elements.resultContainer.classList.add('hide');
-                elements.keyTermsList.innerHTML = ''; // Clear key terms on result page
-            }
-
-            const mainTexts = uiText[mainLang];
-            const resultMsgTexts = resultMessages[mainLang];
-            elements.resultText.innerHTML = `${mainTexts.resultText} <span id="final-score">${score}</span>/${totalQuestions}.`;
-            
-            const percentage = (score / totalQuestions) * 100;
-            let messageKey = 'retry';
-            if (percentage === 100) messageKey = 'perfect';
-            else if (percentage >= 80) messageKey = 'great';
-            else if (percentage >= 50) messageKey = 'good';
-            
-            elements.resultMessage.innerText = resultMsgTexts[messageKey];
+        function updateScoreCounter() {
+            scoreCounterEl.innerText = `Điểm: ${score}`;
         }
 
-        function handleNextButton() {
+        function handleNext() {
             currentQuestionIndex++;
-            if (currentQuestionIndex < totalQuestions) { showQuestion(true); } 
-            else { showResult(); }
-        }
-        
-        function populateKeyTerms(termsArray, isNew = true) {
-            if(isNew) elements.keyTermsList.innerHTML = '';
-            elements.keyTermsTitle.innerText = keyTermsLang === 'vi' ? 'Thuật ngữ chính' : 'Key Terms';
-            
-            if (!termsArray) return;
-            
-            termsArray.forEach((termKey, index) => {
-                const termData = keyTermsData[termKey];
-                if(isNew){
-                    const termItem = document.createElement('div');
-                    termItem.classList.add('term-item');
-                    termItem.innerHTML = `
-                        <div class="term-title">
-                            <span>${termData['term_' + keyTermsLang]}</span>
-                            <span class="toggle-icon">+</span>
-                        </div>
-                        <p class="term-definition">${termData['def_' + keyTermsLang]}</p>
-                    `;
-                    elements.keyTermsList.appendChild(termItem);
-
-                    termItem.querySelector('.term-title').addEventListener('click', () => {
-                        termItem.classList.toggle('active');
-                    });
-                } else {
-                    const termItem = elements.keyTermsList.children[index];
-                    termItem.querySelector('.term-title span:first-child').innerText = termData['term_' + keyTermsLang];
-                    termItem.querySelector('.term-definition').innerText = termData['def_' + keyTermsLang];
-                }
-            });
+            if (currentQuestionIndex < shuffledQuestions.length) {
+                showQuestion();
+            } else {
+                showScore();
+            }
         }
 
-        // --- EVENT LISTENERS ---
-        elements.langSwitchBtn.addEventListener('click', toggleMainLanguage);
-        elements.keyTermsLangSwitchBtn.addEventListener('click', toggleKeyTermsLanguage);
-        elements.nextBtn.addEventListener('click', handleNextButton);
-        elements.restartBtn.addEventListener('click', startQuiz);
+        function showScore() {
+            quizScreen.classList.add('hide');
+            scoreScreen.classList.remove('hide');
+            finalScoreEl.innerText = `Bạn đã trả lời đúng ${score} / 20 câu!`;
+        }
 
-        // --- INITIALIZE ---
-        startQuiz();
+        startBtn.addEventListener('click', startQuiz);
+        restartBtn.addEventListener('click', startQuiz);
+        submitBtn.addEventListener('click', checkAnswer);
+        nextBtn.addEventListener('click', handleNext);
     </script>
+
 </body>
 </html>
-
