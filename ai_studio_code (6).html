@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn Tập Kiến Thức Máy Tính (Dạng Cây)</title>
+    <title>Sổ Tay Kiến Thức Máy Tính (Nâng Cao)</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗂️</text></svg>">
     
     <!-- ======================= CSS STYLES ======================= -->
@@ -33,91 +33,57 @@
             padding: 20px;
         }
 
-        .container { width: 100%; max-width: 900px; margin: 20px auto; }
+        .container { width: 100%; max-width: 1000px; margin: 20px auto; }
 
         .header { text-align: center; margin-bottom: 30px; position: relative; }
         .header h1 { font-size: 2.5rem; color: var(--primary-color); margin: 0; }
+        .header-controls { position: absolute; top: 50%; right: 0; transform: translateY(-50%); display: flex; gap: 10px; }
         
-        .theme-toggle {
-            position: absolute; top: 50%; right: 0; transform: translateY(-50%);
-            cursor: pointer; font-size: 1.5rem; background: none; border: none;
+        .toggle-btn {
+            cursor: pointer; font-size: 1rem; background: none; border: 1px solid var(--border-color);
+            border-radius: var(--border-radius); padding: 8px 12px; font-weight: 500;
             color: var(--text-secondary-color);
         }
 
         /* --- Accordion Styling --- */
-        .accordion {
-            background-color: var(--surface-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        .accordion-item {
-            border-bottom: 1px solid var(--border-color);
-        }
+        .accordion { background-color: var(--surface-color); border-radius: var(--border-radius); box-shadow: var(--shadow); overflow: hidden; }
+        .accordion-item { border-bottom: 1px solid var(--border-color); }
         .accordion-item:last-child { border-bottom: none; }
         
         .accordion-header {
-            display: flex; justify-content: space-between; align-items: center;
-            width: 100%; padding: 20px 25px; cursor: pointer;
-            background-color: var(--surface-color); border: none; text-align: left;
-            font-family: inherit; transition: background-color 0.2s ease;
+            display: flex; justify-content: space-between; align-items: center; width: 100%;
+            padding: 20px 25px; cursor: pointer; background-color: var(--surface-color);
+            border: none; text-align: left; font-family: inherit; transition: background-color 0.2s ease;
         }
         .accordion-header:hover { background-color: var(--accent-color); }
 
         .accordion-header .icon {
-            font-size: 1.2rem; transform: rotate(0deg);
-            transition: transform 0.3s ease-in-out;
+            font-size: 1.2rem; transform: rotate(0deg); transition: transform 0.3s ease-in-out;
             flex-shrink: 0; margin-left: 15px;
         }
         .accordion-item.active > .accordion-header .icon { transform: rotate(180deg); }
         .accordion-item.active > .accordion-header { color: var(--primary-color); }
 
-        .accordion-content {
-            max-height: 0; overflow: hidden;
-            transition: max-height 0.4s ease-in-out;
-        }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; }
         .accordion-content-inner { padding: 0 25px 25px 25px; border-top: 1px solid var(--border-color); }
 
         /* Level 1 (Chapter) */
-        .level-1 > .accordion-header {
-            font-size: 1.4rem; font-weight: 700;
-        }
-        .level-1 > .accordion-content > .accordion-content-inner {
-            background-color: var(--bg-color); padding: 20px;
-        }
+        .level-1 > .accordion-header { font-size: 1.4rem; font-weight: 700; }
+        .level-1 > .accordion-content > .accordion-content-inner { background-color: var(--bg-color); padding: 20px; }
         
         /* Level 2 (Section) */
-        .level-2 {
-            margin-top: 15px; border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-         .level-2:first-child { margin-top: 0; }
-        .level-2 > .accordion-header {
-            font-size: 1.2rem; font-weight: 600;
-            background-color: var(--accent-color);
-            padding: 15px 20px;
-        }
-         .level-2 > .accordion-content > .accordion-content-inner {
-            padding: 20px; border-top: 1px dashed var(--border-color);
-        }
-        [data-theme="dark"] .level-2 > .accordion-header {
-            background-color: #303030;
-        }
+        .level-2 { margin-top: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .level-2:first-child { margin-top: 0; }
+        .level-2 > .accordion-header { font-size: 1.2rem; font-weight: 600; background-color: var(--accent-color); padding: 15px 20px; }
+        .level-2 > .accordion-content > .accordion-content-inner { padding: 20px; border-top: 1px dashed var(--border-color); }
+        [data-theme="dark"] .level-2 > .accordion-header { background-color: #303030; }
 
-        /* Level 3 (Sub-section) */
-        .level-3 {
-            margin-top: 15px;
-        }
-        .level-3 > .accordion-header {
-            font-size: 1.1rem; font-weight: 500;
-            padding: 10px 15px; background-color: transparent;
-            border-bottom: 1px solid var(--border-color); border-radius: 8px 8px 0 0;
-        }
-        .level-3 > .accordion-content > .accordion-content-inner {
-            padding: 15px; border-top: none;
-        }
-
+        /* Content Grid for Translation */
+        .content-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        body.translation-on .content-grid { grid-template-columns: 1fr 1fr; }
+        .translation-column { min-width: 0; }
+        .translation-column.en { border-left: 2px dashed var(--border-color); padding-left: 30px; }
+        
         /* Content Styling */
         h4 { font-size: 1.2rem; color: var(--text-color); margin-bottom: 0.5rem; }
         p, li { color: var(--text-secondary-color); font-size: 1rem; }
@@ -128,75 +94,120 @@
             background-color: var(--accent-color); padding: 0.2em 0.5em; border-radius: 4px;
             font-family: 'Courier New', Courier, monospace; color: var(--text-color);
         }
+        
+        @media (max-width: 992px) {
+            body.translation-on .content-grid { grid-template-columns: 1fr; }
+            .translation-column.en { border-left: none; padding-left: 0; margin-top: 2rem; border-top: 2px dashed var(--border-color); padding-top: 2rem; }
+        }
     </style>
 </head>
 <body data-theme="light">
 
     <main class="container">
         <header class="header">
-            <h1>Sổ Tay Kiến Thức Máy Tính</h1>
-            <button class="theme-toggle" id="theme-toggle-btn">🌙</button>
+            <h1>Sổ Tay Kiến Thức</h1>
+            <div class="header-controls">
+                <button class="toggle-btn" id="translate-btn">Dịch</button>
+                <button class="toggle-btn" id="theme-toggle-btn">🌙</button>
+            </div>
         </header>
 
         <div class="accordion" id="knowledge-accordion">
             <!-- Mục Chương 1 -->
             <div class="accordion-item level-1">
                 <button class="accordion-header">
-                    <span>Phần 1: Những Khái Niệm Nền Tảng (Chương 1)</span>
+                    <span data-lang-vi="Phần 1: Những Khái Niệm Nền Tảng (Chương 1)" data-lang-en="Part 1: Foundational Concepts (Chapter 1)">Phần 1: Những Khái Niệm Nền Tảng (Chương 1)</span>
                     <span class="icon">▼</span>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-content-inner">
-                        
                         <div class="accordion-item level-2">
-                            <button class="accordion-header"><span>1. Các Mô Hình Máy Tính Cơ Bản</span><span class="icon">▼</span></button>
+                            <button class="accordion-header"><span data-lang-vi="1. Các Mô Hình Máy Tính Cơ Bản" data-lang-en="1. Basic Computer Models">1. Các Mô Hình Máy Tính Cơ Bản</span><span class="icon">▼</span></button>
                             <div class="accordion-content">
                                 <div class="accordion-content-inner">
-                                    <p><strong>Ý chính:</strong> Đây là mô hình lý thuyết đầu tiên về một máy tính đa dụng. Nó định nghĩa máy tính là một <code>"bộ xử lý dữ liệu có thể lập trình được"</code>.</p>
-                                    <ul>
-                                        <li>Giới thiệu yếu tố quan trọng: <strong>chương trình (program)</strong>.</li>
-                                        <li>Đầu ra phụ thuộc vào cả <strong>dữ liệu đầu vào (input)</strong> và <strong>chương trình</strong>.</li>
-                                        <li>"Máy Turing vạn năng" là nền tảng cho các máy tính đa năng hiện đại.</li>
-                                    </ul>
-                                    <hr>
-                                    <h4>Mô hình von Neumann (John von Neumann, 1945)</h4>
-                                    <p><strong>Ý chính:</strong> Kiến trúc mà hầu hết các máy tính ngày nay đều dựa trên, với đột phá là ý tưởng lưu trữ cả <strong>chương trình và dữ liệu trong cùng một bộ nhớ</strong>.</p>
-                                    <ul>
-                                        <li><strong>Khái niệm chương trình lưu trữ (Stored-Program Concept):</strong> Giúp máy tính linh hoạt hơn rất nhiều.</li>
-                                        <li><strong>Bốn hệ thống con của phần cứng:</strong> Memory, ALU, Control Unit, và I/O.</li>
-                                    </ul>
+                                    <div class="content-grid">
+                                        <div class="translation-column vi">
+                                            <h4>Mô hình Turing</h4>
+                                            <p><strong>Ý chính:</strong> Định nghĩa máy tính là một <code>"bộ xử lý dữ liệu có thể lập trình được"</code>.</p>
+                                            <ul>
+                                                <li>Giới thiệu khái niệm <strong>chương trình (program)</strong>.</li>
+                                                <li>Đầu ra phụ thuộc vào <strong>dữ liệu đầu vào (input)</strong> và <strong>chương trình</strong>.</li>
+                                            </ul>
+                                            <hr>
+                                            <h4>Mô hình von Neumann</h4>
+                                            <p><strong>Ý chính:</strong> Đột phá với ý tưởng lưu trữ cả <strong>chương trình và dữ liệu trong cùng một bộ nhớ</strong> (Stored-Program Concept).</p>
+                                            <ul>
+                                                <li><strong>Bốn hệ thống con:</strong> Memory, ALU, Control Unit, và I/O.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="translation-column en">
+                                            <h4>Turing Model</h4>
+                                            <p><strong>Main Idea:</strong> Defines a computer as a <code>"programmable data processor"</code>.</p>
+                                            <ul>
+                                                <li>Introduces the concept of a <strong>program</strong>.</li>
+                                                <li>The output depends on both the <strong>input data</strong> and the <strong>program</strong>.</li>
+                                            </ul>
+                                            <hr>
+                                            <h4>Von Neumann Model</h4>
+                                            <p><strong>Main Idea:</strong> Breakthrough with the idea of storing both <strong>program and data in the same memory</strong> (Stored-Program Concept).</p>
+                                            <ul>
+                                                <li><strong>Four subsystems:</strong> Memory, ALU, Control Unit, and I/O.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="accordion-item level-2">
-                            <button class="accordion-header"><span>2. Ba Thành Phần Cấu Tạo Máy Tính</span><span class="icon">▼</span></button>
+                            <button class="accordion-header"><span data-lang-vi="2. Ba Thành Phần Cấu Tạo" data-lang-en="2. Three Core Components">2. Ba Thành Phần Cấu Tạo</span><span class="icon">▼</span></button>
                             <div class="accordion-content">
                                 <div class="accordion-content-inner">
-                                    <ul>
-                                        <li><strong>Phần cứng (Hardware):</strong> Các bộ phận vật lý (CPU, RAM...).</li>
-                                        <li><strong>Dữ liệu (Data):</strong> Thông tin thô, được chuyển đổi thành dạng nhị phân.</li>
-                                        <li><strong>Phần mềm (Software):</strong> Các chương trình, tập hợp các chỉ thị để điều khiển phần cứng.</li>
-                                    </ul>
+                                    <div class="content-grid">
+                                        <div class="translation-column vi">
+                                            <ul>
+                                                <li><strong>Phần cứng (Hardware):</strong> Các bộ phận vật lý.</li>
+                                                <li><strong>Dữ liệu (Data):</strong> Thông tin thô, dạng nhị phân.</li>
+                                                <li><strong>Phần mềm (Software):</strong> Các chương trình điều khiển phần cứng.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="translation-column en">
+                                             <ul>
+                                                <li><strong>Hardware:</strong> The physical parts.</li>
+                                                <li><strong>Data:</strong> Raw information, in binary form.</li>
+                                                <li><strong>Software:</strong> Programs that control the hardware.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="accordion-item level-2">
-                            <button class="accordion-header"><span>3. Lược Sử Phát Triển Máy Tính</span><span class="icon">▼</span></button>
+                             <button class="accordion-header"><span data-lang-vi="3. Lược Sử Phát Triển" data-lang-en="3. A Brief History">3. Lược Sử Phát Triển</span><span class="icon">▼</span></button>
                             <div class="accordion-content">
                                 <div class="accordion-content-inner">
-                                    <ol>
-                                        <li><strong>Thế hệ 1 (1950–1959):</strong> Sử dụng <code>đèn chân không</code>.</li>
-                                        <li><strong>Thế hệ 2 (1959–1965):</strong> Sử dụng <code>bóng bán dẫn (transistor)</code>.</li>
-                                        <li><strong>Thế hệ 3 (1965–1975):</strong> Sử dụng <code>mạch tích hợp (IC)</code>.</li>
-                                        <li><strong>Thế hệ 4 (1975–1985):</strong> Sử dụng <code>vi xử lý (microprocessor)</code>.</li>
-                                        <li><strong>Thế hệ 5 (1985–nay):</strong> Laptop, đa phương tiện, xử lý song song...</li>
-                                    </ol>
+                                    <div class="content-grid">
+                                        <div class="translation-column vi">
+                                            <ol>
+                                                <li><strong>Thế hệ 1:</strong> <code>đèn chân không</code>.</li>
+                                                <li><strong>Thế hệ 2:</strong> <code>bóng bán dẫn (transistor)</code>.</li>
+                                                <li><strong>Thế hệ 3:</strong> <code>mạch tích hợp (IC)</code>.</li>
+                                                <li><strong>Thế hệ 4:</strong> <code>vi xử lý (microprocessor)</code>.</li>
+                                                <li><strong>Thế hệ 5:</strong> Laptop, đa phương tiện...</li>
+                                            </ol>
+                                        </div>
+                                        <div class="translation-column en">
+                                            <ol>
+                                                <li><strong>1st Gen:</strong> <code>Vacuum tubes</code>.</li>
+                                                <li><strong>2nd Gen:</strong> <code>Transistors</code>.</li>
+                                                <li><strong>3rd Gen:</strong> <code>Integrated circuits (ICs)</code>.</li>
+                                                <li><strong>4th Gen:</strong> <code>Microprocessors</code>.</li>
+                                                <li><strong>5th Gen:</strong> Laptops, multimedia...</li>
+                                            </ol>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -204,96 +215,79 @@
             <!-- Mục Chương 5 -->
             <div class="accordion-item level-1">
                 <button class="accordion-header">
-                    <span>Phần 2: Tổ Chức Bên Trong Máy Tính (Chương 5)</span>
+                    <span data-lang-vi="Phần 2: Tổ Chức Bên Trong Máy Tính (Chương 5)" data-lang-en="Part 2: Computer Organization (Chapter 5)">Phần 2: Tổ Chức Bên Trong Máy Tính (Chương 5)</span>
                     <span class="icon">▼</span>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-content-inner">
-                        
                         <div class="accordion-item level-2">
-                            <button class="accordion-header"><span>1. Ba Hệ Thống Con Của Máy Tính</span><span class="icon">▼</span></button>
+                             <button class="accordion-header"><span data-lang-vi="1. Chi Tiết Về CPU & Chu Kỳ Máy" data-lang-en="1. CPU Details & Machine Cycle">1. Chi Tiết Về CPU & Chu Kỳ Máy</span><span class="icon">▼</span></button>
                             <div class="accordion-content">
                                 <div class="accordion-content-inner">
-                                     <ul>
-                                        <li><strong>Bộ Xử lý Trung tâm (CPU)</strong>: "Bộ não" của máy tính.</li>
-                                        <li><strong>Bộ nhớ chính (Main Memory)</strong>: Thường là RAM, lưu trữ tạm thời.</li>
-                                        <li><strong>Hệ thống Xuất/Nhập (I/O Subsystem)</strong>: Các thiết bị ngoại vi.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item level-2">
-                            <button class="accordion-header"><span>2. Chi Tiết Về CPU</span><span class="icon">▼</span></button>
-                            <div class="accordion-content">
-                                <div class="accordion-content-inner">
-                                     <ul>
-                                        <li><strong>Bộ Số học & Logic (ALU):</strong> Thực hiện mọi phép tính toán và logic.</li>
-                                        <li><strong>Các thanh ghi (Registers):</strong> Vùng nhớ <strong>siêu nhanh</strong> trong CPU.
+                                    <div class="content-grid">
+                                        <div class="translation-column vi">
+                                            <h4>Thành phần CPU</h4>
                                             <ul>
-                                                <li><code>Instruction Register (IR)</code>: Giữ chỉ thị <strong>đang được</strong> thực thi.</li>
-                                                <li><code>Program Counter (PC)</code>: Giữ địa chỉ của chỉ thị <strong>kế tiếp</strong>.</li>
+                                                <li><strong>ALU:</strong> Thực hiện tính toán và logic.</li>
+                                                <li><strong>Registers:</strong> Bộ nhớ siêu nhanh (<code>PC</code>, <code>IR</code>).</li>
+                                                <li><strong>Control Unit:</strong> Điều khiển hoạt động.</li>
                                             </ul>
-                                        </li>
-                                        <li><strong>Bộ Điều khiển (Control Unit):</strong> Điều khiển mọi hoạt động.</li>
-                                    </ul>
+                                            <hr>
+                                            <h4>Chu kỳ máy</h4>
+                                            <ol>
+                                                <li><strong>Tìm nạp (Fetch)</strong></li>
+                                                <li><strong>Giải mã (Decode)</strong></li>
+                                                <li><strong>Thực thi (Execute)</strong></li>
+                                            </ol>
+                                        </div>
+                                        <div class="translation-column en">
+                                            <h4>CPU Components</h4>
+                                            <ul>
+                                                <li><strong>ALU:</strong> Performs arithmetic and logic.</li>
+                                                <li><strong>Registers:</strong> Ultra-fast memory (<code>PC</code>, <code>IR</code>).</li>
+                                                <li><strong>Control Unit:</strong> Directs operations.</li>
+                                            </ul>
+                                            <hr>
+                                            <h4>Machine Cycle</h4>
+                                            <ol>
+                                                <li><strong>Fetch</strong></li>
+                                                <li><strong>Decode</strong></li>
+                                                <li><strong>Execute</strong></li>
+                                            </ol>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="accordion-item level-2">
-                            <button class="accordion-header"><span>3. Bộ Nhớ Chính (Main Memory)</span><span class="icon">▼</span></button>
+                         <div class="accordion-item level-2">
+                             <button class="accordion-header"><span data-lang-vi="2. Bộ Nhớ & Kiến Trúc" data-lang-en="2. Memory & Architectures">2. Bộ Nhớ & Kiến Trúc</span><span class="icon">▼</span></button>
                             <div class="accordion-content">
                                 <div class="accordion-content-inner">
-                                    <ul>
-                                        <li><strong>Phân cấp bộ nhớ:</strong> Registers > Cache > RAM > Storage.</li>
-                                        <li><strong>RAM:</strong> <strong>Khả biến</strong> (mất dữ liệu khi tắt nguồn).</li>
-                                        <li><strong>ROM:</strong> <strong>Bất biến</strong> (không mất dữ liệu khi tắt nguồn).</li>
-                                    </ul>
+                                    <div class="content-grid">
+                                        <div class="translation-column vi">
+                                            <h4>Phân cấp bộ nhớ</h4>
+                                            <p>Registers > Cache > RAM > Storage.</p>
+                                            <h4>Kiến trúc</h4>
+                                            <ul>
+                                                <li><strong>CISC:</strong> Tập lệnh phức tạp (Intel x86).</li>
+                                                <li><strong>RISC:</strong> Tập lệnh đơn giản (ARM).</li>
+                                                <li><strong>Pipelining:</strong> Gối đầu các giai đoạn.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="translation-column en">
+                                            <h4>Memory Hierarchy</h4>
+                                            <p>Registers > Cache > RAM > Storage.</p>
+                                            <h4>Architectures</h4>
+                                            <ul>
+                                                <li><strong>CISC:</strong> Complex instruction set (Intel x86).</li>
+                                                <li><strong>RISC:</strong> Reduced instruction set (ARM).</li>
+                                                <li><strong>Pipelining:</strong> Overlapping phases.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="accordion-item level-2">
-                            <button class="accordion-header"><span>4. Hệ Thống I/O & Kết Nối</span><span class="icon">▼</span></button>
-                            <div class="accordion-content">
-                                <div class="accordion-content-inner">
-                                    <ul>
-                                        <li><strong>Bus:</strong> Gồm <code>Bus dữ liệu</code>, <code>Bus địa chỉ</code>, và <code>Bus điều khiển</code>.</li>
-                                        <li><strong>Bộ điều khiển I/O:</strong> Trung gian kết nối giữa thiết bị I/O và CPU/bộ nhớ.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item level-2">
-                            <button class="accordion-header"><span>5. Quá Trình Thực Thi Chương Trình</span><span class="icon">▼</span></button>
-                            <div class="accordion-content">
-                                <div class="accordion-content-inner">
-                                    <h4>Chu kỳ máy (Machine Cycle)</h4>
-                                    <ol>
-                                         <li><strong>Tìm nạp (Fetch):</strong> Lấy chỉ thị từ bộ nhớ vào IR, tăng PC.</li>
-                                         <li><strong>Giải mã (Decode):</strong> Phân tích chỉ thị trong IR.</li>
-                                         <li><strong>Thực thi (Execute):</strong> Thực hiện lệnh.</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item level-2">
-                            <button class="accordion-header"><span>6. Các Kiến Trúc Máy Tính Khác Nhau</span><span class="icon">▼</span></button>
-                            <div class="accordion-content">
-                                <div class="accordion-content-inner">
-                                    <ul>
-                                         <li><strong>CISC:</strong> Tập lệnh phức tạp (Intel x86).</li>
-                                         <li><strong>RISC:</strong> Tập lệnh đơn giản (ARM).</li>
-                                         <li><strong>Pipelining:</strong> Gối đầu các giai đoạn để tăng hiệu suất.</li>
-                                         <li><strong>Xử lý song song:</strong> Dùng nhiều lõi/CPU để làm nhiều việc cùng lúc.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -304,15 +298,27 @@
     <script>
         const app = {
             init() {
-                // Theme Toggle Logic
-                this.themeToggleBtn = document.getElementById('theme-toggle-btn');
+                this.cacheDom();
+                this.bindEvents();
+                
                 this.currentTheme = localStorage.getItem('theme') || 'light';
                 document.body.setAttribute('data-theme', this.currentTheme);
                 this.updateThemeIcon();
-                this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
 
-                // Accordion Logic
+                this.isTranslationVisible = localStorage.getItem('translationVisible') === 'true';
+                document.body.classList.toggle('translation-on', this.isTranslationVisible);
+                this.updateTranslateButtonText();
+            },
+            
+            cacheDom() {
+                this.themeToggleBtn = document.getElementById('theme-toggle-btn');
+                this.translateBtn = document.getElementById('translate-btn');
                 this.accordionHeaders = document.querySelectorAll('.accordion-header');
+            },
+
+            bindEvents() {
+                this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
+                this.translateBtn.addEventListener('click', () => this.toggleTranslation());
                 this.accordionHeaders.forEach(header => {
                     header.addEventListener('click', () => {
                         const item = header.parentElement;
@@ -327,9 +333,29 @@
                 localStorage.setItem('theme', this.currentTheme);
                 this.updateThemeIcon();
             },
-
+            
             updateThemeIcon() {
                 this.themeToggleBtn.textContent = this.currentTheme === 'light' ? '🌙' : '☀️';
+            },
+
+            toggleTranslation() {
+                this.isTranslationVisible = !this.isTranslationVisible;
+                localStorage.setItem('translationVisible', this.isTranslationVisible);
+                document.body.classList.toggle('translation-on', this.isTranslationVisible);
+                this.updateTranslateButtonText();
+
+                // Recalculate height of any open accordion items
+                const activeItems = document.querySelectorAll('.accordion-item.active');
+                activeItems.forEach(item => {
+                    const content = item.querySelector(':scope > .accordion-content');
+                    if (content) {
+                       content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
+            },
+
+            updateTranslateButtonText() {
+                 this.translateBtn.textContent = this.isTranslationVisible ? 'Ẩn Dịch' : 'Dịch';
             },
             
             toggleAccordion(item) {
@@ -340,16 +366,19 @@
                 
                 if (item.classList.contains('active')) {
                     item.classList.remove('active');
-                    content.style.maxHeight = 0;
+                    content.style.maxHeight = null;
                 } else {
                     item.classList.add('active');
                     content.style.maxHeight = content.scrollHeight + 'px';
                 }
 
-                // Khi mở/đóng một mục con, cập nhật lại chiều cao của mục cha
+                // When opening/closing a child, update the parent's height
                 if (parentItem) {
                     const parentContent = parentItem.querySelector(':scope > .accordion-content');
-                    parentContent.style.maxHeight = parentContent.scrollHeight + 'px';
+                    // Use a timeout to allow the child animation to start before recalculating parent height
+                    setTimeout(() => {
+                        parentContent.style.maxHeight = parentContent.scrollHeight + 'px';
+                    }, 50);
                 }
             }
         };
@@ -359,4 +388,4 @@
         });
     </script>
 </body>
-</html>```
+</html>
