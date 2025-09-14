@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ Tay Kiến Thức Máy Tính (Song Ngữ)</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    
+    <!-- ======================= CSS STYLES ======================= -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap');
+
+        :root {
+            --light-bg: #F0F2F5; --light-surface: #FFFFFF; --light-text: #050505; --light-text-secondary: #65676B; --light-primary: #1877F2; --light-accent: #E7F3FF; --light-border: #CED0D4;
+            --dark-bg: #18191A; --dark-surface: #242526; --dark-text: #E4E6EB; --dark-text-secondary: #B0B3B8; --dark-primary: #2D88FF; --dark-accent: #3A3B3C; --dark-border: #3E4042;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1); --border-radius: 12px; --scroll-padding: 80px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: var(--light-bg); --surface-color: var(--light-surface); --text-color: var(--light-text); --text-secondary-color: var(--light-text-secondary); --primary-color: var(--light-primary); --accent-color: var(--light-accent); --border-color: var(--light-border);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: var(--dark-bg); --surface-color: var(--dark-surface); --text-color: var(--dark-text); --text-secondary-color: var(--dark-text-secondary); --primary-color: var(--dark-primary); --accent-color: var(--dark-accent); --border-color: var(--dark-border);
+        }
+        
+        * { box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; scroll-padding-top: var(--scroll-padding); }
+
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: var(--bg-color); color: var(--text-color); margin: 0; line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .app-container { display: flex; height: 100vh; width: 100%; }
+
+        .header {
+            background-color: var(--surface-color); border-bottom: 1px solid var(--border-color);
+            padding: 10px 30px; position: sticky; top: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .header h1 { font-size: 1.5rem; margin: 0; color: var(--primary-color); }
+        .header-controls { display: flex; align-items: center; gap: 15px; }
+
+        .toggle-btn {
+            cursor: pointer; font-size: 1rem; background: none; border: 1px solid var(--border-color);
+            border-radius: var(--border-radius); padding: 8px 12px; font-weight: 500;
+            color: var(--text-secondary-color);
+        }
+        .toggle-btn:hover { background-color: var(--accent-color); }
+
+        .sidebar {
+            width: 320px; flex-shrink: 0; height: calc(100vh - 65px); position: sticky;
+            top: 65px; overflow-y: auto; padding: 20px;
+            border-right: 1px solid var(--border-color); background-color: var(--surface-color);
+        }
+        .sidebar h3 { margin-top: 0; color: var(--text-color); }
+        .sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar-nav li a {
+            display: block; padding: 8px 12px; text-decoration: none; color: var(--text-secondary-color);
+            border-radius: var(--border-radius); margin-bottom: 5px; border-left: 3px solid transparent;
+        }
+        .sidebar-nav li a:hover { background-color: var(--accent-color); color: var(--text-color); }
+        .sidebar-nav li a.active {
+            background-color: var(--accent-color); color: var(--primary-color);
+            font-weight: 700; border-left: 3px solid var(--primary-color);
+        }
+        .sub-item a { padding-left: 25px !important; }
+        
+        .main-content { flex-grow: 1; padding: 30px 40px; }
+
+        #content-display { transition: grid-template-columns 0.4s ease; }
+        #content-display.translation-off { display: block; }
+        #content-display.translation-on {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+        }
+
+        .content-column h2:first-of-type { margin-top: 0; }
+        #english-content {
+            border-left: 2px dashed var(--border-color); padding-left: 40px;
+            opacity: 0; transition: opacity 0.5s ease;
+        }
+        #content-display.translation-on #english-content { opacity: 1; }
+
+        .content-section { margin-bottom: 3rem; }
+        .content-section h2 {
+            font-size: 2.2rem; color: var(--primary-color); border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px; margin-bottom: 1.5rem;
+        }
+        .content-section h3 {
+            font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color); padding-left: 15px;
+        }
+        .content-section h4 { font-size: 1.2rem; color: var(--text-color); margin-bottom: 0.5rem; }
+        .content-section p, .content-section li { color: var(--text-secondary-color); font-size: 1.1rem; }
+        .content-section ul { padding-left: 25px; list-style-type: '✓  '; }
+        .content-section ol { padding-left: 25px; }
+        .content-section strong { color: var(--primary-color); font-weight: 600; }
+        .content-section code {
+            background-color: var(--accent-color); padding: 0.2em 0.5em; border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace; color: var(--text-color);
+        }
+        
+        @media (max-width: 1200px) {
+            .sidebar { width: 280px; }
+        }
+        @media (max-width: 992px) {
+            .app-container { flex-direction: column; }
+            .sidebar { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
+            html { scroll-padding-top: 65px; }
+            .main-content { padding: 20px; }
+            #content-display.translation-on { grid-template-columns: 1fr; }
+            #english-content { border-left: none; padding-left: 0; margin-top: 3rem; border-top: 2px dashed var(--border-color); padding-top: 3rem;}
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <header class="header">
+        <h1>Sổ Tay Kiến Thức</h1>
+        <div class="header-controls">
+            <button class="toggle-btn" id="translate-btn">Dịch Translate</button>
+            <button class="toggle-btn" id="theme-toggle-btn">🌙</button>
+        </div>
+    </header>
+    <div class="app-container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <!-- Menu sẽ được tạo bằng JavaScript -->
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div id="content-display" class="translation-off">
+                <div id="vietnamese-content">
+                    <!-- Nội dung Tiếng Việt sẽ được hiển thị ở đây -->
+                </div>
+                <div id="english-content">
+                    <!-- Nội dung Tiếng Anh sẽ được hiển thị ở đây -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ======================= JAVASCRIPT LOGIC ======================= -->
+    <script>
+        const knowledgeBase = {
+            'ch1': {
+                title: { vi: 'Chương 1: Nền Tảng', en: 'Chapter 1: Foundations' },
+                topics: {
+                    'c1_models': { title: { vi: '1. Các Mô Hình Cơ Bản', en: '1. Basic Models' } },
+                    'c1_turing': { title: { vi: '- Mô hình Turing', en: '- Turing Model' } },
+                    'c1_von_neumann': { title: { vi: '- Mô hình von Neumann', en: '- von Neumann Model' } },
+                    'c1_components': { title: { vi: '2. Ba Thành Phần Cấu Tạo', en: '2. Three Core Components' } },
+                    'c1_history': { title: { vi: '3. Lược Sử Phát Triển', en: '3. A Brief History' } },
+                }
+            },
+            'ch5': {
+                title: { vi: 'Chương 5: Tổ Chức', en: 'Chapter 5: Organization' },
+                topics: {
+                    'c5_subsystems': { title: { vi: '1. Ba Hệ Thống Con', en: '1. Three Subsystems' } },
+                    'c5_cpu': { title: { vi: '2. Chi Tiết Về CPU', en: '2. CPU Details' } },
+                    'c5_memory': { title: { vi: '3. Bộ Nhớ Chính', en: '3. Main Memory' } },
+                    'c5_io': { title: { vi: '4. Hệ Thống I/O & Kết Nối', en: '4. I/O System & Interconnection' } },
+                    'c5_execution': { title: { vi: '5. Quá Trình Thực Thi', en: '5. Program Execution' } },
+                    'c5_architectures': { title: { vi: '6. Các Kiến Trúc Khác Nhau', en: '6. Different Architectures' } },
+                }
+            },
+        };
+        
+        const contentData = {
+            'c1_models': {
+                vi: `<h2>Phần 1: Những Khái Niệm Nền Tảng (Chương 1)</h2><h3>1. Các Mô Hình Máy Tính Cơ Bản</h3>`,
+                en: `<h2>Part 1: Foundational Concepts (Chapter 1)</h2><h3>1. Basic Computer Models</h3>`
+            },
+            'c1_turing': {
+                vi: `<h4>Mô hình Turing (Alan Turing, 1936)</h4><p><strong>Ý chính:</strong> Đây là mô hình lý thuyết đầu tiên về một máy tính đa dụng. Nó định nghĩa máy tính là một <code>"bộ xử lý dữ liệu có thể lập trình được"</code>.</p><ul><li>Mô hình này giới thiệu yếu tố cực kỳ quan trọng: <strong>chương trình (program)</strong>.</li><li>Kết quả đầu ra (output) phụ thuộc vào cả <strong>dữ liệu đầu vào (input)</strong> và <strong>chương trình</strong>.</li><li>"Máy Turing vạn năng" là nền tảng cho các máy tính đa năng hiện đại.</li></ul>`,
+                en: `<h4>Turing Model (Alan Turing, 1936)</h4><p><strong>Main Idea:</strong> This is the first theoretical model of a general-purpose computer. It defines a computer as a <code>"programmable data processor"</code>.</p><ul><li>This model introduces the crucial element: the <strong>program</strong>.</li><li>The output depends on both the <strong>input data</strong> and the <strong>program</strong>.</li><li>The "Universal Turing Machine" concept is the foundation for modern general-purpose computers.</li></ul>`
+            },
+            'c1_von_neumann': {
+                vi: `<h4>Mô hình von Neumann (John von Neumann, 1945)</h4><p><strong>Ý chính:</strong> Đây là kiến trúc mà hầu hết các máy tính ngày nay đều dựa trên, với đột phá là ý tưởng lưu trữ cả <strong>chương trình và dữ liệu trong cùng một bộ nhớ</strong>.</p><ul><li><strong>Khái niệm chương trình lưu trữ (Stored-Program Concept):</strong> Giúp máy tính linh hoạt hơn rất nhiều.</li><li><strong>Bốn hệ thống con của phần cứng:</strong><ol><li><strong>Bộ nhớ (Memory)</strong></li><li><strong>Bộ Số học & Logic (ALU)</strong></li><li><strong>Bộ Điều khiển (Control Unit)</strong></li><li><strong>Hệ thống Xuất/Nhập (I/O)</strong></li></ol></li></ul>`,
+                en: `<h4>Von Neumann Model (John von Neumann, 1945)</h4><p><strong>Main Idea:</strong> This is the architecture that most modern computers are based on, with the breakthrough idea of storing both <strong>program and data in the same memory</strong>.</p><ul><li><strong>Stored-Program Concept:</strong> Made computers vastly more flexible.</li><li><strong>Four hardware subsystems:</strong><ol><li><strong>Memory</strong></li><li><strong>Arithmetic Logic Unit (ALU)</strong></li><li><strong>Control Unit</strong></li><li><strong>Input/Output (I/O) System</strong></li></ol></li></ul>`
+            },
+            'c1_components': {
+                vi: `<h3>2. Ba Thành Phần Cấu Tạo Máy Tính</h3><ul><li><strong>Phần cứng (Hardware):</strong> Các bộ phận vật lý (CPU, RAM...).</li><li><strong>Dữ liệu (Data):</strong> Thông tin thô, được chuyển đổi thành dạng nhị phân.</li><li><strong>Phần mềm (Software):</strong> Các chương trình, tập hợp các chỉ thị để điều khiển phần cứng.</li></ul>`,
+                en: `<h3>2. Three Core Components of a Computer</h3><ul><li><strong>Hardware:</strong> The physical parts (CPU, RAM...).</li><li><strong>Data:</strong> Raw information, converted into binary form.</li><li><strong>Software:</strong> The programs, a set of instructions that control the hardware.</li></ul>`
+            },
+            'c1_history': {
+                vi: `<h3>3. Lược Sử Phát Triển Máy Tính</h3><ul><li><strong>Máy cơ học (trước 1930):</strong> Máy Phân tích của Charles Babbage.</li><li><strong>Máy tính điện tử (1930–1950):</strong> ENIAC (dùng đèn chân không). EDVAC là máy đầu tiên áp dụng mô hình von Neumann.</li><li><strong>Các thế hệ máy tính (1950–nay):</strong><ol><li><strong>Thế hệ 1:</strong> <code>đèn chân không</code>.</li><li><strong>Thế hệ 2:</strong> <code>bóng bán dẫn (transistor)</code>.</li><li><strong>Thế hệ 3:</strong> <code>mạch tích hợp (IC)</code>.</li><li><strong>Thế hệ 4:</strong> <code>vi máy tính (microcomputer)</code>.</li><li><strong>Thế hệ 5:</strong> Laptop, đa phương tiện, thực tế ảo...</li></ol></li></ul>`,
+                en: `<h3>3. A Brief History of Computers</h3><ul><li><strong>Mechanical Machines (before 1930):</strong> Charles Babbage's Analytical Engine.</li><li><strong>Electronic Computers (1930–1950):</strong> ENIAC (used vacuum tubes). EDVAC was the first to apply the von Neumann model.</li><li><strong>Computer Generations (1950–present):</strong><ol><li><strong>1st Gen:</strong> <code>Vacuum tubes</code>.</li><li><strong>2nd Gen:</strong> <code>Transistors</code>.</li><li><strong>3rd Gen:</strong> <code>Integrated circuits (ICs)</code>.</li><li><strong>4th Gen:</strong> <code>Microcomputers</code>.</li><li><strong>5th Gen:</strong> Laptops, multimedia, virtual reality...</li></ol></li></ul>`
+            },
+            'c5_subsystems': {
+                vi: `<h2>Phần 2: Tổ Chức Bên Trong Máy Tính (Chương 5)</h2><h3>1. Ba Hệ Thống Con Của Máy Tính</h3><ul><li><strong>Bộ Xử lý Trung tâm (CPU)</strong></li><li><strong>Bộ nhớ chính (Main Memory)</strong></li><li><strong>Hệ thống Xuất/Nhập (I/O Subsystem)</strong></li></ul>`,
+                en: `<h2>Part 2: Computer Organization (Chapter 5)</h2><h3>1. Three Subsystems of a Computer</h3><ul><li><strong>Central Processing Unit (CPU)</strong></li><li><strong>Main Memory</strong></li><li><strong>Input/Output (I/O) Subsystem</strong></li></ul>`
+            },
+            'c5_cpu': {
+                vi: `<h3>2. Chi Tiết Về CPU</h3><p>Gồm 3 phần chính:</p><ul><li><strong>ALU:</strong> Thực hiện mọi phép tính toán và logic.</li><li><strong>Các thanh ghi (Registers):</strong> Vùng nhớ siêu nhanh trong CPU.<ul><li><code>Instruction Register (IR)</code>: Giữ chỉ thị <strong>đang được</strong> thực thi.</li><li><code>Program Counter (PC)</code>: Giữ địa chỉ của chỉ thị <strong>kế tiếp</strong>.</li></ul></li><li><strong>Control Unit:</strong> Điều khiển mọi hoạt động.</li></ul>`,
+                en: `<h3>2. CPU Details</h3><p>Consists of 3 main parts:</p><ul><li><strong>ALU:</strong> Performs all arithmetic and logical operations.</li><li><strong>Registers:</strong> Extremely fast memory inside the CPU.<ul><li><code>Instruction Register (IR)</code>: Holds the instruction <strong>currently being</strong> executed.</li><li><code>Program Counter (PC)</code>: Holds the address of the <strong>next</strong> instruction.</li></ul></li><li><strong>Control Unit:</strong> Directs all operations.</li></ul>`
+            },
+            'c5_memory': {
+                vi: `<h3>3. Bộ Nhớ Chính (Main Memory)</h3><ul><li><strong>Phân cấp bộ nhớ:</strong> Registers > Cache > RAM.</li><li><strong>RAM (Random Access Memory):</strong> <strong>Khả biến</strong> (mất dữ liệu khi tắt nguồn).</li><li><strong>ROM (Read-Only Memory):</strong> <strong>Bất biến</strong> (không mất dữ liệu khi tắt nguồn).</li></ul>`,
+                en: `<h3>3. Main Memory</h3><ul><li><strong>Memory Hierarchy:</strong> Registers > Cache > RAM.</li><li><strong>RAM (Random Access Memory):</strong> <strong>Volatile</strong> (loses data on power off).</li><li><strong>ROM (Read-Only Memory):</strong> <strong>Non-volatile</strong> (retains data on power off).</li></ul>`
+            },
+            'c5_io': {
+                vi: `<h3>4. Hệ Thống I/O & Kết Nối</h3><ul><li><strong>Bus:</strong> Đường truyền tín hiệu. Gồm <code>Bus dữ liệu</code>, <code>Bus địa chỉ</code>, và <code>Bus điều khiển</code>.</li><li><strong>Bộ điều khiển I/O:</strong> Trung gian kết nối giữa thiết bị I/O và CPU/bộ nhớ.</li></ul>`,
+                en: `<h3>4. I/O System & Interconnection</h3><ul><li><strong>Bus:</strong> Signal pathways. Includes <code>Data Bus</code>, <code>Address Bus</code>, and <code>Control Bus</code>.</li><li><strong>I/O Controllers:</strong> Interface between I/O devices and the CPU/memory.</li></ul>`
+            },
+            'c5_execution': {
+                vi: `<h3>5. Quá Trình Thực Thi Chương Trình</h3><h4>Chu kỳ máy (Machine Cycle)</h4><ol><li><strong>Tìm nạp (Fetch):</strong> Lấy chỉ thị từ bộ nhớ vào IR, tăng PC.</li><li><strong>Giải mã (Decode):</strong> Phân tích chỉ thị trong IR.</li><li><strong>Thực thi (Execute):</strong> Thực hiện lệnh.</li></ol>`,
+                en: `<h3>5. Program Execution</h3><h4>Machine Cycle</h4><ol><li><strong>Fetch:</strong> Get instruction from memory into IR, increment PC.</li><li><strong>Decode:</strong> Analyze the instruction in the IR.</li><li><strong>Execute:</strong> Carry out the command.</li></ol>`
+            },
+            'c5_architectures': {
+                vi: `<h3>6. Các Kiến Trúc Khác Nhau</h3><ul><li><strong>CISC:</strong> Tập lệnh phức tạp (Intel x86).</li><li><strong>RISC:</strong> Tập lệnh đơn giản (ARM).</li><li><strong>Pipelining:</strong> Gối đầu các giai đoạn để tăng hiệu suất.</li><li><strong>Xử lý song song:</strong> Dùng nhiều lõi/CPU để làm nhiều việc cùng lúc.</li></ul>`,
+                en: `<h3>6. Different Architectures</h3><ul><li><strong>CISC:</strong> Complex instruction set (Intel x86).</li><li><strong>RISC:</strong> Reduced instruction set (ARM).</li><li><strong>Pipelining:</strong> Overlapping phases to increase throughput.</li><li><strong>Parallel Processing:</strong> Using multiple cores/CPUs to do multiple things at once.</li></ul>`
+            },
+        };
+        
+        const app = {
+            init() {
+                this.cacheDom();
+                this.bindEvents();
+                this.currentTheme = localStorage.getItem('theme') || 'light';
+                this.isTranslationVisible = localStorage.getItem('translationVisible') === 'true';
+                document.body.setAttribute('data-theme', this.currentTheme);
+                this.updateThemeIcon();
+                this.renderNav();
+                this.renderAllContent();
+                this.updateTranslationView();
+                this.highlightNavLink();
+            },
+
+            cacheDom() {
+                this.nav = document.getElementById('sidebar-nav');
+                this.contentDisplay = document.getElementById('content-display');
+                this.vietnameseContent = document.getElementById('vietnamese-content');
+                this.englishContent = document.getElementById('english-content');
+                this.themeToggleBtn = document.getElementById('theme-toggle-btn');
+                this.translateBtn = document.getElementById('translate-btn');
+            },
+
+            bindEvents() {
+                this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
+                this.translateBtn.addEventListener('click', () => this.toggleTranslation());
+                window.addEventListener('scroll', () => this.highlightNavLink());
+            },
+
+            renderNav() {
+                let navHTML = '';
+                for (const chapterId in knowledgeBase) {
+                    const chapter = knowledgeBase[chapterId];
+                    navHTML += `<h3>${chapter.title.vi}</h3><ul>`;
+                    for (const topicId in chapter.topics) {
+                        const topic = chapter.topics[topicId];
+                        const isSubItem = topic.title.vi.startsWith('-');
+                        navHTML += `<li class="${isSubItem ? 'sub-item' : ''}"><a href="#${topicId}">${topic.title.vi.replace('- ','')}</a></li>`;
+                    }
+                    navHTML += `</ul>`;
+                    if (chapterId === 'ch1') navHTML += '<hr>';
+                }
+                this.nav.innerHTML = navHTML;
+                this.navLinks = document.querySelectorAll('.sidebar-nav a'); // Recache links after rendering
+            },
+            
+            renderAllContent() {
+                let viHTML = '';
+                let enHTML = '';
+                for (const sectionId in contentData) {
+                    const sectionContent = contentData[sectionId];
+                    viHTML += `<div id="${sectionId}" class="content-section">${sectionContent.vi}</div>`;
+                    enHTML += `<div class="content-section">${sectionContent.en}</div>`;
+                }
+                this.vietnameseContent.innerHTML = viHTML;
+                this.englishContent.innerHTML = enHTML;
+                this.sections = document.querySelectorAll('.content-section'); // Recache sections
+            },
+            
+            toggleTheme() {
+                this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+                document.body.setAttribute('data-theme', this.currentTheme);
+                localStorage.setItem('theme', this.currentTheme);
+                this.updateThemeIcon();
+            },
+
+            toggleTranslation() {
+                this.isTranslationVisible = !this.isTranslationVisible;
+                localStorage.setItem('translationVisible', this.isTranslationVisible);
+                this.updateTranslationView();
+            },
+
+            updateTranslationView() {
+                if (this.isTranslationVisible) {
+                    this.contentDisplay.classList.remove('translation-off');
+                    this.contentDisplay.classList.add('translation-on');
+                } else {
+                    this.contentDisplay.classList.remove('translation-on');
+                    this.contentDisplay.classList.add('translation-off');
+                }
+            },
+
+            updateThemeIcon() {
+                this.themeToggleBtn.textContent = this.currentTheme === 'light' ? '🌙' : '☀️';
+            },
+            
+            highlightNavLink() {
+                let currentSectionId = '';
+                const fromTop = window.scrollY + 100;
+
+                this.sections.forEach(section => {
+                    if (section.offsetTop <= fromTop && (section.offsetTop + section.offsetHeight) > fromTop) {
+                        currentSectionId = section.id;
+                    }
+                });
+                
+                this.navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
