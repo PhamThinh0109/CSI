@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn Tập Kiến Thức Máy Tính</title>
+    <title>Ôn Tập Kiến Thức Máy Tính (Dạng Cây)</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗂️</text></svg>">
     
     <!-- ======================= CSS STYLES ======================= -->
@@ -11,9 +11,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap');
 
         :root {
-            --light-bg: #F0F2F5; --light-surface: #FFFFFF; --light-text: #050505; --light-text-secondary: #65676B; --light-primary: #1877F2; --light-accent: #E7F3FF; --light-border: #CED0D4;
+            --light-bg: #F0F2F5; --light-surface: #FFFFFF; --light-text: #050505; --light-text-secondary: #65676B; --light-primary: #1877F2; --light-accent: #E7F3FF; --light-border: #E0E0E0;
             --dark-bg: #18191A; --dark-surface: #242526; --dark-text: #E4E6EB; --dark-text-secondary: #B0B3B8; --dark-primary: #2D88FF; --dark-accent: #3A3B3C; --dark-border: #3E4042;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1); --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08); --border-radius: 12px;
         }
 
         [data-theme="light"] {
@@ -33,36 +33,18 @@
             padding: 20px;
         }
 
-        .container {
-            width: 100%;
-            max-width: 900px;
-            margin: 20px auto;
-        }
+        .container { width: 100%; max-width: 900px; margin: 20px auto; }
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin: 0;
-        }
+        .header { text-align: center; margin-bottom: 30px; position: relative; }
+        .header h1 { font-size: 2.5rem; color: var(--primary-color); margin: 0; }
         
         .theme-toggle {
-            position: absolute;
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 1.5rem;
-            background: none;
-            border: none;
+            position: absolute; top: 50%; right: 0; transform: translateY(-50%);
+            cursor: pointer; font-size: 1.5rem; background: none; border: none;
             color: var(--text-secondary-color);
         }
 
+        /* --- Accordion Styling --- */
         .accordion {
             background-color: var(--surface-color);
             border-radius: var(--border-radius);
@@ -73,69 +55,76 @@
         .accordion-item {
             border-bottom: 1px solid var(--border-color);
         }
-        .accordion-item:last-child {
-            border-bottom: none;
-        }
-
+        .accordion-item:last-child { border-bottom: none; }
+        
         .accordion-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding: 20px 25px;
-            cursor: pointer;
-            background-color: var(--surface-color);
-            border: none;
-            text-align: left;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text-color);
-            transition: background-color 0.2s ease;
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; padding: 20px 25px; cursor: pointer;
+            background-color: var(--surface-color); border: none; text-align: left;
+            font-family: inherit; transition: background-color 0.2s ease;
         }
-        .accordion-header:hover {
-            background-color: var(--accent-color);
-        }
+        .accordion-header:hover { background-color: var(--accent-color); }
 
         .accordion-header .icon {
-            font-size: 1.2rem;
-            transform: rotate(0deg);
+            font-size: 1.2rem; transform: rotate(0deg);
             transition: transform 0.3s ease-in-out;
-            flex-shrink: 0;
-            margin-left: 15px;
+            flex-shrink: 0; margin-left: 15px;
         }
-
-        .accordion-item.active .accordion-header .icon {
-            transform: rotate(180deg);
-        }
-        .accordion-item.active .accordion-header {
-            color: var(--primary-color);
-        }
-
+        .accordion-item.active > .accordion-header .icon { transform: rotate(180deg); }
+        .accordion-item.active > .accordion-header { color: var(--primary-color); }
 
         .accordion-content {
-            max-height: 0;
-            overflow: hidden;
+            max-height: 0; overflow: hidden;
             transition: max-height 0.4s ease-in-out;
         }
+        .accordion-content-inner { padding: 0 25px 25px 25px; border-top: 1px solid var(--border-color); }
 
-        .accordion-content-inner {
-            padding: 0 25px 25px 25px;
-            border-top: 1px solid var(--border-color);
+        /* Level 1 (Chapter) */
+        .level-1 > .accordion-header {
+            font-size: 1.4rem; font-weight: 700;
+        }
+        .level-1 > .accordion-content > .accordion-content-inner {
+            background-color: var(--bg-color); padding: 20px;
+        }
+        
+        /* Level 2 (Section) */
+        .level-2 {
+            margin-top: 15px; border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+         .level-2:first-child { margin-top: 0; }
+        .level-2 > .accordion-header {
+            font-size: 1.2rem; font-weight: 600;
+            background-color: var(--accent-color);
+            padding: 15px 20px;
+        }
+         .level-2 > .accordion-content > .accordion-content-inner {
+            padding: 20px; border-top: 1px dashed var(--border-color);
+        }
+        [data-theme="dark"] .level-2 > .accordion-header {
+            background-color: #303030;
         }
 
-        .content-section h3 {
-            font-size: 1.6rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary-color);
-            padding-left: 15px;
+        /* Level 3 (Sub-section) */
+        .level-3 {
+            margin-top: 15px;
         }
-        .content-section h4 { font-size: 1.2rem; color: var(--text-color); margin-bottom: 0.5rem; }
-        .content-section p, .content-section li { color: var(--text-secondary-color); font-size: 1.1rem; }
-        .content-section ul { padding-left: 25px; list-style-type: '✓ '; }
-        .content-section ol { padding-left: 25px; }
-        .content-section strong { color: var(--primary-color); font-weight: 600; }
-        .content-section code {
+        .level-3 > .accordion-header {
+            font-size: 1.1rem; font-weight: 500;
+            padding: 10px 15px; background-color: transparent;
+            border-bottom: 1px solid var(--border-color); border-radius: 8px 8px 0 0;
+        }
+        .level-3 > .accordion-content > .accordion-content-inner {
+            padding: 15px; border-top: none;
+        }
+
+        /* Content Styling */
+        h4 { font-size: 1.2rem; color: var(--text-color); margin-bottom: 0.5rem; }
+        p, li { color: var(--text-secondary-color); font-size: 1rem; }
+        ul { padding-left: 25px; list-style-type: '✓ '; }
+        ol { padding-left: 25px; }
+        strong { color: var(--primary-color); font-weight: 600; }
+        code {
             background-color: var(--accent-color); padding: 0.2em 0.5em; border-radius: 4px;
             font-family: 'Courier New', Courier, monospace; color: var(--text-color);
         }
@@ -151,129 +140,160 @@
 
         <div class="accordion" id="knowledge-accordion">
             <!-- Mục Chương 1 -->
-            <div class="accordion-item">
+            <div class="accordion-item level-1">
                 <button class="accordion-header">
                     <span>Phần 1: Những Khái Niệm Nền Tảng (Chương 1)</span>
                     <span class="icon">▼</span>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-content-inner">
-                        <section class="content-section">
-                            <h3>1. Các Mô Hình Máy Tính Cơ Bản</h3>
-                            <div>
-                                <h4>Mô hình Turing (Alan Turing, 1936)</h4>
-                                <p><strong>Ý chính:</strong> Đây là mô hình lý thuyết đầu tiên về một máy tính đa dụng. Nó định nghĩa máy tính là một <code>"bộ xử lý dữ liệu có thể lập trình được"</code>.</p>
-                                <ul>
-                                    <li>Mô hình này giới thiệu yếu tố cực kỳ quan trọng: <strong>chương trình (program)</strong>.</li>
-                                    <li>Kết quả đầu ra (output) phụ thuộc vào cả <strong>dữ liệu đầu vào (input)</strong> và <strong>chương trình</strong>.</li>
-                                    <li>Khái niệm "Máy Turing vạn năng" là nền tảng cho các máy tính đa năng hiện đại.</li>
-                                </ul>
+                        
+                        <div class="accordion-item level-2">
+                            <button class="accordion-header"><span>1. Các Mô Hình Máy Tính Cơ Bản</span><span class="icon">▼</span></button>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <p><strong>Ý chính:</strong> Đây là mô hình lý thuyết đầu tiên về một máy tính đa dụng. Nó định nghĩa máy tính là một <code>"bộ xử lý dữ liệu có thể lập trình được"</code>.</p>
+                                    <ul>
+                                        <li>Giới thiệu yếu tố quan trọng: <strong>chương trình (program)</strong>.</li>
+                                        <li>Đầu ra phụ thuộc vào cả <strong>dữ liệu đầu vào (input)</strong> và <strong>chương trình</strong>.</li>
+                                        <li>"Máy Turing vạn năng" là nền tảng cho các máy tính đa năng hiện đại.</li>
+                                    </ul>
+                                    <hr>
+                                    <h4>Mô hình von Neumann (John von Neumann, 1945)</h4>
+                                    <p><strong>Ý chính:</strong> Kiến trúc mà hầu hết các máy tính ngày nay đều dựa trên, với đột phá là ý tưởng lưu trữ cả <strong>chương trình và dữ liệu trong cùng một bộ nhớ</strong>.</p>
+                                    <ul>
+                                        <li><strong>Khái niệm chương trình lưu trữ (Stored-Program Concept):</strong> Giúp máy tính linh hoạt hơn rất nhiều.</li>
+                                        <li><strong>Bốn hệ thống con của phần cứng:</strong> Memory, ALU, Control Unit, và I/O.</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div>
-                                <h4>Mô hình von Neumann (John von Neumann, 1945)</h4>
-                                <p><strong>Ý chính:</strong> Đây là kiến trúc mà hầu hết các máy tính ngày nay đều dựa trên, với đột phá là ý tưởng lưu trữ cả <strong>chương trình và dữ liệu trong cùng một bộ nhớ</strong>.</p>
-                                <ul>
-                                    <li><strong>Khái niệm chương trình lưu trữ (Stored-Program Concept):</strong> Giúp máy tính linh hoạt hơn rất nhiều.</li>
-                                    <li><strong>Bốn hệ thống con của phần cứng:</strong>
-                                        <ol>
-                                            <li><strong>Bộ nhớ (Memory)</strong></li>
-                                            <li><strong>Bộ Số học & Logic (ALU)</strong></li>
-                                            <li><strong>Bộ Điều khiển (Control Unit)</strong></li>
-                                            <li><strong>Hệ thống Xuất/Nhập (I/O)</strong></li>
-                                        </ol>
-                                    </li>
-                                </ul>
+                        </div>
+
+                        <div class="accordion-item level-2">
+                            <button class="accordion-header"><span>2. Ba Thành Phần Cấu Tạo Máy Tính</span><span class="icon">▼</span></button>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <ul>
+                                        <li><strong>Phần cứng (Hardware):</strong> Các bộ phận vật lý (CPU, RAM...).</li>
+                                        <li><strong>Dữ liệu (Data):</strong> Thông tin thô, được chuyển đổi thành dạng nhị phân.</li>
+                                        <li><strong>Phần mềm (Software):</strong> Các chương trình, tập hợp các chỉ thị để điều khiển phần cứng.</li>
+                                    </ul>
+                                </div>
                             </div>
-                        </section>
-                        <section class="content-section">
-                            <h3>2. Ba Thành Phần Cấu Tạo Máy Tính</h3>
-                            <ul>
-                                <li><strong>Phần cứng (Hardware):</strong> Các bộ phận vật lý (CPU, RAM...).</li>
-                                <li><strong>Dữ liệu (Data):</strong> Thông tin thô, được chuyển đổi thành dạng nhị phân.</li>
-                                <li><strong>Phần mềm (Software):</strong> Các chương trình, tập hợp các chỉ thị để điều khiển phần cứng.</li>
-                            </ul>
-                        </section>
-                        <section class="content-section">
-                            <h3>3. Lược Sử Phát Triển Máy Tính</h3>
-                            <ul>
-                                <li><strong>Giai đoạn 1: Máy cơ học (trước 1930):</strong> Máy Phân tích của Charles Babbage.</li>
-                                <li><strong>Giai đoạn 2: Máy tính điện tử (1930–1950):</strong> ENIAC (dùng đèn chân không), EDVAC (áp dụng mô hình von Neumann).</li>
-                                <li><strong>Giai đoạn 3: Các thế hệ máy tính (1950–nay):</strong>
+                        </div>
+
+                        <div class="accordion-item level-2">
+                            <button class="accordion-header"><span>3. Lược Sử Phát Triển Máy Tính</span><span class="icon">▼</span></button>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
                                     <ol>
-                                        <li><strong>Thế hệ 1:</strong> <code>đèn chân không</code>.</li>
-                                        <li><strong>Thế hệ 2:</strong> <code>bóng bán dẫn (transistor)</code>.</li>
-                                        <li><strong>Thế hệ 3:</strong> <code>mạch tích hợp (IC)</code>.</li>
-                                        <li><strong>Thế hệ 4:</strong> <code>vi máy tính (microcomputer)</code>.</li>
-                                        <li><strong>Thế hệ 5:</strong> Laptop, đa phương tiện...</li>
+                                        <li><strong>Thế hệ 1 (1950–1959):</strong> Sử dụng <code>đèn chân không</code>.</li>
+                                        <li><strong>Thế hệ 2 (1959–1965):</strong> Sử dụng <code>bóng bán dẫn (transistor)</code>.</li>
+                                        <li><strong>Thế hệ 3 (1965–1975):</strong> Sử dụng <code>mạch tích hợp (IC)</code>.</li>
+                                        <li><strong>Thế hệ 4 (1975–1985):</strong> Sử dụng <code>vi xử lý (microprocessor)</code>.</li>
+                                        <li><strong>Thế hệ 5 (1985–nay):</strong> Laptop, đa phương tiện, xử lý song song...</li>
                                     </ol>
-                                </li>
-                            </ul>
-                        </section>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
 
             <!-- Mục Chương 5 -->
-            <div class="accordion-item">
+            <div class="accordion-item level-1">
                 <button class="accordion-header">
                     <span>Phần 2: Tổ Chức Bên Trong Máy Tính (Chương 5)</span>
                     <span class="icon">▼</span>
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-content-inner">
-                        <section class="content-section">
-                            <h3>1. Ba Hệ Thống Con Của Máy Tính</h3>
-                             <ul>
-                                <li><strong>Bộ Xử lý Trung tâm (CPU)</strong></li>
-                                <li><strong>Bộ nhớ chính (Main Memory)</strong></li>
-                                <li><strong>Hệ thống Xuất/Nhập (I/O Subsystem)</strong></li>
-                            </ul>
-                        </section>
-                        <section class="content-section">
-                            <h3>2. Chi Tiết Về CPU</h3>
-                             <ul>
-                                <li><strong>Bộ Số học & Logic (ALU):</strong> Thực hiện mọi phép tính toán và logic.</li>
-                                <li><strong>Các thanh ghi (Registers):</strong> Vùng nhớ <strong>siêu nhanh</strong> trong CPU.
-                                    <ul>
-                                        <li><code>Instruction Register (IR)</code>: Giữ chỉ thị <strong>đang được</strong> thực thi.</li>
-                                        <li><code>Program Counter (PC)</code>: Giữ địa chỉ của chỉ thị <strong>kế tiếp</strong>.</li>
+                        
+                        <div class="accordion-item level-2">
+                            <button class="accordion-header"><span>1. Ba Hệ Thống Con Của Máy Tính</span><span class="icon">▼</span></button>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                     <ul>
+                                        <li><strong>Bộ Xử lý Trung tâm (CPU)</strong>: "Bộ não" của máy tính.</li>
+                                        <li><strong>Bộ nhớ chính (Main Memory)</strong>: Thường là RAM, lưu trữ tạm thời.</li>
+                                        <li><strong>Hệ thống Xuất/Nhập (I/O Subsystem)</strong>: Các thiết bị ngoại vi.</li>
                                     </ul>
-                                </li>
-                                <li><strong>Bộ Điều khiển (Control Unit):</strong> Điều khiển mọi hoạt động.</li>
-                            </ul>
-                        </section>
-                        <section class="content-section">
-                            <h3>3. Bộ Nhớ Chính (Main Memory)</h3>
-                            <ul>
-                                <li><strong>Phân cấp bộ nhớ:</strong> Registers > Cache > RAM.</li>
-                                <li><strong>RAM (Random Access Memory):</strong> <strong>Khả biến</strong> (mất dữ liệu khi tắt nguồn).</li>
-                                <li><strong>ROM (Read-Only Memory):</strong> <strong>Bất biến</strong> (không mất dữ liệu khi tắt nguồn).</li>
-                            </ul>
-                        </section>
-                        <section class="content-section">
-                            <h3>4. Hệ Thống I/O & Kết Nối</h3>
-                            <ul>
-                                <li><strong>Bus:</strong> Gồm <code>Bus dữ liệu</code>, <code>Bus địa chỉ</code>, và <code>Bus điều khiển</code>.</li>
-                                <li><strong>Bộ điều khiển I/O:</strong> Trung gian kết nối giữa thiết bị I/O và CPU/bộ nhớ.</li>
-                            </ul>
-                        </section>
-                        <section class="content-section">
-                            <h3>5. Quá Trình Thực Thi Chương Trình (Chu Kỳ Máy)</h3>
-                            <ol>
-                                 <li><strong>Tìm nạp (Fetch):</strong> Lấy chỉ thị từ bộ nhớ vào IR, tăng PC.</li>
-                                 <li><strong>Giải mã (Decode):</strong> Phân tích chỉ thị trong IR.</li>
-                                 <li><strong>Thực thi (Execute):</strong> Thực hiện lệnh.</li>
-                            </ol>
-                        </section>
-                        <section class="content-section">
-                            <h3>6. Các Kiến Trúc Máy Tính Khác Nhau</h3>
-                            <ul>
-                                 <li><strong>CISC:</strong> Tập lệnh phức tạp (Intel x86).</li>
-                                 <li><strong>RISC:</strong> Tập lệnh đơn giản (ARM).</li>
-                                 <li><strong>Pipelining:</strong> Gối đầu các giai đoạn để tăng hiệu suất.</li>
-                                 <li><strong>Xử lý song song:</strong> Dùng nhiều lõi/CPU để làm nhiều việc cùng lúc.</li>
-                            </ul>
-                        </section>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item level-2">
+                            <button class="accordion-header"><span>2. Chi Tiết Về CPU</span><span class="icon">▼</span></button>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                     <ul>
+                                        <li><strong>Bộ Số học & Logic (ALU):</strong> Thực hiện mọi phép tính toán và logic.</li>
+                                        <li><strong>Các thanh ghi (Registers):</strong> Vùng nhớ <strong>siêu nhanh</strong> trong CPU.
+                                            <ul>
+                                                <li><code>Instruction Register (IR)</code>: Giữ chỉ thị <strong>đang được</strong> thực thi.</li>
+                                                <li><code>Program Counter (PC)</code>: Giữ địa chỉ của chỉ thị <strong>kế tiếp</strong>.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Bộ Điều khiển (Control Unit):</strong> Điều khiển mọi hoạt động.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item level-2">
+                            <button class="accordion-header"><span>3. Bộ Nhớ Chính (Main Memory)</span><span class="icon">▼</span></button>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <ul>
+                                        <li><strong>Phân cấp bộ nhớ:</strong> Registers > Cache > RAM > Storage.</li>
+                                        <li><strong>RAM:</strong> <strong>Khả biến</strong> (mất dữ liệu khi tắt nguồn).</li>
+                                        <li><strong>ROM:</strong> <strong>Bất biến</strong> (không mất dữ liệu khi tắt nguồn).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item level-2">
+                            <button class="accordion-header"><span>4. Hệ Thống I/O & Kết Nối</span><span class="icon">▼</span></button>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <ul>
+                                        <li><strong>Bus:</strong> Gồm <code>Bus dữ liệu</code>, <code>Bus địa chỉ</code>, và <code>Bus điều khiển</code>.</li>
+                                        <li><strong>Bộ điều khiển I/O:</strong> Trung gian kết nối giữa thiết bị I/O và CPU/bộ nhớ.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item level-2">
+                            <button class="accordion-header"><span>5. Quá Trình Thực Thi Chương Trình</span><span class="icon">▼</span></button>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <h4>Chu kỳ máy (Machine Cycle)</h4>
+                                    <ol>
+                                         <li><strong>Tìm nạp (Fetch):</strong> Lấy chỉ thị từ bộ nhớ vào IR, tăng PC.</li>
+                                         <li><strong>Giải mã (Decode):</strong> Phân tích chỉ thị trong IR.</li>
+                                         <li><strong>Thực thi (Execute):</strong> Thực hiện lệnh.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item level-2">
+                            <button class="accordion-header"><span>6. Các Kiến Trúc Máy Tính Khác Nhau</span><span class="icon">▼</span></button>
+                            <div class="accordion-content">
+                                <div class="accordion-content-inner">
+                                    <ul>
+                                         <li><strong>CISC:</strong> Tập lệnh phức tạp (Intel x86).</li>
+                                         <li><strong>RISC:</strong> Tập lệnh đơn giản (ARM).</li>
+                                         <li><strong>Pipelining:</strong> Gối đầu các giai đoạn để tăng hiệu suất.</li>
+                                         <li><strong>Xử lý song song:</strong> Dùng nhiều lõi/CPU để làm nhiều việc cùng lúc.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -295,16 +315,8 @@
                 this.accordionHeaders = document.querySelectorAll('.accordion-header');
                 this.accordionHeaders.forEach(header => {
                     header.addEventListener('click', () => {
-                        const activeItem = document.querySelector('.accordion-item.active');
-                        const clickedItem = header.parentElement;
-
-                        // Nếu có mục đang mở và không phải mục vừa click, thì đóng nó lại
-                        if (activeItem && activeItem !== clickedItem) {
-                            this.toggleAccordion(activeItem);
-                        }
-                        
-                        // Mở hoặc đóng mục vừa click
-                        this.toggleAccordion(clickedItem);
+                        const item = header.parentElement;
+                        this.toggleAccordion(item);
                     });
                 });
             },
@@ -321,14 +333,23 @@
             },
             
             toggleAccordion(item) {
-                const content = item.querySelector('.accordion-content');
+                const content = item.querySelector(':scope > .accordion-content');
+                if (!content) return;
+
+                const parentItem = item.closest('.accordion-item.active');
+                
                 if (item.classList.contains('active')) {
                     item.classList.remove('active');
                     content.style.maxHeight = 0;
                 } else {
                     item.classList.add('active');
-                    // scrollHeight trả về chiều cao đầy đủ của nội dung bên trong
                     content.style.maxHeight = content.scrollHeight + 'px';
+                }
+
+                // Khi mở/đóng một mục con, cập nhật lại chiều cao của mục cha
+                if (parentItem) {
+                    const parentContent = parentItem.querySelector(':scope > .accordion-content');
+                    parentContent.style.maxHeight = parentContent.scrollHeight + 'px';
                 }
             }
         };
@@ -338,4 +359,4 @@
         });
     </script>
 </body>
-</html>
+</html>```
