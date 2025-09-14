@@ -308,8 +308,7 @@
                 this.accordionHeaders = document.querySelectorAll('.accordion-header');
                 this.accordionHeaders.forEach(header => {
                     header.addEventListener('click', () => {
-                        const item = header.parentElement; // L'élément .accordion-item
-                        this.toggleAccordion(item);
+                        this.toggleAccordion(header.parentElement);
                     });
                 });
             },
@@ -325,27 +324,29 @@
                 this.themeToggleBtn.textContent = this.currentTheme === 'light' ? '🌙' : '☀️';
             },
             
-            toggleAccordion(item) {
-                const content = item.querySelector(':scope > .accordion-content');
-                if (!content) return; 
+            toggleAccordion(itemToToggle) {
+                const content = itemToToggle.querySelector(':scope > .accordion-content');
+                if (!content) return;
 
-                const parentItem = item.parentElement.closest('.accordion-item.active');
-
-                if (item.classList.contains('active')) {
-                    item.classList.remove('active');
-                    content.style.maxHeight = null; 
+                // Nếu mục được nhấp đang hoạt động, hãy đóng nó lại.
+                if (itemToToggle.classList.contains('active')) {
+                    itemToToggle.classList.remove('active');
+                    content.style.maxHeight = null;
                 } else {
-                    item.classList.add('active');
+                    // Nếu mục được nhấp không hoạt động, hãy mở nó ra.
+                    itemToToggle.classList.add('active');
                     content.style.maxHeight = content.scrollHeight + 'px';
                 }
 
-                if (parentItem) {
-                    const parentContent = parentItem.querySelector(':scope > .accordion-content');
+                // Cập nhật chiều cao của bất kỳ mục cha nào đang hoạt động.
+                // Điều này đảm bảo mục cha co lại hoặc giãn ra để vừa với các con.
+                let parent = itemToToggle.parentElement.closest('.accordion-item.active');
+                while (parent) {
+                    const parentContent = parent.querySelector(':scope > .accordion-content');
                     if (parentContent) {
-                         setTimeout(() => {
-                            parentContent.style.maxHeight = parentContent.scrollHeight + 'px';
-                        }, 200); // Small delay to allow child animation to start
+                        parentContent.style.maxHeight = parentContent.scrollHeight + 'px';
                     }
+                    parent = parent.parentElement.closest('.accordion-item.active');
                 }
             }
         };
