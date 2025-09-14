@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng Hợp Kiến Thức Máy Tính - Chương 1 & 5</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+    
+    <!-- ======================= CSS STYLES ======================= -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            --light-bg: #F0F2F5;
+            --light-surface: #FFFFFF;
+            --light-text: #050505;
+            --light-text-secondary: #65676B;
+            --light-primary: #1877F2;
+            --light-accent: #E7F3FF;
+            --light-border: #CED0D4;
+            
+            --dark-bg: #18191A;
+            --dark-surface: #242526;
+            --dark-text: #E4E6EB;
+            --dark-text-secondary: #B0B3B8;
+            --dark-primary: #2D88FF;
+            --dark-accent: #3A3B3C;
+            --dark-border: #3E4042;
+
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --scroll-padding: 80px; /* Space for sticky header */
+        }
+
+        [data-theme="light"] {
+            --bg-color: var(--light-bg);
+            --surface-color: var(--light-surface);
+            --text-color: var(--light-text);
+            --text-secondary-color: var(--light-text-secondary);
+            --primary-color: var(--light-primary);
+            --accent-color: var(--light-accent);
+            --border-color: var(--light-border);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: var(--dark-bg);
+            --surface-color: var(--dark-surface);
+            --text-color: var(--dark-text);
+            --text-secondary-color: var(--dark-text-secondary);
+            --primary-color: var(--dark-primary);
+            --accent-color: var(--dark-accent);
+            --border-color: var(--dark-border);
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--scroll-padding);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .header {
+            background-color: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 30px;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--primary-color);
+        }
+        
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+        }
+
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+            height: calc(100vh - 61px); /* Full height minus header */
+            position: sticky;
+            top: 61px; /* Stick below header */
+            overflow-y: auto;
+            padding: 20px;
+            border-right: 1px solid var(--border-color);
+            background-color: var(--surface-color);
+        }
+        .sidebar h3 {
+            margin-top: 0;
+            color: var(--text-color);
+        }
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-nav li a {
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: var(--text-secondary-color);
+            border-radius: var(--border-radius);
+            margin-bottom: 5px;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-nav li a:hover {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+        }
+        .sidebar-nav li a.active {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: 700;
+            border-left: 3px solid var(--primary-color);
+        }
+        .sub-item a {
+            padding-left: 25px !important;
+        }
+        
+        .main-content {
+            flex-grow: 1;
+            padding: 30px 40px;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+        .content-section h2 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 1.5rem;
+        }
+        .content-section h3 {
+            font-size: 1.6rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 15px;
+        }
+        .content-section h4 {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        .content-section p, .content-section li {
+            color: var(--text-secondary-color);
+            font-size: 1.1rem;
+        }
+        .content-section ul {
+            padding-left: 25px;
+            list-style-type: '✓  ';
+        }
+         .content-section ol {
+            padding-left: 25px;
+        }
+        .content-section strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .content-section code {
+            background-color: var(--accent-color);
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            html {
+                scroll-padding-top: 61px;
+            }
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <header class="header">
+        <h1>Sổ Tay Kiến Thức Máy Tính</h1>
+        <button class="theme-toggle" id="theme-toggle-btn">🌙</button>
+    </header>
+    <div class="container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <h3>Chương 1: Nền Tảng</h3>
+                <ul>
+                    <li><a href="#c1_models">1. Các Mô Hình Cơ Bản</a></li>
+                    <li class="sub-item"><a href="#c1_turing"> - Mô hình Turing</a></li>
+                    <li class="sub-item"><a href="#c1_von_neumann"> - Mô hình von Neumann</a></li>
+                    <li><a href="#c1_components">2. Ba Thành Phần Cấu Tạo</a></li>
+                    <li><a href="#c1_history">3. Lược Sử Phát Triển</a></li>
+                </ul>
+                <hr>
+                <h3>Chương 5: Tổ Chức</h3>
+                <ul>
+                    <li><a href="#c5_subsystems">1. Ba Hệ Thống Con</a></li>
+                    <li><a href="#c5_cpu">2. Chi Tiết Về CPU</a></li>
+                    <li><a href="#c5_memory">3. Bộ Nhớ Chính</a></li>
+                    <li><a href="#c5_io">4. Hệ Thống I/O & Kết Nối</a></li>
+                    <li><a href="#c5_execution">5. Quá Trình Thực Thi</a></li>
+                    <li><a href="#c5_architectures">6. Các Kiến Trúc Khác Nhau</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section id="c1_models" class="content-section">
+                <h2>Phần 1: Những Khái Niệm Nền Tảng (Chương 1)</h2>
+                <h3>1. Các Mô Hình Máy Tính Cơ Bản</h3>
+                
+                <div id="c1_turing">
+                    <h4>Mô hình Turing (Alan Turing, 1936)</h4>
+                    <p><strong>Ý chính:</strong> Đây là mô hình lý thuyết đầu tiên về một máy tính đa dụng. Nó định nghĩa máy tính là một <code>"bộ xử lý dữ liệu có thể lập trình được"</code>.</p>
+                    <p><strong>Chi tiết cần nhớ:</strong></p>
+                    <ul>
+                        <li>Mô hình này giới thiệu một yếu tố cực kỳ quan trọng: <strong>chương trình (program)</strong>. Chương trình là một tập hợp các chỉ thị cho máy tính biết phải làm gì với dữ liệu đầu vào.</li>
+                        <li>Kết quả đầu ra (output) phụ thuộc vào cả <strong>dữ liệu đầu vào (input)</strong> và <strong>chương trình</strong>. Cùng một dữ liệu nhưng với các chương trình khác nhau sẽ cho ra kết quả khác nhau.</li>
+                        <li>Khái niệm "Máy Turing vạn năng" (Universal Turing Machine) là nền tảng cho các máy tính đa năng hiện đại, có khả năng thực hiện bất kỳ tác vụ nào nếu được cung cấp chương trình phù hợp.</li>
+                    </ul>
+                </div>
+
+                <div id="c1_von_neumann">
+                    <h4>Mô hình von Neumann (John von Neumann, 1945)</h4>
+                    <p><strong>Ý chính:</strong> Đây là kiến trúc mà hầu hết các máy tính ngày nay đều dựa trên. Điểm đột phá lớn nhất của nó là ý tưởng lưu trữ cả <strong>chương trình và dữ liệu trong cùng một bộ nhớ</strong>.</p>
+                    <p><strong>Chi tiết cần nhớ:</strong></p>
+                    <ul>
+                        <li><strong>Khái niệm chương trình lưu trữ (Stored-Program Concept):</strong> Trước đó, chương trình được nạp vào máy tính bằng các phương pháp vật lý như cắm dây hoặc bật công tắc. Von Neumann đề xuất rằng chương trình (dưới dạng mã nhị phân) và dữ liệu nên được lưu chung trong bộ nhớ, giúp máy tính linh hoạt hơn rất nhiều.</li>
+                        <li><strong>Bốn hệ thống con (subsystems) của phần cứng:</strong>
+                            <ol>
+                                <li><strong>Bộ nhớ (Memory):</strong> Nơi lưu trữ chương trình và dữ liệu.</li>
+                                <li><strong>Bộ Số học & Logic (ALU):</strong> Thực hiện các phép toán (cộng, trừ, nhân, chia) và các phép toán logic (AND, OR, NOT).</li>
+                                <li><strong>Bộ Điều khiển (Control Unit):</strong> "Nhạc trưởng" của máy tính, điều phối hoạt động của bộ nhớ, ALU và thiết bị xuất/nhập.</li>
+                                <li><strong>Hệ thống Xuất/Nhập (I/O):</strong> Giao tiếp với thế giới bên ngoài (bàn phím, màn hình, máy in) và các thiết bị lưu trữ phụ.</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="c1_components" class="content-section">
+                <h3>2. Ba Thành Phần Cấu Tạo Máy Tính</h3>
+                <ul>
+                    <li><strong>Phần cứng (Hardware):</strong> Các bộ phận vật lý của máy tính (CPU, RAM, ổ cứng,...).</li>
+                    <li><strong>Dữ liệu (Data):</strong> Thông tin thô được máy tính xử lý. Bên trong máy tính, mọi dữ liệu (văn bản, hình ảnh, âm thanh) đều phải được chuyển đổi thành dạng nhị phân (chuỗi các số 0 và 1).</li>
+                    <li><strong>Phần mềm (Software):</strong> Là các chương trình, tập hợp các chỉ thị để điều khiển phần cứng.</li>
+                </ul>
+            </section>
+            
+            <section id="c1_history" class="content-section">
+                <h3>3. Lược Sử Phát Triển Máy Tính</h3>
+                <ul>
+                    <li><strong>Giai đoạn 1: Máy cơ học (trước 1930):</strong> Gồm các máy tính cơ học như Pascaline, Leibniz Wheel, và Máy Phân tích của Charles Babbage (có các thành phần tương tự máy tính hiện đại như "mill" - ALU và "store" - bộ nhớ).</li>
+                    <li><strong>Giai đoạn 2: Sự ra đời của máy tính điện tử (1930–1950):</strong> Các máy tính như ENIAC ra đời, sử dụng đèn chân không, kích thước khổng lồ. Chúng chỉ lưu dữ liệu trong bộ nhớ, còn chương trình được nạp bằng cách đi lại dây. EDVAC là máy tính đầu tiên áp dụng mô hình von Neumann.</li>
+                    <li><strong>Giai đoạn 3: Các thế hệ máy tính (1950–nay):</strong>
+                        <ol>
+                            <li><strong>Thế hệ 1 (1950–1959):</strong> Sử dụng <code>đèn chân không</code>.</li>
+                            <li><strong>Thế hệ 2 (1959–1965):</strong> Sử dụng <code>bóng bán dẫn (transistor)</code>, giúp máy tính nhỏ hơn, rẻ hơn.</li>
+                            <li><strong>Thế hệ 3 (1965–1975):</strong> Sử dụng <code>mạch tích hợp (IC)</code>, dẫn đến sự ra đời của máy tính mini.</li>
+                            <li><strong>Thế hệ 4 (1975–1985):</strong> Sự xuất hiện của <code>vi máy tính (microcomputer)</code> và mạng máy tính.</li>
+                            <li><strong>Thế hệ 5 (1985–nay):</strong> Laptop, đa phương tiện, thực tế ảo,...</li>
+                        </ol>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="c5_subsystems" class="content-section">
+                 <h2>Phần 2: Tổ Chức Bên Trong Máy Tính (Chương 5)</h2>
+                <h3>1. Ba Hệ Thống Con Của Máy Tính</h3>
+                 <ul>
+                    <li><strong>Bộ Xử lý Trung tâm (CPU - Central Processing Unit):</strong> "Bộ não" của máy tính.</li>
+                    <li><strong>Bộ nhớ chính (Main Memory):</strong> Thường là RAM.</li>
+                    <li><strong>Hệ thống Xuất/Nhập (I/O Subsystem):</strong> Các thiết bị ngoại vi.</li>
+                </ul>
+            </section>
+
+             <section id="c5_cpu" class="content-section">
+                <h3>2. Chi Tiết Về CPU</h3>
+                <p>CPU bao gồm 3 phần chính:</p>
+                 <ul>
+                    <li><strong>Bộ Số học & Logic (ALU):</strong> Thực hiện mọi phép tính toán và logic.</li>
+                    <li><strong>Các thanh ghi (Registers):</strong> Là những vùng nhớ <strong>siêu nhanh</strong> và có dung lượng rất nhỏ, nằm ngay bên trong CPU để lưu trữ tạm thời dữ liệu và chỉ thị đang được xử lý.
+                        <ul>
+                            <li><code>Thanh ghi dữ liệu (Data Register)</code>: Giữ dữ liệu đang tính toán.</li>
+                            <li><code>Thanh ghi chỉ thị (IR - Instruction Register)</code>: Giữ chỉ thị <strong>đang được</strong> thực thi.</li>
+                            <li><code>Bộ đếm chương trình (PC - Program Counter)</code>: Giữ địa chỉ của chỉ thị <strong>kế tiếp</strong> sẽ được thực thi. Đây là một chi tiết rất quan trọng!</li>
+                        </ul>
+                    </li>
+                    <li><strong>Bộ Điều khiển (Control Unit):</strong> Gửi tín hiệu để điều khiển mọi hoạt động.</li>
+                </ul>
+            </section>
+
+            <section id="c5_memory" class="content-section">
+                <h3>3. Bộ Nhớ Chính (Main Memory)</h3>
+                <ul>
+                    <li><strong>Tổ chức:</strong> Là một tập hợp các ô nhớ, mỗi ô có một <code>địa chỉ (address)</code> duy nhất.</li>
+                    <li><strong>Phân cấp bộ nhớ (Memory Hierarchy):</strong> Để cân bằng giữa tốc độ, chi phí và dung lượng, bộ nhớ được tổ chức thành nhiều cấp:
+                        <ol>
+                            <li><strong>Thanh ghi (Registers):</strong> Nhanh nhất, nhỏ nhất, đắt nhất (nằm trong CPU).</li>
+                            <li><strong>Bộ nhớ đệm (Cache Memory):</strong> Nhanh hơn bộ nhớ chính, lưu trữ các dữ liệu/chỉ thị được sử dụng thường xuyên để tăng tốc độ truy cập cho CPU.</li>
+                            <li><strong>Bộ nhớ chính (RAM):</strong> Chậm hơn, lớn hơn, rẻ hơn.</li>
+                        </ol>
+                    </li>
+                    <li><strong>Các loại bộ nhớ:</strong>
+                        <ul>
+                            <li><strong>RAM (Random Access Memory):</strong> Có thể đọc và ghi. <strong>Khả biến</strong> (dữ liệu sẽ mất khi tắt nguồn).</li>
+                            <li><strong>ROM (Read-Only Memory):</strong> Chỉ có thể đọc. <strong>Bất biến</strong> (dữ liệu không mất khi tắt nguồn). Dùng để lưu các chương trình khởi động (boot program).</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            
+            <section id="c5_io" class="content-section">
+                <h3>4. Hệ Thống Xuất/Nhập (I/O) và Kết Nối</h3>
+                <ul>
+                    <li><strong>Thiết bị lưu trữ (Storage Devices):</strong> Lưu trữ dữ liệu lâu dài (ổ cứng, SSD, USB).</li>
+                    <li><strong>Kết nối các hệ thống con (Bus):</strong> Là các đường truyền tín hiệu điện tử kết nối các thành phần với nhau.
+                        <ul>
+                             <li><code>Bus dữ liệu (Data Bus)</code>: Vận chuyển dữ liệu.</li>
+                             <li><code>Bus địa chỉ (Address Bus)</code>: Vận chuyển địa chỉ bộ nhớ hoặc thiết bị.</li>
+                             <li><code>Bus điều khiển (Control Bus)</code>: Vận chuyển các tín hiệu lệnh và điều khiển.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Bộ điều khiển I/O (I/O Controllers):</strong> Các giao diện chuyên dụng (như USB, HDMI, SCSI) làm trung gian kết nối giữa các thiết bị I/O (vốn chậm) với CPU và bộ nhớ (rất nhanh).</li>
+                </ul>
+            </section>
+            
+            <section id="c5_execution" class="content-section">
+                <h3>5. Quá Trình Thực Thi Chương Trình</h3>
+                <h4>Chu kỳ máy (Machine Cycle)</h4>
+                <p>Đây là quy trình lặp đi lặp lại cho mỗi chỉ thị trong chương trình.</p>
+                <ol>
+                     <li><strong>Tìm nạp (Fetch):</strong> Bộ điều khiển lấy chỉ thị từ địa chỉ được lưu trong PC, nạp vào thanh ghi IR, sau đó <strong>tăng giá trị của PC lên 1</strong> để trỏ đến chỉ thị tiếp theo.</li>
+                     <li><strong>Giải mã (Decode):</strong> Bộ điều khiển phân tích chỉ thị trong IR để biết phải làm gì.</li>
+                     <li><strong>Thực thi (Execute):</strong> Bộ điều khiển gửi tín hiệu đến các bộ phận liên quan (như ALU) để thực hiện lệnh.</li>
+                </ol>
+            </section>
+            
+            <section id="c5_architectures" class="content-section">
+                <h3>6. Các Kiến Trúc Máy Tính Khác Nhau</h3>
+                <ul>
+                     <li><strong>CISC (Complex Instruction Set Computer):</strong> Có một tập lệnh lớn và phức tạp. Một lệnh có thể thực hiện nhiều thao tác phức tạp. Lập trình dễ hơn nhưng phần cứng phức tạp. Ví dụ: Vi xử lý Intel x86.</li>
+                     <li><strong>RISC (Reduced Instruction Set Computer):</strong> Có một tập lệnh nhỏ và đơn giản. Các lệnh được tối ưu hóa để thực thi rất nhanh. Cần nhiều lệnh hơn để hoàn thành một tác vụ phức tạp nhưng hiệu năng tổng thể thường cao hơn. Ví dụ: Vi xử lý ARM (dùng trong hầu hết điện thoại thông minh).</li>
+                     <li><strong>Đường ống (Pipelining):</strong> Một kỹ thuật để tăng hiệu suất. CPU bắt đầu xử lý chỉ thị thứ hai trước khi chỉ thị thứ nhất hoàn thành, bằng cách gối đầu các giai đoạn Fetch-Decode-Execute của nhiều chỉ thị lên nhau.</li>
+                     <li><strong>Xử lý song song (Parallel Processing):</strong> Sử dụng nhiều bộ xử lý (hoặc nhiều lõi) để thực hiện công việc cùng một lúc, giúp tăng đáng kể hiệu suất.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <!-- ======================= JAVASCRIPT LOGIC ======================= -->
+    <script>
+        const app = {
+            init() {
+                // Theme Toggle Logic
+                this.themeToggleBtn = document.getElementById('theme-toggle-btn');
+                this.currentTheme = localStorage.getItem('theme') || 'light';
+                document.body.setAttribute('data-theme', this.currentTheme);
+                this.updateThemeIcon();
+                this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
+
+                // Active Link on Scroll Logic
+                this.navLinks = document.querySelectorAll('.sidebar-nav a');
+                this.sections = document.querySelectorAll('.content-section, .content-section div[id]');
+                window.addEventListener('scroll', () => this.highlightNavLink());
+            },
+
+            toggleTheme() {
+                this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+                document.body.setAttribute('data-theme', this.currentTheme);
+                localStorage.setItem('theme', this.currentTheme);
+                this.updateThemeIcon();
+            },
+
+            updateThemeIcon() {
+                this.themeToggleBtn.textContent = this.currentTheme === 'light' ? '🌙' : '☀️';
+            },
+            
+            highlightNavLink() {
+                let currentSectionId = '';
+                const fromTop = window.scrollY + 100;
+
+                this.sections.forEach(section => {
+                    if (section.offsetTop <= fromTop && (section.offsetTop + section.offsetHeight) > fromTop) {
+                        currentSectionId = section.id;
+                    }
+                });
+                
+                this.navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
