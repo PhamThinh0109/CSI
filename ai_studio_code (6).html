@@ -3,552 +3,676 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc Nghiệm Chương 1: Giới Thiệu Khoa Học Máy Tính</title>
+    <title>Hệ thống Học tập và Trắc nghiệm - Kiến trúc Máy tính</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --background-color: #ffffff;
+            --text-color: #212529;
+            --border-color: #dee2e6;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --sidebar-width: 320px;
+        }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: var(--font-family);
             margin: 0;
-            padding: 20px;
-        }
-
-        .quiz-container {
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 800px;
-            overflow: hidden;
-        }
-
-        .header {
-            background-color: #4a69bd;
-            color: white;
-            padding: 20px 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 1.8em;
-        }
-
-        .main-content {
-            padding: 30px;
-        }
-
-        #start-screen h2, #score-screen h2 {
-            text-align: center;
-            color: #4a69bd;
-        }
-
-        #quiz-screen {
-            display: flex;
-            flex-direction: column;
-        }
-
-        #info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            font-weight: 600;
-            color: #555;
-        }
-
-        #question {
-            font-size: 1.3em;
-            font-weight: 600;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-
-        #options-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-
-        .option-btn {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            background-color: #f8f9fa;
-            cursor: pointer;
-            text-align: left;
-            font-size: 1em;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .option-btn:hover:not([disabled]) {
-            border-color: #4a69bd;
-            background-color: #e9ecef;
-        }
-        
-        .option-btn.selected {
-            border-color: #4a69bd;
-            background-color: #dcdde1;
-        }
-
-        .option-btn.correct {
-            background-color: #d4edda;
-            border-color: #28a745;
-            color: #155724;
-        }
-
-        .option-btn.incorrect {
-            background-color: #f8d7da;
-            border-color: #dc3545;
-            color: #721c24;
-        }
-
-        .btn {
-            display: block;
-            width: 200px;
-            margin: 20px auto 0;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 10px;
-            background-color: #4a69bd;
-            color: white;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn:hover {
-            background-color: #3b528f;
-        }
-        
-        #submit-btn {
-            background-color: #28a745;
-        }
-        #submit-btn:hover {
-             background-color: #218838;
-        }
-        #submit-btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-
-        #result-container {
-            margin-top: 25px;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #f1f2f6;
-            border: 1px solid #ced6e0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: var(--text-color);
             line-height: 1.6;
         }
 
-        #result-container h3 {
-            margin-top: 0;
-            color: #4a69bd;
+        .hidden { display: none !important; }
+
+        /* --- Learning Page Styles --- */
+        .learning-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        #final-score {
-            font-size: 1.5em;
-            font-weight: 600;
-            text-align: center;
+        .learning-container h1, .learning-container h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
         }
 
-        .hide {
-            display: none;
+        .learning-container ul {
+            list-style-type: none;
+            padding-left: 0;
         }
+
+        .learning-container ul li {
+            background-color: var(--light-color);
+            margin-bottom: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 4px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .learning-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: #0056b3; }
+        .btn-secondary { background-color: var(--secondary-color); color: white; }
+        .btn-secondary:hover { background-color: #5a6268; }
+
+        /* --- Quiz Page Styles --- */
+        .quiz-page-container {
+            display: flex;
+            height: 100vh;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        .key-terms-sidebar {
+            flex: 0 0 var(--sidebar-width);
+            background-color: var(--background-color);
+            border-right: 1px solid var(--border-color);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            transition: margin-left 0.3s ease-in-out;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            z-index: 100;
+        }
+        
+        .key-terms-sidebar.collapsed {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        .sidebar-header {
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .sidebar-header h3 { margin: 0; color: var(--primary-color); }
+        .sidebar-controls { display: flex; align-items: center; gap: 0.5rem; }
+        
+        .btn-icon {
+            background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--secondary-color);
+        }
+
+        .sidebar-content {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        
+        .key-term-item { margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 4px; }
+        .key-term-header { padding: 0.5rem; background-color: var(--light-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .key-term-title { font-weight: bold; }
+        .key-term-toggle { font-size: 1.2rem; }
+        .key-term-lang-switch { font-size: 0.7rem; padding: 2px 4px; }
+        .key-term-details { padding: 0.5rem; font-size: 0.9rem; border-top: 1px solid var(--border-color); }
+        .key-term-details p { margin: 0.5rem 0; }
+        .key-term-details strong { color: var(--dark-color); }
+        
+        .sidebar-toggle-tab {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            cursor: pointer;
+            z-index: 99;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-weight: bold;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .sidebar-toggle-tab.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .quiz-content {
+            flex: 1;
+            padding: 2rem 3rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            margin-left: var(--sidebar-width);
+            transition: margin-left 0.3s ease-in-out;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .quiz-content.full-width {
+            margin-left: 0;
+            width: 100%;
+        }
+        
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .question-progress { font-size: 1.2rem; font-weight: bold; color: var(--secondary-color); }
+
+        #question-text {
+            font-size: 1.5rem; margin-bottom: 2rem; background-color: var(--background-color); padding: 1rem;
+            border-radius: 5px; border-left: 5px solid var(--primary-color);
+        }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        
+        .option-btn {
+            width: 100%; text-align: left; background-color: var(--background-color);
+            color: var(--text-color); border: 2px solid var(--border-color); transition: all 0.2s ease;
+        }
+        
+        .option-btn:not(:disabled):hover { border-color: var(--primary-color); background-color: #e9f4ff; }
+        .option-btn.selected { border-color: var(--primary-color); background-color: #cce5ff; }
+        .option-btn.correct { border-color: var(--success-color); background-color: #d4edda; color: #155724; }
+        .option-btn.incorrect { border-color: var(--danger-color); background-color: #f8d7da; color: #721c24; }
+        
+        #feedback-area { margin-top: 2rem; padding: 1rem; border-radius: 5px; font-size: 0.95rem; }
+        #feedback-area.incorrect-feedback { background-color: #fff3cd; border: 1px solid #ffeeba; }
+        #feedback-area h4 { margin-top: 0; }
+        
+        .quiz-navigation {
+            margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--border-color);
+            display: flex; justify-content: space-between;
+        }
+        
+        /* --- Results Page --- */
+        .results-container {
+            max-width: 900px; margin: 2rem auto; padding: 2rem; background-color: var(--background-color);
+            border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .results-summary { text-align: center; margin-bottom: 2rem; }
+        .score { font-size: 3rem; font-weight: bold; color: var(--primary-color); }
+        .incorrect-answer { background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; padding: 1rem; margin-bottom: 1.5rem; }
+        .incorrect-answer p { margin: 0.5rem 0; }
+        .weakness-analysis h3 { color: var(--danger-color); }
+        .weakness-analysis .tag {
+            display: inline-block; background-color: var(--danger-color); color: white; padding: 0.25rem 0.75rem;
+            border-radius: 15px; margin: 0.25rem; font-size: 0.9rem;
+        }
+
+        @media (max-width: 992px) {
+            :root { --sidebar-width: 280px; }
+            .quiz-content { padding: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+             .key-terms-sidebar { margin-left: calc(-1 * var(--sidebar-width)); } /* Default collapsed on mobile */
+             .sidebar-toggle-tab { opacity: 1; visibility: visible; }
+             .quiz-content { margin-left: 0; width: 100%; padding: 1rem; }
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="quiz-container">
-        <div class="header">
-            <h1>Trắc Nghiệm Chương 1: Giới Thiệu</h1>
+    <!-- Learning Page -->
+    <div id="learning-page" class="learning-container">
+        <div class="learning-controls">
+            <h1>Kiến trúc Máy tính: Chương 1</h1>
+            <button id="learning-lang-switch" class="btn btn-secondary">Switch to English</button>
         </div>
-        <div class="main-content">
-            <div id="start-screen">
-                <h2>Chào mừng bạn đến với bài kiểm tra kiến thức Chương 1!</h2>
-                <p style="text-align: center;">Hệ thống sẽ chọn ngẫu nhiên 20 câu hỏi để kiểm tra hiểu biết của bạn về các khái niệm nền tảng của Khoa học Máy tính. Chúc bạn may mắn!</p>
-                <button id="start-btn" class="btn">Bắt đầu</button>
-            </div>
-
-            <div id="quiz-screen" class="hide">
-                <div id="info">
-                    <span id="question-counter"></span>
-                    <span id="score-counter"></span>
-                </div>
-                <h2 id="question"></h2>
-                <div id="options-container"></div>
-                <button id="submit-btn" class="btn" disabled>Kiểm tra</button>
-                <div id="result-container" class="hide">
-                    <h3 id="result-text"></h3>
-                    <p id="explanation-text"></p>
-                    <p id="tip-text"></p>
-                </div>
-                <button id="next-btn" class="btn hide">Câu tiếp theo</button>
-            </div>
-
-            <div id="score-screen" class="hide">
-                <h2>Hoàn thành bài kiểm tra!</h2>
-                <p id="final-score"></p>
-                <button id="restart-btn" class="btn">Làm lại</button>
-            </div>
+        <h2 id="summary-title">Tóm tắt Chương</h2><p id="summary-content"></p>
+        <h2 id="keypoints-title">Các điểm chính</h2><ul id="keypoints-list"></ul>
+        <h2 id="tips-title">Mẹo học tập</h2><div id="tips-list"></div>
+        <div class="learning-controls">
+            <span></span>
+            <button id="start-quiz-btn" class="btn btn-primary">Bắt đầu Quiz &rarr;</button>
         </div>
     </div>
 
+    <!-- Quiz Page -->
+    <div id="quiz-page" class="quiz-page-container hidden">
+        <aside class="key-terms-sidebar" id="key-terms-sidebar">
+            <div class="sidebar-header">
+                <h3>Thuật ngữ</h3>
+                <div class="sidebar-controls">
+                    <button id="term-lang-switch" class="btn btn-secondary btn-small">EN/VN</button>
+                    <button id="sidebar-hide-btn" class="btn-icon" title="Ẩn sidebar">&times;</button>
+                </div>
+            </div>
+            <div class="sidebar-content" id="key-terms-content"></div>
+        </aside>
+
+        <div id="sidebar-toggle-tab" class="sidebar-toggle-tab">Thuật Ngữ</div>
+
+        <main class="quiz-content" id="quiz-content">
+            <div class="quiz-header">
+                <span id="question-progress" class="question-progress"></span>
+                <button id="quiz-lang-switch" class="btn btn-secondary">Switch to English</button>
+            </div>
+            <div id="question-text"></div>
+            <div id="options-grid" class="options-grid"></div>
+            <div id="feedback-area"></div>
+            <div class="quiz-navigation">
+                <button id="prev-btn" class="btn btn-secondary">&larr; Quay lại</button>
+                <button id="next-btn" class="btn btn-primary">Tiếp theo &rarr;</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Results Page -->
+    <div id="results-page" class="results-container hidden">
+        <div class="results-summary">
+            <h2>Kết quả Quiz</h2>
+            <p>Điểm số của bạn:</p>
+            <div id="final-score" class="score"></div>
+            <p id="feedback-message"></p>
+        </div>
+        <div id="incorrect-answers-review">
+            <h3>Xem lại các câu trả lời sai:</h3><div id="incorrect-list"></div>
+        </div>
+        <div class="weakness-analysis">
+            <h3>Phân tích mảng kiến thức yếu:</h3>
+            <p>Bạn có vẻ cần xem lại các khái niệm liên quan đến các chủ đề sau:</p>
+            <div id="weak-tags-list"></div>
+        </div>
+        <div class="learning-controls">
+            <button id="retake-quiz-btn" class="btn btn-primary">Làm 10 câu khác</button>
+            <button id="back-to-learning-btn" class="btn btn-secondary">&larr; Về trang học tập</button>
+        </div>
+    </div>
+
+
     <script>
-        const questionBank = [
-            {
-                question: "Ý tưởng cốt lõi nhất của mô hình Turing là gì?",
-                options: ["Máy tính có 4 thành phần chính", "Chương trình được lưu trong bộ nhớ", "Máy tính là một bộ xử lý dữ liệu có thể lập trình", "Máy tính sử dụng bóng bán dẫn"],
-                answer: "Máy tính là một bộ xử lý dữ liệu có thể lập trình",
-                explanation: "Mô hình Turing giới thiệu khái niệm 'chương trình' (program), biến máy tính từ một thiết bị chuyên dụng thành một thiết bị đa năng có thể thực hiện nhiều tác vụ khác nhau.",
-                tip: "💡 Mẹo nhớ: Turing = Program. Chính chương trình làm cho máy tính trở nên 'vạn năng'."
-            },
-            {
-                question: "Đột phá mang tính cách mạng của mô hình von Neumann là gì?",
-                options: ["Phát minh ra bóng bán dẫn", "Khái niệm chương trình được lưu trữ (stored-program concept)", "Sử dụng hệ nhị phân", "Phát minh ra Internet"],
-                answer: "Khái niệm chương trình được lưu trữ (stored-program concept)",
-                explanation: "Von Neumann đề xuất rằng cả chương trình và dữ liệu đều nên được lưu trữ trong cùng một bộ nhớ. Điều này giúp việc thay đổi tác vụ của máy tính trở nên cực kỳ linh hoạt, chỉ cần nạp chương trình mới thay vì phải đi dây lại.",
-                tip: "💡 Mẹo nhớ: Von Neumann = Chương trình + Dữ liệu CÙNG ở trong Bộ nhớ."
-            },
-            {
-                question: "Thành phần nào trong kiến trúc von Neumann thực hiện các phép tính như cộng, trừ, nhân, chia?",
-                options: ["Control Unit (Đơn vị điều khiển)", "Memory (Bộ nhớ)", "Arithmetic Logic Unit (ALU)", "Input/Output Subsystem (Hệ thống Nhập/Xuất)"],
-                answer: "Arithmetic Logic Unit (ALU)",
-                explanation: "ALU là 'máy tính' thực sự bên trong CPU, chịu trách nhiệm cho tất cả các phép toán số học (Arithmetic) và các phép so sánh logic (Logic).",
-                tip: "💡 Mẹo nhớ: Arithmetic = Số học. ALU làm toán."
-            },
-            {
-                question: "Thành phần nào hoạt động như 'nhạc trưởng' của máy tính, điều phối hoạt động của các bộ phận khác?",
-                options: ["ALU", "Memory", "Control Unit", "I/O"],
-                answer: "Control Unit",
-                explanation: "Đơn vị điều khiển (Control Unit) đọc từng chỉ thị từ bộ nhớ, giải mã nó và gửi tín hiệu điều khiển đến các bộ phận khác để thực thi chỉ thị đó.",
-                tip: "💡 Mẹo nhớ: Control = Điều khiển. Nó là 'bộ não' điều hành mọi thứ."
-            },
-            {
-                question: "Tất cả các loại dữ liệu (văn bản, hình ảnh, âm thanh) được biểu diễn bên trong máy tính dưới dạng gì?",
-                options: ["Hệ thập phân (0-9)", "Mẫu nhị phân (0 và 1)", "Ký tự Alphabet", "Sóng điện từ"],
-                answer: "Mẫu nhị phân (0 và 1)",
-                explanation: "Vì máy tính là thiết bị điện tử, nó hoạt động dựa trên hai trạng thái (có điện/không có điện), tương ứng với 1 và 0. Mọi thứ đều phải được mã hóa thành chuỗi nhị phân.",
-                tip: "💡 Mẹo nhớ: Máy tính chỉ hiểu hai thứ: Bật (1) và Tắt (0)."
-            },
-            {
-                question: "Charles Babbage được xem là 'cha đẻ của máy tính' vì cỗ máy nào của ông có thiết kế tương đồng với máy tính hiện đại?",
-                options: ["Difference Engine", "Pascaline", "Jacquard Loom", "Analytical Engine"],
-                answer: "Analytical Engine",
-                explanation: "Máy Phân tích (Analytical Engine) có thiết kế bao gồm 'store' (bộ nhớ), 'mill' (bộ xử lý/ALU), 'operator' (đơn vị điều khiển), và có thể lập trình bằng thẻ đục lỗ, tương ứng với các thành phần chính của máy tính hiện đại.",
-                tip: "💡 Mẹo nhớ: Analytical = Phân tích. Một cỗ máy có khả năng phân tích phức tạp cần có cấu trúc giống máy tính."
-            },
-            {
-                question: "Công nghệ điện tử nào là đặc trưng của thế hệ máy tính thứ nhất (1950-1959)?",
-                options: ["Bóng bán dẫn (Transistor)", "Mạch tích hợp (IC)", "Vi xử lý (Microprocessor)", "Bóng đèn chân không (Vacuum Tube)"],
-                answer: "Bóng đèn chân không (Vacuum Tube)",
-                explanation: "Máy tính thế hệ đầu tiên như ENIAC sử dụng hàng ngàn bóng đèn chân không, khiến chúng rất lớn, tỏa nhiều nhiệt và kém tin cậy.",
-                tip: "💡 Mẹo nhớ: Thế hệ 1 = Cổ xưa nhất, to nhất = Bóng đèn chân không."
-            },
-            {
-                question: "Sự thay thế bóng đèn chân không bằng bóng bán dẫn (transistor) là bước nhảy vọt của thế hệ máy tính nào?",
-                options: ["Thế hệ 1", "Thế hệ 2", "Thế hệ 3", "Thế hệ 4"],
-                answer: "Thế hệ 2",
-                explanation: "Thế hệ thứ hai (1959-1965) sử dụng bóng bán dẫn, giúp máy tính trở nên nhỏ hơn, rẻ hơn, nhanh hơn và tiết kiệm năng lượng hơn đáng kể.",
-                tip: "💡 Mẹo nhớ: Thế hệ 2 = Bước cải tiến đầu tiên = Transistor."
-            },
-            {
-                question: "Việc phát minh ra mạch tích hợp (Integrated Circuit - IC) đã khởi đầu cho thế hệ máy tính nào?",
-                options: ["Thế hệ 2", "Thế hệ 3", "Thế hệ 4", "Thế hệ 5"],
-                answer: "Thế hệ 3",
-                explanation: "Thế hệ thứ ba (1965-1975) được đánh dấu bằng IC, tích hợp nhiều bóng bán dẫn lên một con chip silicon nhỏ, tiếp tục cuộc cách mạng thu nhỏ hóa máy tính.",
-                tip: "💡 Mẹo nhớ: Thế hệ 3 = Tích hợp nhiều thứ vào một (IC)."
-            },
-            {
-                question: "Cuộc cách mạng máy tính cá nhân (microcomputer) bùng nổ ở thế hệ thứ tư nhờ vào sự ra đời của linh kiện nào?",
-                options: ["RAM", "Ổ cứng", "Vi xử lý (Microprocessor)", "Màn hình màu"],
-                answer: "Vi xử lý (Microprocessor)",
-                explanation: "Thế hệ thứ tư (1975-1985) chứng kiến sự ra đời của vi xử lý, tích hợp toàn bộ CPU lên một con chip duy nhất, làm cho máy tính đủ nhỏ và rẻ để trở thành thiết bị cá nhân.",
-                tip: "💡 Mẹo nhớ: Thế hệ 4 = Máy tính cá nhân = Vi xử lý."
-            },
-            {
-                question: "Một giải pháp logic, từng bước để giải quyết một vấn đề được gọi là gì?",
-                options: ["Chương trình (Program)", "Ngôn ngữ lập trình (Language)", "Thuật toán (Algorithm)", "Hệ điều hành (Operating System)"],
-                answer: "Thuật toán (Algorithm)",
-                explanation: "Thuật toán là bản thiết kế, là công thức, là các bước đi tuần tự để giải quyết một bài toán. Lập trình viên phải có thuật toán trước khi viết code.",
-                tip: "💡 Mẹo nhớ: Thuật toán = Công thức nấu ăn. Chương trình = Hành động nấu ăn."
-            },
-            {
-                question: "Máy tính điện tử đa năng, hoàn toàn điện tử đầu tiên có tên là gì?",
-                options: ["EDVAC", "ENIAC", "Colossus", "Mark I"],
-                answer: "ENIAC",
-                explanation: "ENIAC (Electronic Numerical Integrator and Calculator), hoàn thành năm 1946, được công nhận là máy tính điện tử đa năng đầu tiên. Tuy nhiên, nó được lập trình từ bên ngoài bằng cách cắm dây và gạt công tắc.",
-                tip: "💡 Mẹo nhớ: ENIAC có chữ 'E' đầu tiên = Electronic (điện tử) đầu tiên."
-            },
-            {
-                question: "Máy tính đầu tiên được xây dựng dựa trên ý tưởng 'chương trình được lưu trữ' của von Neumann là gì?",
-                options: ["ENIAC", "ABC Computer", "EDVAC", "Z1"],
-                answer: "EDVAC",
-                explanation: "EDVAC (Electronic Discrete Variable Automatic Computer) là một trong những máy tính đầu tiên được thiết kế và xây dựng theo kiến trúc von Neumann, nơi chương trình được lưu trong bộ nhớ.",
-                tip: "💡 Mẹo nhớ: EDVAC có chữ 'V' = Von Neumann."
-            },
-             {
-                question: "Theo định nghĩa trong sách, một ổ đĩa được coi là thiết bị ĐẦU RA (output device) khi nào?",
-                options: ["Khi nó đọc dữ liệu từ đĩa", "Khi nó đang quay", "Khi nó lưu kết quả xử lý vào đĩa", "Khi nó được format"],
-                answer: "Khi nó lưu kết quả xử lý vào đĩa",
-                explanation: "Khi máy tính ghi dữ liệu ra một thiết bị lưu trữ, nó đang 'xuất' thông tin ra ngoài. Ngược lại, khi đọc dữ liệu vào, nó là thiết bị 'nhập'.",
-                tip: "💡 Mẹo nhớ: Xuất (Output) = Ghi ra. Nhập (Input) = Đọc vào."
-            },
-            {
-                question: "Sự ra đời của các 'gói phần mềm' (software packages) và ngành công nghiệp phần mềm là đặc trưng của thế hệ máy tính nào?",
-                options: ["Thế hệ 2", "Thế hệ 3", "Thế hệ 4", "Thế hệ 5"],
-                answer: "Thế hệ 3",
-                explanation: "Cùng với sự phát triển của máy tính mini ở thế hệ thứ ba, nhu cầu về các chương trình làm sẵn tăng cao, từ đó hình thành nên ngành công nghiệp phần mềm.",
-                tip: "💡 Mẹo nhớ: Thế hệ 3 (máy tính phổ biến hơn) -> Cần phần mềm -> Ngành phần mềm ra đời."
-            },
-            {
-                question: "Lý do ban đầu cho sự ra đời của Hệ điều hành là gì?",
-                options: ["Để chơi game", "Để lướt web", "Để quản lý và tạo điều kiện truy cập vào phần cứng", "Để viết email"],
-                answer: "Để quản lý và tạo điều kiện truy cập vào phần cứng",
-                explanation: "Ban đầu, hệ điều hành được tạo ra như một lớp trung gian để quản lý các tài nguyên phần cứng phức tạp, giúp các chương trình ứng dụng truy cập chúng một cách dễ dàng và hiệu quả hơn.",
-                tip: "💡 Mẹo nhớ: Hệ điều hành = Người quản gia cho phần cứng."
-            },
-            {
-                question: "Máy dệt Jacquard có ý nghĩa lịch sử vì nó là cỗ máy đầu tiên sử dụng ý tưởng nào?",
-                options: ["Lưu trữ và lập trình bằng thẻ đục lỗ", "Sử dụng điện", "Tính toán đa thức", "Có bộ nhớ và bộ xử lý"],
-                answer: "Lưu trữ và lập trình bằng thẻ đục lỗ",
-                explanation: "Máy dệt Jacquard dùng các thẻ gỗ đục lỗ để điều khiển kim dệt, tạo ra các hoa văn phức tạp. Đây là hình thức sơ khai nhất của việc lưu trữ một 'chương trình' (hoa văn) để máy móc tự động thực hiện.",
-                tip: "💡 Mẹo nhớ: Jacquard = Dệt may = Hoa văn trên thẻ đục lỗ."
-            },
-            {
-                question: "Mô hình von Neumann yêu cầu chương trình và dữ liệu cùng nằm trong bộ nhớ. Điều này ngụ ý cả hai phải có cùng...",
-                options: ["Kích thước", "Tầm quan trọng", "Định dạng (Format)", "Tác giả"],
-                answer: "Định dạng (Format)",
-                explanation: "Để được lưu trữ trong cùng một nơi (bộ nhớ), cả chương trình (các chỉ thị máy) và dữ liệu đều phải được mã hóa dưới cùng một định dạng cơ bản, đó là định dạng nhị phân (chuỗi 0 và 1).",
-                tip: "💡 Mẹo nhớ: Cùng một nhà (bộ nhớ) thì phải nói cùng một ngôn ngữ (định dạng nhị phân)."
-            },
-            {
-                question: "Lĩnh vực nào sau đây thuộc 'lĩnh vực hệ thống' (systems areas) của khoa học máy tính?",
-                options: ["Trí tuệ nhân tạo", "Cơ sở dữ liệu", "Kiến trúc máy tính", "Phân tích dữ liệu"],
-                answer: "Kiến trúc máy tính",
-                explanation: "Lĩnh vực hệ thống liên quan đến việc tạo ra và vận hành nền tảng máy tính, bao gồm phần cứng (kiến trúc máy tính), hệ điều hành, mạng, ngôn ngữ lập trình. Các lĩnh vực còn lại là ứng dụng chạy trên nền tảng đó.",
-                tip: "💡 Mẹo nhớ: Hệ thống = Nền móng (phần cứng, HĐH). Ứng dụng = Ngôi nhà xây trên nền móng đó (AI, Database)."
-            },
-            {
-                question: "Theo mô hình Turing, nếu bạn giữ nguyên chương trình nhưng thay đổi dữ liệu đầu vào, kết quả đầu ra sẽ như thế nào?",
-                options: ["Không thay đổi", "Thay đổi", "Gây ra lỗi", "Không thể xác định"],
-                answer: "Thay đổi",
-                explanation: "Nguyên tắc của mô hình Turing là đầu ra phụ thuộc vào cả chương trình VÀ dữ liệu đầu vào. Thay đổi một trong hai yếu tố này sẽ làm thay đổi kết quả. Ví dụ: cùng chương trình tính tổng, nhưng cộng `2+2` sẽ khác với `3+3`.",
-                tip: "💡 Mẹo nhớ: `Output = f(Input, Program)`. Thay đổi `Input` thì `Output` cũng thay đổi."
-            },
-            {
-                question: "Thế hệ máy tính thứ năm (1985-nay) được đặc trưng bởi xu hướng nào?",
-                options: ["Sự ra đời của máy tính cá nhân", "Sự phát triển của laptop, mạng máy tính và đa phương tiện", "Sự thay thế bóng chân không bằng transistor", "Sự ra đời của ngôn ngữ COBOL và FORTRAN"],
-                answer: "Sự phát triển của laptop, mạng máy tính và đa phương tiện",
-                explanation: "Thế hệ thứ năm là một thế hệ mở, chứng kiến sự bùng nổ của máy tính di động (laptop), kết nối toàn cầu (Internet), và các ứng dụng sử dụng nhiều loại dữ liệu như hình ảnh, âm thanh (đa phương tiện).",
-                tip: "💡 Mẹo nhớ: Thế hệ 5 = Thế hệ hiện đại chúng ta đang sống."
-            },
-            {
-                question: "Tại sao việc chương trình phải bao gồm một chuỗi các chỉ thị (a sequence of instructions) lại quan trọng?",
-                options: ["Vì nó làm cho chương trình dài hơn", "Vì nó cho phép tái sử dụng (reusability) các chỉ thị", "Vì nó giúp máy tính chạy nhanh hơn", "Vì đó là yêu cầu của hệ điều hành"],
-                answer: "Vì nó cho phép tái sử dụng (reusability) các chỉ thị",
-                explanation: "Thay vì tạo ra một chương trình độc nhất cho mỗi tác vụ, máy tính có một bộ chỉ thị cơ bản. Lập trình viên có thể kết hợp các chỉ thị này theo vô số cách khác nhau để tạo ra các chương trình khác nhau. Điều này giúp tái sử dụng và làm cho việc lập trình dễ dàng hơn nhiều.",
-                tip: "💡 Mẹo nhớ: Giống như các chữ cái, chúng ta có thể kết hợp chúng để tạo ra vô số từ và câu."
-            },
-            {
-                question: "Nguyên tắc 'thực thi tuần tự' (Sequential execution) trong mô hình von Neumann có nghĩa là gì?",
-                options: ["Máy tính chỉ chạy được một chương trình tại một thời điểm", "Các chỉ thị trong một chương trình được thực thi lần lượt, từ trên xuống dưới", "Máy tính phải được khởi động theo một trình tự nhất định", "Dữ liệu phải được nhập vào một cách tuần tự"],
-                answer: "Các chỉ thị trong một chương trình được thực thi lần lượt, từ trên xuống dưới",
-                explanation: "Mô hình ban đầu yêu cầu đơn vị điều khiển phải nạp và thực thi chỉ thị này xong rồi mới đến chỉ thị tiếp theo trong bộ nhớ (trừ khi có lệnh nhảy).",
-                tip: "💡 Mẹo nhớ: Sequential = Tuần tự = Theo thứ tự 1, 2, 3..."
-            },
-            {
-                question: "Lý do chính cho sự ra đời của các ngôn ngữ lập trình bậc cao (high-level programming languages) là gì?",
-                options: ["Để máy tính chạy nhanh hơn", "Để làm cho việc viết các chương trình lớn trở nên dễ dàng và đỡ tẻ nhạt hơn", "Để tương thích với nhiều loại phần cứng hơn", "Để giảm kích thước của chương trình"],
-                answer: "Để làm cho việc viết các chương trình lớn trở nên dễ dàng và đỡ tẻ nhạt hơn",
-                explanation: "Viết chương trình dài bằng ngôn ngữ máy (chuỗi 0 và 1) rất khó khăn và dễ sai sót. Các ngôn ngữ bậc cao sử dụng các từ và ký hiệu gần với ngôn ngữ tự nhiên, giúp lập trình viên làm việc hiệu quả hơn.",
-                tip: "💡 Mẹo nhớ: Bậc cao = Gần với người hơn. Bậc thấp = Gần với máy hơn."
-            },
-             {
-                question: "Máy tính ABC (Atanasoff-Berry Computer) là một máy tính điện tử sơ khai. Nó được thiết kế cho mục đích gì?",
-                options: ["Phá mã Enigma của Đức", "Giải một hệ phương trình tuyến tính", "Điều khiển máy dệt", "Thực hiện điều tra dân số"],
-                answer: "Giải một hệ phương trình tuyến tính",
-                explanation: "Máy tính ABC là một máy tính chuyên dụng (special-purpose) được thiết kế đặc biệt để giải các hệ phương trình tuyến tính, không phải là máy tính đa năng.",
-                tip: "💡 Mẹo nhớ: ABC là các biến trong phương trình (ax + by = c)."
-            },
-            {
-                question: "So với máy tính chuyên dụng, ưu điểm lớn nhất của máy tính đa năng là gì?",
-                options: ["Rẻ hơn", "Nhỏ gọn hơn", "Linh hoạt hơn", "Bền hơn"],
-                answer: "Linh hoạt hơn",
-                explanation: "Máy tính đa năng có thể thực hiện vô số tác vụ khác nhau chỉ bằng cách thay đổi phần mềm (chương trình), trong khi máy tính chuyên dụng chỉ có thể làm một việc duy nhất mà nó được thiết kế.",
-                tip: "💡 Mẹo nhớ: Đa năng = Đa tài = Linh hoạt."
-            },
-            {
-                question: "Cả hai mô hình Turing và von Neumann đều nhấn mạnh tầm quan trọng của thành phần nào?",
-                options: ["Chương trình (Program)", "Giao diện đồ họa", "Mạng máy tính", "Bóng bán dẫn"],
-                answer: "Chương trình (Program)",
-                explanation: "Turing đưa ra khái niệm lý thuyết về chương trình như một yếu tố quyết định sự đa năng. Von Neumann đưa ra kiến trúc thực tế về cách lưu trữ và thực thi chương trình đó. Cả hai đều xoay quanh 'chương trình'.",
-                tip: "💡 Mẹo nhớ: Linh hồn của máy tính hiện đại chính là chương trình."
-            },
-            {
-                question: "Kỹ thuật phần mềm (Software engineering) là lĩnh vực nghiên cứu về điều gì?",
-                options: ["Cách sửa chữa phần cứng máy tính", "Thiết kế và viết các chương trình có cấu trúc, tuân theo các quy tắc và nguyên tắc chặt chẽ", "Lịch sử của các loại phần mềm", "Cách bẻ khóa phần mềm"],
-                answer: "Thiết kế và viết các chương trình có cấu trúc, tuân theo các quy tắc và nguyên tắc chặt chẽ",
-                explanation: "Kỹ thuật phần mềm áp dụng các nguyên tắc kỹ thuật vào việc phát triển phần mềm, nhằm tạo ra các sản phẩm chất lượng cao, dễ bảo trì và đáng tin cậy, chứ không chỉ đơn thuần là viết code cho chạy được.",
-                tip: "💡 Mẹo nhớ: Engineering = Kỹ thuật = Quy trình, nguyên tắc, cấu trúc."
-            },
-            {
-                question: "FORTRAN và COBOL là hai ngôn ngữ lập trình bậc cao đầu tiên, ra đời ở thế hệ máy tính nào?",
-                options: ["Thế hệ 1", "Thế hệ 2", "Thế hệ 3", "Thế hệ 4"],
-                answer: "Thế hệ 2",
-                explanation: "Sự ra đời của FORTRAN (cho khoa học kỹ thuật) và COBOL (cho kinh doanh) ở thế hệ thứ hai đã giúp tách biệt công việc lập trình khỏi việc vận hành máy tính, cho phép các chuyên gia lĩnh vực khác có thể tự viết chương trình.",
-                tip: "💡 Mẹo nhớ: Ngôn ngữ lập trình đầu tiên ra đời khi máy tính bắt đầu phổ biến hơn một chút (Thế hệ 2)."
-            },
-            {
-                question: "Sự khác biệt cơ bản giữa dữ liệu (data) và phần mềm (software) là gì?",
-                options: ["Dữ liệu được lưu trữ trong bộ nhớ, còn phần mềm thì không", "Dữ liệu là thông tin bị động, còn phần mềm là tập hợp các chỉ thị chủ động để xử lý dữ liệu", "Không có sự khác biệt, chúng là một", "Dữ liệu là số, còn phần mềm là chữ"],
-                answer: "Dữ liệu là thông tin bị động, còn phần mềm là tập hợp các chỉ thị chủ động để xử lý dữ liệu",
-                explanation: "Dữ liệu chỉ là các sự kiện, con số, văn bản... nó không tự làm gì cả. Phần mềm (chương trình) là thứ 'hành động', nó đọc dữ liệu, biến đổi dữ liệu và tạo ra kết quả.",
-                tip: "💡 Mẹo nhớ: Dữ liệu = Nguyên liệu. Phần mềm = Đầu bếp và công thức."
+        // --- DATA EMBEDDED DIRECTLY ---
+        const studyData = {
+          "Summary": "Chương này giới thiệu các khái niệm nền tảng về máy tính, bắt đầu bằng việc phân biệt giữa Kiến trúc Máy tính (Computer Architecture) – các thuộc tính logic mà lập trình viên thấy, và Tổ chức Máy tính (Computer Organization) – cách các thành phần phần cứng được triển khai để thực hiện kiến trúc đó. Máy tính được mô tả như một hệ thống phân cấp, có bốn chức năng cơ bản: xử lý dữ liệu (data processing), lưu trữ dữ liệu (data storage), di chuyển dữ liệu (data movement) và điều khiển (control). Cấu trúc chính của một máy tính bao gồm CPU (bộ xử lý trung tâm), bộ nhớ chính (main memory), I/O (nhập/xuất), và liên kết hệ thống (system interconnection). Đi sâu hơn, CPU được cấu thành từ đơn vị điều khiển (control unit), ALU (đơn vị số học và logic), và các thanh ghi (registers). Chương khám phá sự phát triển của máy tính qua các ví dụ lịch sử và hiện đại. Máy tính IAS được trình bày như một nguyên mẫu cho các máy tính đa năng sau này, với khái niệm chương trình được lưu trữ (stored-program concept) của von Neumann. Ở cấp độ vi mô, máy tính được xây dựng từ các cổng logic (gates) và ô nhớ (memory cells), vốn được tạo nên từ các bóng bán dẫn (transistors) trên các vi mạch tích hợp (integrated circuits). Định luật Moore được giới thiệu để giải thích sự tăng trưởng theo hàm mũ về mật độ bóng bán dẫn trên chip, thúc đẩy sự tiến bộ vượt bậc của công nghệ. Hai họ kiến trúc vi xử lý chính được xem xét: Intel x86, đại diện cho thiết kế CISC (Complex Instruction Set Computer) và ARM, đại diện cho thiết kế RISC (Reduced Instruction Set Computer) phổ biến trong các hệ thống nhúng. Cuối cùng, chương đi sâu vào các hệ thống nhúng (embedded systems), định nghĩa chúng là các máy tính chuyên dụng tích hợp trong các thiếti bị lớn hơn, từ đó giới thiệu các khái niệm liên quan như Internet of Things (IoT), vi xử lý (microprocessor) so với vi điều khiển (microcontroller), và các dòng sản phẩm ARM Cortex (A, R, M) được tối ưu hóa cho các ứng dụng khác nhau.",
+          "KeyPoints": [
+            { "en": "Computer Architecture vs. Computer Organization", "vn": "Kiến trúc Máy tính và Tổ chức Máy tính" },
+            { "en": "Four Basic Functions: Data Processing, Data Storage, Data Movement, Control", "vn": "Bốn chức năng cơ bản: Xử lý dữ liệu, Lưu trữ dữ liệu, Di chuyển dữ liệu, Điều khiển" },
+            { "en": "Top-Level Structure: CPU, Main Memory, I/O, System Interconnection", "vn": "Cấu trúc cấp cao: CPU, Bộ nhớ chính, I/O, Liên kết hệ thống" },
+            { "en": "CPU Structure: Control Unit, ALU, Registers", "vn": "Cấu trúc CPU: Đơn vị điều khiển, ALU, Thanh ghi" },
+            { "en": "Stored-Program Concept (Von Neumann Architecture)", "vn": "Khái niệm chương trình lưu trữ (Kiến trúc Von Neumann)" },
+            { "en": "Fundamental Components: Gates and Memory Cells built from Transistors", "vn": "Thành phần cơ bản: Cổng logic và Ô nhớ được xây dựng từ Transistor" },
+            { "en": "Moore's Law: Transistor density on a chip doubles approximately every 18-24 months", "vn": "Định luật Moore: Mật độ bóng bán dẫn trên chip tăng gấp đôi sau mỗi 18-24 tháng" },
+            { "en": "Multicore Computers: A single processor chip contains multiple processing units called cores", "vn": "Máy tính đa lõi: Một chip xử lý duy nhất chứa nhiều đơn vị xử lý gọi là lõi" },
+            { "en": "CISC (Complex Instruction Set Computer) vs. RISC (Reduced Instruction Set Computer)", "vn": "Máy tính tập lệnh phức tạp (CISC) và Máy tính tập lệnh rút gọn (RISC)" },
+            { "en": "Embedded Systems: Computers as components within a larger system", "vn": "Hệ thống nhúng: Máy tính như một thành phần trong một hệ thống lớn hơn" },
+            { "en": "Microprocessor vs. Microcontroller", "vn": "Vi xử lý và Vi điều khiển" },
+            { "en": "ARM Architecture: A popular RISC architecture for embedded systems (Cortex-A, R, M series)", "vn": "Kiến trúc ARM: Một kiến trúc RISC phổ biến cho hệ thống nhúng (dòng Cortex-A, R, M)" }
+          ],
+          "LearningTips": [
+            { "tip": "Sử dụng phép loại suy (analogy) để phân biệt Kiến trúc và Tổ chức:", "detail": "Hãy tưởng tượng một chiếc ô tô. **Kiến trúc (Architecture)** giống như những gì người lái xe tương tác: vô lăng, chân ga, chân phanh, cần số. Bất kỳ ai biết lái xe đều có thể lái một chiếc xe khác vì kiến trúc này khá chuẩn. **Tổ chức (Organization)** là những gì nằm dưới mui xe: động cơ xăng, động cơ điện, hay động cơ hybrid; hệ thống phun xăng điện tử hay bộ chế hòa khí. Những chi tiết này ảnh hưởng đến hiệu suất và giá thành, nhưng người lái không cần biết về chúng để vận hành xe. Tương tự, kiến trúc máy tính (Computer Architecture) là tập lệnh mà lập trình viên sử dụng, còn tổ chức máy tính (Computer Organization) là cách các mạch điện tử được thiết kế để thực thi các lệnh đó." },
+            { "tip": "Vẽ sơ đồ phân cấp để hình dung cấu trúc máy tính:", "detail": "Bắt đầu với một hộp lớn ghi 'COMPUTER'. Bên trong đó, vẽ các hộp nhỏ hơn cho 'CPU', 'Main Memory', 'I/O', và một đường nối chúng là 'System Bus'. Sau đó, phóng to hộp 'CPU' và vẽ các thành phần bên trong nó: 'Control Unit', 'ALU', 'Registers'. Tiếp tục phóng to một 'Multicore Processor' và vẽ ra các 'Core', 'L1/L2/L3 Cache'. Việc trực quan hóa này giúp củng cố kiến thức về mối quan hệ giữa các thành phần." },
+            { "tip": "Liên hệ Định luật Moore với thực tế:", "detail": "Hãy nghĩ về chiếc điện thoại thông minh bạn đang dùng so với chiếc máy tính để bàn của 10 năm trước. Điện thoại của bạn mạnh hơn rất nhiều, nhỏ gọn hơn và có thể rẻ hơn. Đó chính là hệ quả trực tiếp của Định luật Moore (Moore's Law): ngày càng nhiều bóng bán dẫn được nhồi nhét vào một con chip, làm tăng sức mạnh xử lý trong khi giảm chi phí và kích thước. Liên hệ các khái niệm trừu tượng với các thiết bị quen thuộc sẽ giúp bạn nhớ lâu hơn." },
+            { "tip": "Tạo bảng so sánh để ghi nhớ các khái niệm đối lập:", "detail": "Lập một bảng có hai cột để so sánh các cặp khái niệm quan trọng. Ví dụ:\n- **Vi xử lý (Microprocessor)** vs. **Vi điều khiển (Microcontroller)**: Cột vi xử lý ghi 'CPU trên một chip, cần bộ nhớ và ngoại vi bên ngoài', 'Mạnh mẽ, cho máy tính đa năng'. Cột vi điều khiển ghi 'Máy tính hoàn chỉnh trên một chip (CPU, RAM, ROM, I/O)', 'Chuyên dụng, cho hệ thống nhúng'.\n- **CISC** vs. **RISC**: Cột CISC ghi 'Nhiều lệnh phức tạp', 'Cần nhiều chu kỳ xung nhịp cho mỗi lệnh', 'Ví dụ: Intel x86'. Cột RISC ghi 'Ít lệnh đơn giản', 'Mỗi lệnh thường mất 1 chu kỳ xung nhịp', 'Ví dụ: ARM'." }
+          ],
+          "QuestionBank": [
+            { "Question": { "en": "Which of the following refers to the attributes of a system visible to a programmer?", "vn": "Thuật ngữ nào sau đây đề cập đến các thuộc tính của một hệ thống mà lập trình viên có thể nhìn thấy?" }, "Options": [{ "en": "Computer Organization", "vn": "Tổ chức máy tính" }, { "en": "Computer Architecture", "vn": "Kiến trúc máy tính" }, { "en": "Computer Structure", "vn": "Cấu trúc máy tính" }, { "en": "Computer Function", "vn": "Chức năng máy tính" }], "Answer": "Computer Architecture", "Explanation": "Kiến trúc máy tính (Computer Architecture) định nghĩa các khía cạnh của một hệ thống mà một lập trình viên cần biết để viết phần mềm, chẳng hạn như tập lệnh, các loại dữ liệu và kỹ thuật địa chỉ hóa bộ nhớ. Tổ chức máy tính (Computer Organization) liên quan đến việc triển khai phần cứng, vốn thường trong suốt đối với lập trình viên.", "Mnemonic": "Kiến trúc (Architecture) là 'bản thiết kế' (blueprint) mà lập trình viên nhìn vào, còn Tổ chức (Organization) là 'công trường thi công' (construction) ẩn bên dưới.", "Tags": ["Definition", "Architecture vs. Organization"] },
+            { "Question": { "en": "Which of the four main functions of a computer involves moving data between the computer and its external environment?", "vn": "Trong bốn chức năng chính của máy tính, chức năng nào liên quan đến việc di chuyển dữ liệu giữa máy tính và môi trường bên ngoài của nó?" }, "Options": [{ "en": "Data Processing", "vn": "Xử lý dữ liệu" }, { "en": "Data Storage", "vn": "Lưu trữ dữ liệu" }, { "en": "Data Movement", "vn": "Di chuyển dữ liệu" }, { "en": "Control", "vn": "Điều khiển" }], "Answer": "Data Movement", "Explanation": "Chức năng di chuyển dữ liệu (Data Movement) bao gồm việc nhận dữ liệu từ các thiết bị ngoại vi (input) và gửi dữ liệu đến chúng (output). Khi dữ liệu được di chuyển qua khoảng cách xa, nó được gọi là truyền thông dữ liệu (data communications).", "Mnemonic": "Khi bạn gõ phím (input) hoặc in một tài liệu (output), đó là 'di chuyển' dữ liệu vào và ra khỏi máy tính.", "Tags": ["Function", "Definition"] },
+            { "Question": { "en": "What are the four main structural components of a computer?", "vn": "Bốn thành phần cấu trúc chính của một máy tính là gì?" }, "Options": [{ "en": "CPU, ALU, Control Unit, Registers", "vn": "CPU, ALU, Đơn vị điều khiển, Thanh ghi" }, { "en": "CPU, Main Memory, I/O, System Interconnection", "vn": "CPU, Bộ nhớ chính, I/O, Liên kết hệ thống" }, { "en": "Hard Drive, RAM, Monitor, Keyboard", "vn": "Ổ cứng, RAM, Màn hình, Bàn phím" }, { "en": "Gates, Memory Cells, Wafers, Chips", "vn": "Cổng logic, Ô nhớ, Tấm wafer, Chip" }], "Answer": "CPU, Main Memory, I/O, System Interconnection", "Explanation": "Đây là bốn thành phần cấu trúc ở cấp độ cao nhất của một máy tính. CPU thực hiện xử lý, Bộ nhớ chính (Main Memory) lưu trữ dữ liệu và chương trình, I/O xử lý giao tiếp với thế giới bên ngoài, và Liên kết hệ thống (System Interconnection), thường là một bus hệ thống, kết nối tất cả chúng lại với nhau.", "Mnemonic": "", "Tags": ["Structure", "Definition"] },
+            { "Question": { "en": "The concept that both instructions and data are stored in memory is known as the:", "vn": "Khái niệm mà cả lệnh và dữ liệu đều được lưu trữ trong bộ nhớ được gọi là:" }, "Options": [{ "en": "Stored-Program Concept", "vn": "Khái niệm chương trình lưu trữ" }, { "en": "Moore's Law", "vn": "Định luật Moore" }, { "en": "Hierarchical System", "vn": "Hệ thống phân cấp" }, { "en": "Harvard Architecture", "vn": "Kiến trúc Harvard" }], "Answer": "Stored-Program Concept", "Explanation": "Khái niệm chương trình lưu trữ (Stored-Program Concept), thường được gắn với John von Neumann, là một thiết kế nền tảng của các máy tính hiện đại. Nó cho phép máy tính có thể được lập trình lại bằng cách thay đổi nội dung của bộ nhớ mà không cần phải thay đổi phần cứng.", "Mnemonic": "'Von Neumann' đặt chương trình vào cùng nơi với dữ liệu.", "Tags": ["IAS Computer", "Von Neumann"] },
+            { "Question": { "en": "Which register in the IAS computer specifies the address in memory for the next read or write?", "vn": "Thanh ghi nào trong máy tính IAS chỉ định địa chỉ trong bộ nhớ cho lần đọc hoặc ghi tiếp theo?" }, "Options": [{ "en": "MBR (Memory Buffer Register)", "vn": "Thanh ghi đệm bộ nhớ (MBR)" }, { "en": "MAR (Memory Address Register)", "vn": "Thanh ghi địa chỉ bộ nhớ (MAR)" }, { "en": "PC (Program Counter)", "vn": "Bộ đếm chương trình (PC)" }, { "en": "IR (Instruction Register)", "vn": "Thanh ghi lệnh (IR)" }], "Answer": "MAR (Memory Address Register)", "Explanation": "Thanh ghi địa chỉ bộ nhớ (MAR) được kết nối với các đường địa chỉ của bus hệ thống. Nó chứa địa chỉ của vị trí bộ nhớ mà CPU muốn đọc hoặc ghi dữ liệu vào. MBR (Memory Buffer Register) chứa dữ liệu sẽ được ghi hoặc vừa được đọc.", "Mnemonic": "'A' trong MAR là Address (Địa chỉ).", "Tags": ["IAS Computer", "CPU", "Structure"] },
+            { "Question": { "en": "Moore's Law states that the number of transistors on a chip doubles approximately every:", "vn": "Định luật Moore phát biểu rằng số lượng bóng bán dẫn trên một con chip sẽ tăng gấp đôi xấp xỉ mỗi:" }, "Options": [{ "en": "6 months", "vn": "6 tháng" }, { "en": "1 year", "vn": "1 năm" }, { "en": "18-24 months", "vn": "18-24 tháng" }, { "en": "5 years", "vn": "5 năm" }], "Answer": "18-24 months", "Explanation": "Định luật Moore là một quan sát của Gordon Moore vào năm 1965, dự đoán rằng số lượng bóng bán dẫn trong một mạch tích hợp (IC) sẽ tăng gấp đôi khoảng hai năm một lần. Tốc độ này đã chậm lại một chút trong những năm 1970 thành khoảng 18 tháng và duy trì tốc độ đó trong nhiều thập kỷ.", "Mnemonic": "", "Tags": ["Moore's Law", "History", "Technology"] },
+            { "Question": { "en": "Which processor family is a prominent example of CISC architecture?", "vn": "Họ vi xử lý nào là một ví dụ nổi bật của kiến trúc CISC?" }, "Options": [{ "en": "ARM", "vn": "ARM" }, { "en": "Intel x86", "vn": "Intel x86" }, { "en": "MIPS", "vn": "MIPS" }, { "en": "PowerPC", "vn": "PowerPC" }], "Answer": "Intel x86", "Explanation": "Kiến trúc Intel x86 là ví dụ điển hình của Máy tính tập lệnh phức tạp (CISC - Complex Instruction Set Computer). Nó có một bộ lệnh lớn và phức tạp, với nhiều lệnh có thể thực hiện các hoạt động cấp cao trong một bước. ARM, MIPS và PowerPC là những ví dụ về kiến trúc RISC.", "Mnemonic": "Intel Inside = CISC Inside.", "Tags": ["CISC vs. RISC", "Intel x86", "Architecture"] },
+            { "Question": { "en": "What is a key characteristic of an embedded system?", "vn": "Đặc điểm chính của một hệ thống nhúng là gì?" }, "Options": [{ "en": "It is a general-purpose computer like a desktop.", "vn": "Nó là một máy tính đa năng như máy tính để bàn." }, { "en": "It is designed for a specific function within a larger device.", "vn": "Nó được thiết kế cho một chức năng cụ thể trong một thiết bị lớn hơn." }, { "en": "It always has a complex user interface with a screen and keyboard.", "vn": "Nó luôn có giao diện người dùng phức tạp với màn hình và bàn phím." }, { "en": "It requires a powerful, high-speed processor to operate.", "vn": "Nó yêu cầu một bộ xử lý mạnh mẽ, tốc độ cao để hoạt động." }], "Answer": "It is designed for a specific function within a larger device.", "Explanation": "Hệ thống nhúng (Embedded System) là một hệ thống máy tính được thiết kế để thực hiện một hoặc một vài chức năng chuyên dụng, thường trong một hệ thống lớn hơn. Ví dụ bao gồm bộ điều khiển trong lò vi sóng, hệ thống chống bó cứng phanh (ABS) trong ô tô. Chúng thường được tối ưu hóa về chi phí, kích thước và mức tiêu thụ điện năng.", "Mnemonic": "Nhúng (embedded) nghĩa là 'nhúng' một máy tính vào bên trong một thiết bị khác.", "Tags": ["Embedded Systems", "Definition"] },
+            { "Question": { "en": "A single chip containing a processor, memory (ROM and RAM), and I/O control units is called a:", "vn": "Một con chip duy nhất chứa bộ xử lý, bộ nhớ (ROM và RAM), và các đơn vị điều khiển I/O được gọi là:" }, "Options": [{ "en": "Microprocessor", "vn": "Vi xử lý" }, { "en": "Multicore processor", "vn": "Bộ xử lý đa lõi" }, { "en": "Microcontroller", "vn": "Vi điều khiển" }, { "en": "Application processor", "vn": "Bộ xử lý ứng dụng" }], "Answer": "Microcontroller", "Explanation": "Vi điều khiển (Microcontroller) là một 'máy tính trên một con chip'. Nó tích hợp tất cả các thành phần cần thiết (CPU, bộ nhớ, I/O) vào một mạch tích hợp duy nhất, làm cho nó trở nên lý tưởng cho các hệ thống nhúng chuyên dụng. Ngược lại, một vi xử lý (microprocessor) thường chỉ chứa CPU và cần các chip bộ nhớ và I/O bên ngoài.", "Mnemonic": "Microcontroller = Micro-computer. Nó điều khiển (controls) một thiết bị.", "Tags": ["Microprocessor vs. Microcontroller", "Embedded Systems", "Definition"] },
+            { "Question": { "en": "Which ARM Cortex series is designed for high-performance applications and can run complex operating systems like Android or Linux?", "vn": "Dòng ARM Cortex nào được thiết kế cho các ứng dụng hiệu suất cao và có thể chạy các hệ điều hành phức tạp như Android hoặc Linux?" }, "Options": [{ "en": "Cortex-A", "vn": "Cortex-A" }, { "en": "Cortex-R", "vn": "Cortex-R" }, { "en": "Cortex-M", "vn": "Cortex-M" }, { "en": "Cortex-X", "vn": "Cortex-X" }], "Answer": "Cortex-A", "Explanation": "Dòng Cortex-A ('A' cho Application) được thiết kế như những bộ xử lý ứng dụng. Chúng có hiệu suất cao, hỗ trợ đơn vị quản lý bộ nhớ (MMU), và có khả năng chạy các hệ điều hành đầy đủ tính năng. Đây là loại bộ xử lý bạn thường thấy trong điện thoại thông minh và máy tính bảng. Cortex-R ('R' cho Real-time) dành cho các ứng dụng thời gian thực, và Cortex-M ('M' cho Microcontroller) dành cho các thiết bị nhúng chi phí thấp.", "Mnemonic": "A for Application (ứng dụng), R for Real-time (thời gian thực), M for Microcontroller (vi điều khiển).", "Tags": ["ARM", "Embedded Systems", "Architecture"] },
+            { "Question": { "en": "In the context of computer structure, what does 'ALU' stand for?", "vn": "Trong bối cảnh cấu trúc máy tính, 'ALU' là viết tắt của từ gì?" }, "Options": [{ "en": "Advanced Logic Unit", "vn": "Đơn vị logic tiên tiến" }, { "en": "Arithmetic and Logic Unit", "vn": "Đơn vị số học và logic" }, { "en": "Application Logic Unit", "vn": "Đơn vị logic ứng dụng" }, { "en": "Address Location Unit", "vn": "Đơn vị định vị địa chỉ" }], "Answer": "Arithmetic and Logic Unit", "Explanation": "ALU (Arithmetic and Logic Unit) là một phần của CPU thực hiện các phép toán số học (như cộng, trừ, nhân, chia) và các phép toán logic (như AND, OR, NOT).", "Mnemonic": "", "Tags": ["Structure", "CPU", "Definition"] },
+            { "Question": { "en": "The operational units and their interconnections that realize the architectural specifications are known as:", "vn": "Các đơn vị hoạt động và các kết nối của chúng để hiện thực hóa các đặc tả kiến trúc được gọi là:" }, "Options": [{ "en": "Computer Architecture", "vn": "Kiến trúc máy tính" }, { "en": "Instruction Set Architecture (ISA)", "vn": "Kiến trúc tập lệnh (ISA)" }, { "en": "Computer Organization", "vn": "Tổ chức máy tính" }, { "en": "Computer Function", "vn": "Chức năng máy tính" }], "Answer": "Computer Organization", "Explanation": "Tổ chức máy tính (Computer Organization) mô tả cách các đặc điểm kiến trúc được triển khai. Ví dụ, kiến trúc có thể chỉ định rằng có một lệnh nhân, nhưng tổ chức sẽ quyết định liệu lệnh đó được thực hiện bởi một đơn vị nhân phần cứng chuyên dụng hay bằng cách lặp lại phép cộng. Đây là phần 'làm thế nào' (how) của máy tính.", "Mnemonic": "Tổ chức (Organization) là việc 'tổ chức' các bộ phận phần cứng lại với nhau.", "Tags": ["Definition", "Architecture vs. Organization"] },
+            { "Question": { "en": "In a multicore computer, what is a 'core'?", "vn": "Trong một máy tính đa lõi, 'lõi' (core) là gì?" }, "Options": [{ "en": "The main memory chip", "vn": "Chip bộ nhớ chính" }, { "en": "An individual processing unit on a processor chip", "vn": "Một đơn vị xử lý riêng lẻ trên một chip xử lý" }, { "en": "The entire processor chip itself", "vn": "Toàn bộ con chip xử lý" }, { "en": "The system bus connecting all components", "vn": "Bus hệ thống kết nối tất cả các thành phần" }], "Answer": "An individual processing unit on a processor chip", "Explanation": "Một lõi (core) là một đơn vị xử lý độc lập, hoàn chỉnh (bao gồm ALU, đơn vị điều khiển, và thanh ghi) nằm trên một con chip vi xử lý. Một bộ xử lý đa lõi (multicore processor) chứa nhiều lõi như vậy, cho phép nó thực hiện nhiều tác vụ song song.", "Mnemonic": "", "Tags": ["Structure", "Multicore", "Definition"] },
+            { "Question": { "en": "What is the primary purpose of cache memory?", "vn": "Mục đích chính của bộ nhớ đệm (cache) là gì?" }, "Options": [{ "en": "To provide long-term, non-volatile storage for files.", "vn": "Để cung cấp lưu trữ dài hạn, không bay hơi cho các tệp tin." }, { "en": "To speed up memory access by storing frequently used data closer to the CPU.", "vn": "Để tăng tốc độ truy cập bộ nhớ bằng cách lưu trữ dữ liệu thường dùng ở gần CPU hơn." }, { "en": "To manage input/output operations with peripheral devices.", "vn": "Để quản lý các hoạt động nhập/xuất với các thiết bị ngoại vi." }, { "en": "To execute complex operating systems.", "vn": "Để thực thi các hệ điều hành phức tạp." }], "Answer": "To speed up memory access by storing frequently used data closer to the CPU.", "Explanation": "Bộ nhớ đệm (Cache memory) là một loại bộ nhớ nhỏ, tốc độ cao nằm giữa CPU và bộ nhớ chính (RAM). Nó lưu trữ các bản sao của dữ liệu và lệnh từ các vị trí RAM thường được truy cập. Vì cache nhanh hơn RAM rất nhiều, việc truy cập dữ liệu từ cache sẽ giảm đáng kể thời gian chờ của CPU, từ đó cải thiện hiệu suất tổng thể của hệ thống.", "Mnemonic": "Cache giống như một 'tủ đồ' nhỏ ngay cạnh bàn làm việc của bạn, chứa những công cụ bạn hay dùng nhất, thay vì phải chạy xuống nhà kho (RAM) mỗi lần cần.", "Tags": ["Structure", "Memory", "Function"] },
+            { "Question": { "en": "The fundamental building block of digital circuits like gates and memory cells is the:", "vn": "Thành phần cấu tạo cơ bản của các mạch kỹ thuật số như cổng logic và ô nhớ là:" }, "Options": [{ "en": "Vacuum tube", "vn": "Đèn chân không" }, { "en": "Capacitor", "vn": "Tụ điện" }, { "en": "Resistor", "vn": "Điện trở" }, { "en": "Transistor", "vn": "Bóng bán dẫn (Transistor)" }], "Answer": "Transistor", "Explanation": "Bóng bán dẫn (Transistor) là một công tắc điện tử có thể được bật hoặc tắt bằng một tín hiệu điện. Bằng cách kết hợp các transistor, người ta có thể tạo ra các cổng logic (AND, OR, NOT) để thực hiện tính toán, và các ô nhớ (flip-flops) để lưu trữ một bit dữ liệu. Sự phát minh ra transistor đã mở đường cho các mạch tích hợp và cuộc cách mạng máy tính hiện đại.", "Mnemonic": "", "Tags": ["Technology", "Structure", "Definition"] },
+            { "Question": { "en": "Which Intel processor was the first 32-bit machine and supported multitasking?", "vn": "Bộ xử lý Intel nào là máy 32-bit đầu tiên và hỗ trợ đa nhiệm?" }, "Options": [{ "en": "8086", "vn": "8086" }, { "en": "80286", "vn": "80286" }, { "en": "80386", "vn": "80386" }, { "en": "Pentium", "vn": "Pentium" }], "Answer": "80386", "Explanation": "Intel 80386 là một bước đột phá lớn, là bộ xử lý 32-bit đầu tiên trong dòng x86. Kiến trúc 32-bit của nó cho phép nó xử lý các tập dữ liệu lớn hơn và hỗ trợ đa nhiệm (multitasking) thực sự, nghĩa là nó có thể chạy nhiều chương trình cùng một lúc.", "Mnemonic": "Số '3' trong 386 có thể liên tưởng đến một bước tiến lớn thứ ba (sau 8086 và 80286).", "Tags": ["Intel x86", "History"] },
+            { "Question": { "en": "The term for the expanding interconnection of smart devices, from appliances to tiny sensors, is:", "vn": "Thuật ngữ chỉ sự kết nối ngày càng mở rộng của các thiết bị thông minh, từ đồ gia dụng đến các cảm biến nhỏ, là:" }, "Options": [{ "en": "Cloud Computing", "vn": "Điện toán đám mây" }, { "en": "Internet of Things (IoT)", "vn": "Vạn vật kết nối (IoT)" }, { "en": "Embedded Systems", "vn": "Hệ thống nhúng" }, { "en": "Big Data", "vn": "Dữ liệu lớn" }], "Answer": "Internet of Things (IoT)", "Explanation": "Internet of Things (IoT) hay Vạn vật kết nối là một mạng lưới các đối tượng vật lý ('vạn vật') được nhúng với các cảm biến, phần mềm và các công nghệ khác nhằm mục đích kết nối và trao đổi dữ liệu với các thiết bị và hệ thống khác qua Internet. Đây là một động lực chính thúc đẩy sự phát triển của các hệ thống nhúng.", "Mnemonic": "", "Tags": ["IoT", "Embedded Systems", "Definition"] },
+            { "Question": { "en": "An architecture that uses separate buses and memory for instructions and data, allowing simultaneous access, is called:", "vn": "Một kiến trúc sử dụng các bus và bộ nhớ riêng biệt cho lệnh và dữ liệu, cho phép truy cập đồng thời, được gọi là:" }, "Options": [{ "en": "Von Neumann Architecture", "vn": "Kiến trúc Von Neumann" }, { "en": "Harvard Architecture", "vn": "Kiến trúc Harvard" }, { "en": "CISC Architecture", "vn": "Kiến trúc CISC" }, { "en": "RISC Architecture", "vn": "Kiến trúc RISC" }], "Answer": "Harvard Architecture", "Explanation": "Kiến trúc Harvard (Harvard Architecture) có các đường dẫn và không gian bộ nhớ riêng biệt cho lệnh và dữ liệu. Điều này cho phép CPU đọc một lệnh và truy cập dữ liệu cùng một lúc, giúp tăng hiệu suất. Nhiều bộ vi điều khiển hiện đại, bao gồm cả ARM Cortex-M, sử dụng một kiến trúc Harvard sửa đổi. Kiến trúc Von Neumann sử dụng cùng một bộ nhớ và bus cho cả hai.", "Mnemonic": "Harvard có 2 con đường riêng biệt, Von Neumann chỉ có 1 con đường chung.", "Tags": ["Architecture", "ARM", "Definition"] },
+            { "Question": { "en": "Which part of the CPU fetches and decodes instructions?", "vn": "Bộ phận nào của CPU tìm nạp và giải mã lệnh?" }, "Options": [{ "en": "Arithmetic and Logic Unit (ALU)", "vn": "Đơn vị số học và logic (ALU)" }, { "en": "Registers", "vn": "Thanh ghi" }, { "en": "Control Unit", "vn": "Đơn vị điều khiển" }, { "en": "System Bus", "vn": "Bus hệ thống" }], "Answer": "Control Unit", "Explanation": "Đơn vị điều khiển (Control Unit) có vai trò như 'bộ não' của CPU. Nó điều phối tất cả các hoạt động. Chức năng chính của nó bao gồm tìm nạp lệnh từ bộ nhớ, giải mã lệnh để xác định thao tác cần thực hiện, và tạo ra các tín hiệu điều khiển để ra lệnh cho các bộ phận khác (như ALU, thanh ghi, bộ nhớ) thực hiện công việc.", "Mnemonic": "Control Unit 'controls' everything.", "Tags": ["CPU", "Structure", "Function"] },
+            { "Question": { "en": "A processor with a small, highly optimized set of instructions is characteristic of which architecture?", "vn": "Một bộ xử lý với một tập lệnh nhỏ, được tối ưu hóa cao là đặc trưng của kiến trúc nào?" }, "Options": [{ "en": "CISC", "vn": "CISC" }, { "en": "RISC", "vn": "RISC" }, { "en": "Von Neumann", "vn": "Von Neumann" }, { "en": "x86", "vn": "x86" }], "Answer": "RISC", "Explanation": "RISC (Reduced Instruction Set Computer) hay Máy tính tập lệnh rút gọn, được thiết kế dựa trên triết lý rằng một tập lệnh nhỏ, đơn giản và được tối ưu hóa cao có thể được thực thi nhanh hơn. Mỗi lệnh thường hoàn thành trong một chu kỳ xung nhịp, giúp việc thiết kế bộ xử lý đơn giản và hiệu quả hơn. ARM là một ví dụ điển hình.", "Mnemonic": "'R' trong RISC là Reduced (rút gọn).", "Tags": ["CISC vs. RISC", "Architecture", "Definition"] },
+            { "Question": { "en": "Which of these is NOT a primary function of a computer?", "vn": "Điều nào sau đây KHÔNG phải là chức năng chính của máy tính?" }, "Options": [{ "en": "Data processing", "vn": "Xử lý dữ liệu" }, { "en": "Data generation", "vn": "Tạo dữ liệu" }, { "en": "Data storage", "vn": "Lưu trữ dữ liệu" }, { "en": "Data movement", "vn": "Di chuyển dữ liệu" }], "Answer": "Data generation", "Explanation": "Bốn chức năng chính của máy tính là xử lý dữ liệu (data processing), lưu trữ dữ liệu (data storage), di chuyển dữ liệu (data movement), và điều khiển (control). Máy tính thao tác trên dữ liệu hiện có chứ không tự 'tạo ra' dữ liệu từ hư không. Dữ liệu được nhập vào từ môi trường bên ngoài (data movement) hoặc đã được lưu trữ (data storage).", "Mnemonic": "", "Tags": ["Function", "Definition"] },
+            { "Question": { "en": "An individual processing unit within a multicore processor, equivalent to a single-CPU system, is called a:", "vn": "Một đơn vị xử lý riêng lẻ trong một bộ xử lý đa lõi, tương đương với một hệ thống CPU đơn, được gọi là:" }, "Options": [{ "en": "Chip", "vn": "Chip" }, { "en": "Socket", "vn": "Đế cắm" }, { "en": "Core", "vn": "Lõi" }, { "en": "Thread", "vn": "Luồng" }], "Answer": "Core", "Explanation": "Một lõi (Core) là một đơn vị xử lý đầy đủ trên một chip. Một bộ xử lý đa lõi (multicore processor) có nhiều lõi, cho phép thực thi song song. Một chip là toàn bộ miếng silicon vật lý. Một socket là nơi cắm chip trên bo mạch chủ. Một thread (luồng) là một khái niệm phần mềm, là một chuỗi các lệnh mà hệ điều hành có thể quản lý.", "Mnemonic": "", "Tags": ["Multicore", "Structure", "Definition"] },
+            { "Question": { "en": "The main printed circuit board in a computer is called the:", "vn": "Bảng mạch in chính trong một máy tính được gọi là:" }, "Options": [{ "en": "Expansion board", "vn": "Bảng mạch mở rộng" }, { "en": "Daughterboard", "vn": "Bảng mạch con" }, { "en": "System board or motherboard", "vn": "Bảng mạch hệ thống hoặc bo mạch chủ" }, { "en": "Integrated circuit", "vn": "Mạch tích hợp" }], "Answer": "System board or motherboard", "Explanation": "Bo mạch chủ (Motherboard) hay bảng mạch hệ thống là bảng mạch in (PCB) chính. Nó chứa các thành phần điện tử quan trọng nhất của hệ thống, như CPU, bộ nhớ, và các khe cắm để kết nối các thiết bị ngoại vi và các bảng mạch mở rộng khác.", "Mnemonic": "Motherboard (bo mạch mẹ) vì nó là nơi 'sinh ra' và kết nối tất cả các thành phần con khác.", "Tags": ["Structure", "Hardware", "Definition"] },
+            { "Question": { "en": "In the IAS computer's instruction cycle, what are the two subcycles?", "vn": "Trong chu kỳ lệnh của máy tính IAS, hai chu kỳ con là gì?" }, "Options": [{ "en": "Read and Write", "vn": "Đọc và Ghi" }, { "en": "Input and Output", "vn": "Nhập và Xuất" }, { "en": "Fetch and Execute", "vn": "Tìm nạp và Thực thi" }, { "en": "Start and Stop", "vn": "Bắt đầu và Dừng" }], "Answer": "Fetch and Execute", "Explanation": "Chu kỳ lệnh (instruction cycle) cơ bản bao gồm hai bước. Trong chu kỳ tìm nạp (fetch cycle), CPU đọc một lệnh từ bộ nhớ. Trong chu kỳ thực thi (execute cycle), CPU giải mã và thực hiện lệnh đó. Quá trình này được lặp đi lặp lại liên tục.", "Mnemonic": "Đầu tiên bạn phải 'lấy' (fetch) công việc, sau đó bạn mới 'làm' (execute) nó.", "Tags": ["IAS Computer", "Function", "CPU"] },
+            { "Question": { "en": "A device that implements a simple Boolean logical function (e.g., AND, OR) is called a:", "vn": "Một thiết bị thực hiện một hàm logic Boolean đơn giản (ví dụ: AND, OR) được gọi là:" }, "Options": [{ "en": "Memory cell", "vn": "Ô nhớ" }, { "en": "Gate", "vn": "Cổng logic" }, { "en": "Transistor", "vn": "Bóng bán dẫn" }, { "en": "Register", "vn": "Thanh ghi" }], "Answer": "Gate", "Explanation": "Một cổng logic (gate) là một khối xây dựng cơ bản của một mạch kỹ thuật số. Nó nhận một hoặc nhiều đầu vào nhị phân và tạo ra một đầu ra nhị phân duy nhất dựa trên một hàm logic đơn giản. Một ô nhớ (memory cell) được sử dụng để lưu trữ một bit dữ liệu.", "Mnemonic": "Nó hoạt động như một cái 'cổng' (gate), cho phép hoặc chặn dòng chảy của tín hiệu dựa trên các điều kiện logic.", "Tags": ["Hardware", "Structure", "Definition"] },
+            { "Question": { "en": "The Intel 8080, used in the first personal computer (the Altair), was what kind of machine?", "vn": "Intel 8080, được sử dụng trong máy tính cá nhân đầu tiên (Altair), là loại máy gì?" }, "Options": [{ "en": "A 4-bit machine", "vn": "Máy 4-bit" }, { "en": "An 8-bit machine", "vn": "Máy 8-bit" }, { "en": "A 16-bit machine", "vn": "Máy 16-bit" }, { "en": "A 32-bit machine", "vn": "Máy 32-bit" }], "Answer": "An 8-bit machine", "Explanation": "Intel 8080 là bộ vi xử lý đa năng 8-bit đầu tiên trên thế giới và là bộ não của Altair 8800, chiếc máy tính cá nhân đã khơi mào cho cuộc cách mạng PC. Nó có một đường dẫn dữ liệu 8-bit đến bộ nhớ.", "Mnemonic": "", "Tags": ["Intel x86", "History"] },
+            { "Question": { "en": "What does a 'deeply embedded system' typically use?", "vn": "Một 'hệ thống nhúng sâu' (deeply embedded system) thường sử dụng cái gì?" }, "Options": [{ "en": "A microprocessor", "vn": "Một vi xử lý" }, { "en": "A microcontroller", "vn": "Một vi điều khiển" }, { "en": "A complex operating system", "vn": "Một hệ điều hành phức tạp" }, { "en": "A user interface", "vn": "Một giao diện người dùng" }], "Answer": "A microcontroller", "Explanation": "Các hệ thống nhúng sâu (deeply embedded systems) là các hệ thống chuyên dụng, đơn mục đích, thường không có sự tương tác của người dùng và có các ràng buộc nghiêm ngặt về tài nguyên. Chúng thường sử dụng một vi điều khiển (microcontroller) vì nó tích hợp tất cả các thành phần cần thiết vào một chip, có chi phí thấp và tiết kiệm năng lượng.", "Mnemonic": "", "Tags": ["Embedded Systems", "Definition"] },
+            { "Question": { "en": "The Thumb instruction set in ARM architecture is designed to:", "vn": "Tập lệnh Thumb trong kiến trúc ARM được thiết kế để:" }, "Options": [{ "en": "Increase clock speed", "vn": "Tăng tốc độ xung nhịp" }, { "en": "Improve code density", "vn": "Cải thiện mật độ mã" }, { "en": "Support 64-bit operations", "vn": "Hỗ trợ các hoạt động 64-bit" }, { "en": "Enable multitasking", "vn": "Cho phép đa nhiệm" }], "Answer": "Improve code density", "Explanation": "Tập lệnh Thumb là một phiên bản mã hóa lại của một tập con các lệnh ARM 32-bit thành các lệnh 16-bit. Điều này cho phép chương trình chiếm ít không gian bộ nhớ hơn, một yếu tố quan trọng trong các hệ thống nhúng có bộ nhớ hạn chế. Mật độ mã (code density) cao hơn có nghĩa là nhiều lệnh hơn có thể được lưu trữ trong cùng một lượng bộ nhớ.", "Mnemonic": "Thumb (ngón tay cái) nhỏ hơn cánh tay (ARM), cũng như lệnh Thumb (16-bit) nhỏ hơn lệnh ARM (32-bit).", "Tags": ["ARM", "Architecture", "Function"] },
+            { "Question": { "en": "The component that provides for communication among CPU, main memory, and I/O is the:", "vn": "Thành phần cung cấp sự giao tiếp giữa CPU, bộ nhớ chính và I/O là:" }, "Options": [{ "en": "Control Unit", "vn": "Đơn vị điều khiển" }, { "en": "ALU", "vn": "ALU" }, { "en": "Cache memory", "vn": "Bộ nhớ đệm" }, { "en": "System Interconnection (e.g., system bus)", "vn": "Liên kết hệ thống (ví dụ: bus hệ thống)" }], "Answer": "System Interconnection (e.g., system bus)", "Explanation": "Liên kết hệ thống (System Interconnection) là cơ chế cho phép các thành phần chính của máy tính giao tiếp với nhau. Một ví dụ phổ biến là bus hệ thống (system bus), bao gồm một tập hợp các dây dẫn điện để truyền dữ liệu, địa chỉ và tín hiệu điều khiển.", "Mnemonic": "Bus giống như một chiếc 'xe buýt' chở dữ liệu giữa các 'trạm' là CPU, bộ nhớ và I/O.", "Tags": ["Structure", "Definition"] },
+            { "Question": { "en": "A computer system that is in continual interaction with the environment and executes at a pace determined by that environment is called a:", "vn": "Một hệ thống máy tính tương tác liên tục với môi trường và thực thi theo nhịp độ do môi trường đó quyết định được gọi là:" }, "Options": [{ "en": "General-purpose system", "vn": "Hệ thống đa năng" }, { "en": "Reactive system", "vn": "Hệ thống phản ứng" }, { "en": "Batch system", "vn": "Hệ thống xử lý theo lô" }, { "en": "Mainframe system", "vn": "Hệ thống máy tính lớn" }], "Answer": "Reactive system", "Explanation": "Một hệ thống phản ứng (reactive system) là đặc trưng của nhiều hệ thống nhúng. Nó phải liên tục theo dõi môi trường (qua cảm biến) và phản ứng lại các thay đổi trong một khoảng thời gian xác định (điều khiển các cơ cấu chấp hành). Ví dụ, hệ thống điều khiển bay của máy bay hoặc hệ thống chống bó cứng phanh của ô tô.", "Mnemonic": "", "Tags": ["Embedded Systems", "Definition"] },
+            { "Question": { "en": "In the IAS computer, which register temporarily holds the right-hand instruction from a word in memory?", "vn": "Trong máy tính IAS, thanh ghi nào tạm thời giữ lệnh bên phải từ một từ trong bộ nhớ?" }, "Options": [{ "en": "IR (Instruction Register)", "vn": "Thanh ghi lệnh (IR)" }, { "en": "IBR (Instruction Buffer Register)", "vn": "Thanh ghi đệm lệnh (IBR)" }, { "en": "PC (Program Counter)", "vn": "Bộ đếm chương trình (PC)" }, { "en": "AC (Accumulator)", "vn": "Thanh ghi tích lũy (AC)" }], "Answer": "IBR (Instruction Buffer Register)", "Explanation": "Bộ nhớ của máy tính IAS được tổ chức thành các từ (word), mỗi từ có thể chứa hai lệnh (lệnh trái và lệnh phải). Khi một từ được tìm nạp, lệnh bên trái được đưa vào Thanh ghi lệnh (IR) để thực thi, trong khi lệnh bên phải được đưa vào Thanh ghi đệm lệnh (IBR) để chờ đến lượt thực thi tiếp theo. Điều này giúp tăng tốc độ xử lý bằng cách giảm số lần truy cập bộ nhớ.", "Mnemonic": "'B' trong IBR là Buffer (đệm), nó đệm lệnh tiếp theo.", "Tags": ["IAS Computer", "CPU", "Structure"] },
+            { "Question": { "en": "What is the name for a physical piece of silicon containing one or more cores?", "vn": "Tên gọi của một miếng silicon vật lý chứa một hoặc nhiều lõi là gì?" }, "Options": [{ "en": "A core", "vn": "Một lõi" }, { "en": "A processor", "vn": "Một bộ xử lý" }, { "en": "A motherboard", "vn": "Một bo mạch chủ" }, { "en": "A system bus", "vn": "Một bus hệ thống" }], "Answer": "A processor", "Explanation": "Theo định nghĩa được sử dụng trong sách, một bộ xử lý (processor) là một miếng silicon vật lý. Nó có thể chứa một lõi (core) - trường hợp này là bộ xử lý đơn lõi, hoặc nhiều lõi - trường hợp này là bộ xử lý đa lõi (multicore processor).", "Mnemonic": "", "Tags": ["Structure", "Definition", "Multicore"] },
+            { "Question": { "en": "Which consequence is NOT a direct result of Moore's Law?", "vn": "Hệ quả nào sau đây KHÔNG phải là kết quả trực tiếp của Định luật Moore?" }, "Options": [{ "en": "The cost of computer logic and memory has fallen dramatically.", "vn": "Chi phí cho logic và bộ nhớ máy tính đã giảm mạnh." }, { "en": "The operating speed of chips has increased.", "vn": "Tốc độ hoạt động của chip đã tăng lên." }, { "en": "Computers have become smaller.", "vn": "Máy tính đã trở nên nhỏ hơn." }, { "en": "The fundamental principles of the Von Neumann architecture have been replaced.", "vn": "Các nguyên tắc cơ bản của kiến trúc Von Neumann đã bị thay thế." }], "Answer": "The fundamental principles of the Von Neumann architecture have been replaced.", "Explanation": "Định luật Moore đã dẫn đến việc giảm chi phí, tăng tốc độ, giảm kích thước và giảm yêu cầu về năng lượng. Tuy nhiên, nó không thay đổi kiến trúc cơ bản của máy tính. Hầu hết các máy tính đa năng ngày nay vẫn tuân theo các nguyên tắc của kiến trúc chương trình lưu trữ của Von Neumann, ngay cả khi chúng được triển khai bằng công nghệ tiên tiến hơn rất nhiều.", "Mnemonic": "", "Tags": ["Moore's Law", "Technology", "Architecture"] },
+            { "Question": { "en": "An application processor is defined by its ability to:", "vn": "Một bộ xử lý ứng dụng (application processor) được định nghĩa bởi khả năng:" }, "Options": [{ "en": "Perform only a single, dedicated task.", "vn": "Chỉ thực hiện một nhiệm vụ chuyên dụng duy nhất." }, { "en": "Operate at very low power consumption.", "vn": "Hoạt động ở mức tiêu thụ điện năng rất thấp." }, { "en": "Execute complex operating systems like Linux or Android.", "vn": "Thực thi các hệ điều hành phức tạp như Linux hoặc Android." }, { "en": "Be integrated into a microcontroller.", "vn": "Được tích hợp vào một vi điều khiển." }], "Answer": "Execute complex operating systems like Linux or Android.", "Explanation": "Một bộ xử lý ứng dụng (Application Processor), như ARM Cortex-A, được thiết kế để đủ mạnh mẽ và có các tính năng cần thiết (như MMU) để chạy các hệ điều hành phức tạp và nhiều ứng dụng khác nhau. Điều này trái ngược với một bộ xử lý chuyên dụng (dedicated processor) được tối ưu hóa cho một số ít nhiệm vụ cụ thể.", "Mnemonic": "Application Processor chạy các 'applications' (ứng dụng) trên một hệ điều hành.", "Tags": ["Embedded Systems", "Definition"] },
+            { "Question": { "en": "The ARM Cortex-R series is primarily designed for what type of applications?", "vn": "Dòng ARM Cortex-R chủ yếu được thiết kế cho loại ứng dụng nào?" }, "Options": [{ "en": "High-performance mobile devices (smartphones)", "vn": "Các thiết bị di động hiệu suất cao (điện thoại thông minh)" }, { "en": "Low-cost microcontrollers for IoT", "vn": "Các vi điều khiển chi phí thấp cho IoT" }, { "en": "General-purpose desktop computers", "vn": "Máy tính để bàn đa năng" }, { "en": "Real-time applications requiring rapid response", "vn": "Các ứng dụng thời gian thực yêu cầu phản hồi nhanh" }], "Answer": "Real-time applications requiring rapid response", "Explanation": "Dòng Cortex-R ('R' cho Real-time) được tối ưu hóa cho các hệ thống thời gian thực, nơi việc đáp ứng các sự kiện trong một khoảng thời gian xác định là rất quan trọng. Ví dụ bao gồm hệ thống phanh ô tô, bộ điều khiển lưu trữ khối, và các thiết bị mạng.", "Mnemonic": "R for Real-time.", "Tags": ["ARM", "Embedded Systems", "Architecture"] },
+            { "Question": { "en": "The way in which the components of a computer are interrelated is its:", "vn": "Cách thức mà các thành phần của một máy tính liên kết với nhau là:" }, "Options": [{ "en": "Function", "vn": "Chức năng" }, { "en": "Structure", "vn": "Cấu trúc" }, { "en": "Architecture", "vn": "Kiến trúc" }, { "en": "Organization", "vn": "Tổ chức" }], "Answer": "Structure", "Explanation": "Cấu trúc (Structure) đề cập đến cách các thành phần được kết nối với nhau. Chức năng (Function) là hoạt động của từng thành phần như một phần của cấu trúc đó. Ví dụ, cấu trúc của máy tính bao gồm CPU và bộ nhớ được kết nối bằng bus hệ thống; chức năng của CPU là thực thi lệnh.", "Mnemonic": "", "Tags": ["Structure", "Definition"] },
+            { "Question": { "en": "What technology packages several bare chips on a common substrate to decrease spacing and increase performance?", "vn": "Công nghệ nào đóng gói nhiều chip trần trên một đế chung để giảm khoảng cách và tăng hiệu suất?" }, "Options": [{ "en": "Printed Circuit Board (PCB)", "vn": "Bảng mạch in (PCB)" }, { "en": "Integrated Circuit (IC)", "vn": "Mạch tích hợp (IC)" }, { "en": "Multichip Module (MCM)", "vn": "Mô-đun đa chip (MCM)" }, { "en": "Small-Scale Integration (SSI)", "vn": "Tích hợp quy mô nhỏ (SSI)" }], "Answer": "Multichip Module (MCM)", "Explanation": "Mô-đun đa chip (Multichip Module - MCM) là một công nghệ đóng gói tiên tiến, đặt nhiều chip chưa được đóng gói (chip trần) lên một đế chung. Điều này làm giảm đáng kể khoảng cách giữa các chip so với việc gắn các chip đã đóng gói riêng lẻ lên một bo mạch chủ, từ đó tăng tốc độ giao tiếp và giảm nhiễu.", "Mnemonic": "Multi-chip = nhiều chip trong một module.", "Tags": ["Technology", "Hardware", "Definition"] },
+            { "Question": { "en": "In the IBM z13 core layout, what is the function of the LSU (load-store unit)?", "vn": "Trong bố cục lõi của IBM z13, chức năng của LSU (đơn vị tải-lưu) là gì?" }, "Options": [{ "en": "To decode instructions", "vn": "Để giải mã lệnh" }, { "en": "To perform fixed-point arithmetic", "vn": "Để thực hiện các phép toán số nguyên" }, { "en": "To manage data traffic between L2 cache and execution units", "vn": "Để quản lý luồng dữ liệu giữa bộ đệm L2 và các đơn vị thực thi" }, { "en": "To predict the outcome of branch instructions", "vn": "Để dự đoán kết quả của các lệnh rẽ nhánh" }], "Answer": "To manage data traffic between L2 cache and execution units", "Explanation": "Đơn vị tải-lưu (LSU - Load-Store Unit) chịu trách nhiệm xử lý tất cả các truy cập toán hạng. Nó quản lý luồng dữ liệu giữa bộ đệm dữ liệu L2 và các đơn vị thực thi chức năng (như FXU, VFU). Nó chứa bộ đệm dữ liệu L1.", "Mnemonic": "LSU 'loads' (tải) dữ liệu từ bộ nhớ và 'stores' (lưu) dữ liệu vào bộ nhớ.", "Tags": ["Structure", "CPU", "Function"] },
+            { "Question": { "en": "What was a key innovation introduced with the Pentium processor?", "vn": "Một cải tiến quan trọng được giới thiệu cùng với bộ xử lý Pentium là gì?" }, "Options": [{ "en": "32-bit architecture", "vn": "Kiến trúc 32-bit" }, { "en": "Multitasking", "vn": "Đa nhiệm" }, { "en": "Superscalar techniques", "vn": "Kỹ thuật siêu vô hướng (Superscalar)" }, { "en": "Integrated math coprocessor", "vn": "Bộ đồng xử lý toán học tích hợp" }], "Answer": "Superscalar techniques", "Explanation": "Với bộ xử lý Pentium, Intel đã giới thiệu các kỹ thuật siêu vô hướng (superscalar), cho phép bộ xử lý thực thi nhiều lệnh cùng một lúc (song song) trong các đường ống (pipeline) khác nhau. Đây là một bước tiến lớn trong việc tăng hiệu suất xử lý.", "Mnemonic": "Pentium = Parallel (song song).", "Tags": ["Intel x86", "History", "Architecture"] },
+            { "Question": { "en": "Which hardware module in some ARM Cortex processors protects one program's memory from another?", "vn": "Mô-đun phần cứng nào trong một số bộ xử lý ARM Cortex bảo vệ bộ nhớ của một chương trình khỏi một chương trình khác?" }, "Options": [{ "en": "MMU (Memory Management Unit)", "vn": "Đơn vị quản lý bộ nhớ (MMU)" }, { "en": "ALU (Arithmetic Logic Unit)", "vn": "Đơn vị số học và logic (ALU)" }, { "en": "MPU (Memory Protection Unit)", "vn": "Đơn vị bảo vệ bộ nhớ (MPU)" }, { "en": "FPU (Floating-Point Unit)", "vn": "Đơn vị dấu phẩy động (FPU)" }], "Answer": "MPU (Memory Protection Unit)", "Explanation": "Đơn vị bảo vệ bộ nhớ (MPU) là một mô-đun phần cứng đơn giản hơn MMU. Chức năng chính của nó là ngăn một chương trình truy cập vào các vùng nhớ đã được gán cho một chương trình khác hoặc cho hệ điều hành. Điều này giúp tăng độ tin cậy và an toàn của hệ thống, đặc biệt là trong các ứng dụng thời gian thực và nhúng, nơi không cần đến sự phức tạp của bộ nhớ ảo.", "Mnemonic": "MPU 'protects' (bảo vệ) bộ nhớ.", "Tags": ["ARM", "Memory", "Function"] },
+            { "Question": { "en": "The Intel Core series introduced the concept of:", "vn": "Dòng Intel Core đã giới thiệu khái niệm về:" }, "Options": [{ "en": "A 16-bit architecture for the first time.", "vn": "Một kiến trúc 16-bit lần đầu tiên." }, { "en": "A dual-core processor on a single chip.", "vn": "Một bộ xử lý lõi kép trên một chip duy nhất." }, { "en": "A built-in math coprocessor.", "vn": "Một bộ đồng xử lý toán học tích hợp." }, { "en": "The first use of cache memory.", "vn": "Việc sử dụng bộ nhớ đệm lần đầu tiên." }], "Answer": "A dual-core processor on a single chip.", "Explanation": "Dòng vi xử lý Intel Core là dòng sản phẩm đầu tiên của Intel triển khai hai lõi (dual core) trên một chip duy nhất. Điều này đánh dấu sự chuyển hướng của ngành công nghiệp từ việc tăng tốc độ xung nhịp sang việc tăng số lượng lõi để cải thiện hiệu suất thông qua xử lý song song.", "Mnemonic": "Core = 'lõi' xử lý.", "Tags": ["Intel x86", "History", "Multicore"] }
+          ],
+          "KeyTerms": [
+            { "term_en": "Computer Architecture", "term_vn": "Kiến trúc máy tính", "definition": "Refers to those attributes of a system visible to a programmer or, put another way, those attributes that have a direct impact on the logical execution of a program.", "function": "Defines instruction set, number of bits for data types, I/O mechanisms, and memory addressing techniques.", "example": "The ARMv8-A architecture defines a 64-bit instruction set. An iPhone and a Samsung phone might have different hardware (organization) but can run the same apps because they use compatible ARM architectures.", "tags": ["Definition", "Architecture vs. Organization"] },
+            { "term_en": "Computer Organization", "term_vn": "Tổ chức máy tính", "definition": "Refers to the operational units and their interconnections that realize the architectural specifications. These are hardware details transparent to the programmer.", "function": "Implements the architecture. This includes control signals, interfaces between the computer and peripherals, and the memory technology used.", "example": "Two different models of Intel Core i7 processors share the same x86-64 architecture but may have different organizations, such as different cache sizes, clock speeds, or internal bus structures, leading to different performance and cost.", "tags": ["Definition", "Architecture vs. Organization"] },
+            { "term_en": "Central Processing Unit (CPU)", "term_vn": "Đơn vị xử lý trung tâm (CPU)", "definition": "The part of a computer that controls the operation of the computer and performs its data processing functions.", "function": "Fetches, decodes, and executes instructions stored in memory.", "example": "The Intel Core i9 or the Apple M2 chip are examples of modern CPUs.", "tags": ["Structure", "CPU"] },
+            { "term_en": "Arithmetic and Logic Unit (ALU)", "term_vn": "Đơn vị số học và logic (ALU)", "definition": "A component of the CPU that performs the computer's data processing functions.", "function": "Executes arithmetic operations (addition, subtraction) and logical operations (AND, OR, NOT).", "example": "When a program adds two numbers, the Control Unit sends the numbers to the ALU, which performs the addition and stores the result in a register.", "tags": ["Structure", "CPU", "Function"] },
+            { "term_en": "Control Unit", "term_vn": "Đơn vị điều khiển", "definition": "A component of the CPU that controls the operation of the CPU and hence the computer.", "function": "Manages the computer's resources, orchestrating the performance of its functional parts in response to instructions.", "example": "The Control Unit fetches an instruction from memory, decodes it, and generates signals to tell the ALU what to do and where to get its data.", "tags": ["Structure", "CPU", "Function"] },
+            { "term_en": "Stored-Program Concept", "term_vn": "Khái niệm chương trình lưu trữ", "definition": "A fundamental computer design approach where instructions are stored in the main memory along with the data on which they operate.", "function": "Allows the computer to be 'programmed' by simply loading a different set of instructions into memory, making it a general-purpose machine.", "example": "The IAS computer, developed by John von Neumann and his colleagues, is the prototype for all modern general-purpose computers based on this concept.", "tags": ["IAS Computer", "Von Neumann", "Architecture"] },
+            { "term_en": "Moore's Law", "term_vn": "Định luật Moore", "definition": "An observation that the number of transistors on a microchip doubles approximately every 18-24 months, though the cost of computers is halved.", "function": "Describes the historical trend of rapid technological advancement in the semiconductor industry.", "example": "The exponential growth predicted by Moore's Law is the reason why smartphones today are more powerful than supercomputers from a few decades ago.", "tags": ["Moore's Law", "Technology", "History"] },
+            { "term_en": "Embedded System", "term_vn": "Hệ thống nhúng", "definition": "The use of electronics and software within a product, as opposed to a general-purpose computer. It is a computer system with a dedicated function within a larger mechanical or electrical system.", "function": "To control a specific device or process.", "example": "The computer that controls the anti-lock braking system (ABS) in a car, the firmware in a microwave oven, or a digital thermostat.", "tags": ["Embedded Systems", "Definition"] },
+            { "term_en": "Microprocessor", "term_vn": "Vi xử lý", "definition": "A central processing unit (CPU) contained on a single integrated circuit (IC) or chip.", "function": "To perform processing tasks in a general-purpose computer system. It requires external chips for memory and I/O peripherals.", "example": "The Intel Core i7 is a microprocessor. It is installed on a motherboard which also has separate RAM chips and I/O controller chips.", "tags": ["Microprocessor vs. Microcontroller", "Definition"] },
+            { "term_en": "Microcontroller", "term_vn": "Vi điều khiển", "definition": "A small computer on a single IC containing a processor core, memory (both program and data), and programmable input/output peripherals.", "function": "To serve as a dedicated, self-contained computer for an embedded system.", "example": "The ARM Cortex-M3 based EFM32 chip is a microcontroller used in smart meters and security systems. It has everything it needs to function on one chip.", "tags": ["Microprocessor vs. Microcontroller", "Embedded Systems", "Definition"] },
+            { "term_en": "CISC (Complex Instruction Set Computer)", "term_vn": "Máy tính tập lệnh phức tạp", "definition": "A computer architecture with a large set of complex instructions, where a single instruction can execute several low-level operations (such as a load from memory, an arithmetic operation, and a memory store).", "function": "To simplify compiler design and reduce the number of instructions per program.", "example": "The Intel x86 architecture is the most well-known example of CISC.", "tags": ["CISC vs. RISC", "Architecture", "Definition"] },
+            { "term_en": "RISC (Reduced Instruction Set Computer)", "term_vn": "Máy tính tập lệnh rút gọn", "definition": "A computer architecture with a small, highly optimized set of simple instructions. Complex operations are performed by combining these simple instructions.", "function": "To enable faster execution of instructions, as each simple instruction can typically be executed in a single clock cycle.", "example": "The ARM architecture, used in virtually all smartphones, is the most prominent example of RISC.", "tags": ["CISC vs. RISC", "Architecture", "Definition"] },
+            { "term_en": "Core", "term_vn": "Lõi", "definition": "An individual processing unit on a processor chip.", "function": "Executes instructions independently. A processor with multiple cores (a multicore processor) can execute multiple tasks in parallel.", "example": "A quad-core processor has four cores, allowing it to work on four different tasks simultaneously.", "tags": ["Multicore", "Structure", "Definition"] },
+            { "term_en": "Cache Memory", "term_vn": "Bộ nhớ đệm", "definition": "A smaller, faster memory component that sits between the CPU and the main memory, used to store copies of frequently used data.", "function": "To reduce the average time to access data from the main memory, thereby speeding up computer performance.", "example": "L1, L2, and L3 caches are levels of cache memory, with L1 being the smallest and fastest, closest to the CPU core.", "tags": ["Memory", "Structure", "Function"] }
+          ]
+        };
+
+        // --- APPLICATION LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- STATE MANAGEMENT ---
+            const LOCAL_STORAGE_KEY = 'cs_arch_study_app_v2';
+            let appState;
+
+            const defaultState = {
+                currentPage: 'learning', // 'learning', 'quiz', 'results'
+                learningLang: 'vn',
+                quizLang: 'vn',
+                termDefLang: 'vn',
+                isSidebarCollapsed: window.innerWidth <= 768,
+                quiz: {
+                    questions: [],
+                    originalIndices: [],
+                    currentQuestionIndex: 0,
+                    userAnswers: {},
+                    score: 0,
+                    isFinished: false
+                },
+                allQuestionsIndices: Array.from({ length: studyData.QuestionBank.length }, (_, i) => i),
+            };
+
+            function saveState() {
+                try {
+                    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appState));
+                } catch (e) { console.error("Could not save state", e); }
             }
-        ];
 
-        const startBtn = document.getElementById('start-btn');
-        const restartBtn = document.getElementById('restart-btn');
-        const submitBtn = document.getElementById('submit-btn');
-        const nextBtn = document.getElementById('next-btn');
-
-        const startScreen = document.getElementById('start-screen');
-        const quizScreen = document.getElementById('quiz-screen');
-        const scoreScreen = document.getElementById('score-screen');
-
-        const questionEl = document.getElementById('question');
-        const optionsContainer = document.getElementById('options-container');
-        const resultContainer = document.getElementById('result-container');
-        
-        const questionCounterEl = document.getElementById('question-counter');
-        const scoreCounterEl = document.getElementById('score-counter');
-        const finalScoreEl = document.getElementById('final-score');
-        
-        const resultTextEl = document.getElementById('result-text');
-        const explanationTextEl = document.getElementById('explanation-text');
-        const tipTextEl = document.getElementById('tip-text');
-
-        let shuffledQuestions, currentQuestionIndex, score;
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+            function loadState() {
+                try {
+                    const savedState = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+                    appState = { ...defaultState, ...savedState };
+                    appState.quiz = { ...defaultState.quiz, ...savedState?.quiz };
+                } catch (e) { appState = { ...defaultState }; }
             }
-        }
 
-        function startQuiz() {
-            startScreen.classList.add('hide');
-            scoreScreen.classList.add('hide');
-            quizScreen.classList.remove('hide');
+            // --- DOM ELEMENTS ---
+            const learningPage = document.getElementById('learning-page');
+            const quizPage = document.getElementById('quiz-page');
+            const resultsPage = document.getElementById('results-page');
+            const learningLangSwitchBtn = document.getElementById('learning-lang-switch');
+            const startQuizBtn = document.getElementById('start-quiz-btn');
+            const questionProgress = document.getElementById('question-progress');
+            const quizLangSwitchBtn = document.getElementById('quiz-lang-switch');
+            const questionText = document.getElementById('question-text');
+            const optionsGrid = document.getElementById('options-grid');
+            const feedbackArea = document.getElementById('feedback-area');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const keyTermsSidebar = document.getElementById('key-terms-sidebar');
+            const sidebarHideBtn = document.getElementById('sidebar-hide-btn');
+            const sidebarToggleTab = document.getElementById('sidebar-toggle-tab');
+            const quizContent = document.getElementById('quiz-content');
+            const termLangSwitchBtn = document.getElementById('term-lang-switch');
+            const keyTermsContent = document.getElementById('key-terms-content');
+            const finalScoreEl = document.getElementById('final-score');
+            const feedbackMessageEl = document.getElementById('feedback-message');
+            const incorrectListEl = document.getElementById('incorrect-list');
+            const weakTagsListEl = document.getElementById('weak-tags-list');
+            const retakeQuizBtn = document.getElementById('retake-quiz-btn');
+            const backToLearningBtn = document.getElementById('back-to-learning-btn');
 
-            let allQuestions = [...questionBank];
-            shuffleArray(allQuestions);
-            shuffledQuestions = allQuestions.slice(0, 20);
-            
-            currentQuestionIndex = 0;
-            score = 0;
-            updateScoreCounter();
-            showQuestion();
-        }
-
-        function showQuestion() {
-            resetState();
-            const currentQuestion = shuffledQuestions[currentQuestionIndex];
-            questionEl.innerText = currentQuestion.question;
-            questionCounterEl.innerText = `Câu ${currentQuestionIndex + 1} / 20`;
-
-            currentQuestion.options.forEach(option => {
-                const button = document.createElement('button');
-                button.innerText = option;
-                button.classList.add('option-btn');
-                button.addEventListener('click', () => selectAnswer(button));
-                optionsContainer.appendChild(button);
-            });
-        }
-
-        function resetState() {
-            while (optionsContainer.firstChild) {
-                optionsContainer.removeChild(optionsContainer.firstChild);
+            // --- RENDER FUNCTIONS ---
+            function renderLearningPage() {
+                const lang = appState.learningLang;
+                const otherLang = lang === 'vn' ? 'en' : 'vn';
+                document.getElementById('summary-title').textContent = lang === 'vn' ? 'Tóm tắt Chương' : 'Chapter Summary';
+                document.getElementById('summary-content').textContent = lang === 'vn' ? studyData.Summary : "This chapter introduces foundational concepts of computers... (Summary in English)";
+                document.getElementById('keypoints-title').textContent = lang === 'vn' ? 'Các điểm chính' : 'Key Points';
+                document.getElementById('keypoints-list').innerHTML = studyData.KeyPoints.map(p => `<li>${p[lang]}</li>`).join('');
+                document.getElementById('tips-title').textContent = lang === 'vn' ? 'Mẹo học tập' : 'Learning Tips';
+                document.getElementById('tips-list').innerHTML = studyData.LearningTips.map(t => `<p><strong>${t.tip}</strong><br>${t.detail}</p>`).join('');
+                learningLangSwitchBtn.textContent = `Switch to ${otherLang === 'vn' ? 'Vietnamese' : 'English'}`;
+                showPage('learning');
             }
-            submitBtn.disabled = true;
-            submitBtn.classList.remove('hide');
-            nextBtn.classList.add('hide');
-            resultContainer.classList.add('hide');
-        }
-        
-        function selectAnswer(selectedButton) {
-            const allOptions = optionsContainer.querySelectorAll('.option-btn');
-            allOptions.forEach(btn => btn.classList.remove('selected'));
-            selectedButton.classList.add('selected');
-            submitBtn.disabled = false;
-        }
 
-        function checkAnswer() {
-            const selectedOption = optionsContainer.querySelector('.option-btn.selected');
-            if (!selectedOption) return;
-
-            const isCorrect = selectedOption.innerText === shuffledQuestions[currentQuestionIndex].answer;
-            
-            if (isCorrect) {
-                score++;
-                resultTextEl.innerText = "🎉 Chính xác!";
-                resultTextEl.style.color = '#28a745';
-            } else {
-                resultTextEl.innerText = "😥 Chưa đúng!";
-                resultTextEl.style.color = '#dc3545';
-                selectedOption.classList.add('incorrect');
-            }
-            updateScoreCounter();
-
-            Array.from(optionsContainer.children).forEach(button => {
-                if (button.innerText === shuffledQuestions[currentQuestionIndex].answer) {
-                    button.classList.add('correct');
+            function renderQuizPage() {
+                if (appState.quiz.isFinished) {
+                    renderResultsPage();
+                    return;
                 }
-                button.disabled = true;
-            });
-            
-            explanationTextEl.innerText = shuffledQuestions[currentQuestionIndex].explanation;
-            tipTextEl.innerText = shuffledQuestions[currentQuestionIndex].tip;
-            resultContainer.classList.remove('hide');
-            
-            submitBtn.classList.add('hide');
-            nextBtn.classList.remove('hide');
-        }
+                showPage('quiz');
+                
+                const lang = appState.quizLang;
+                const otherLang = lang === 'vn' ? 'en' : 'vn';
+                quizLangSwitchBtn.textContent = `Switch to ${otherLang === 'vn' ? 'Vietnamese' : 'English'}`;
 
-        function updateScoreCounter() {
-            scoreCounterEl.innerText = `Điểm: ${score}`;
-        }
+                const qIndex = appState.quiz.currentQuestionIndex;
+                const originalQIndex = appState.quiz.originalIndices[qIndex];
+                const questionData = studyData.QuestionBank[originalQIndex];
 
-        function handleNext() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < shuffledQuestions.length) {
-                showQuestion();
-            } else {
-                showScore();
+                questionProgress.textContent = lang === 'vn' ? `Câu ${qIndex + 1} / ${appState.quiz.questions.length}` : `Question ${qIndex + 1} / ${appState.quiz.questions.length}`;
+                questionText.innerHTML = questionData.Question[lang];
+                optionsGrid.innerHTML = '';
+                const userAnswer = appState.quiz.userAnswers[qIndex];
+
+                questionData.Options.forEach((option, index) => {
+                    const optionBtn = document.createElement('button');
+                    optionBtn.classList.add('btn', 'option-btn');
+                    optionBtn.innerHTML = option[lang];
+                    optionBtn.dataset.index = index;
+                    
+                    if (userAnswer) {
+                        optionBtn.disabled = true;
+                        const correctOptionText = questionData.Options.find(o => o.en === questionData.Answer).en;
+                        const thisOptionText = option.en;
+                        if (thisOptionText === correctOptionText) optionBtn.classList.add('correct');
+                        if (userAnswer.selectedOption === thisOptionText) {
+                            optionBtn.classList.add('selected');
+                            if (!userAnswer.isCorrect) optionBtn.classList.add('incorrect');
+                        }
+                    }
+                    optionsGrid.appendChild(optionBtn);
+                });
+                
+                feedbackArea.innerHTML = '';
+                feedbackArea.className = '';
+                if (userAnswer && !userAnswer.isCorrect) {
+                    feedbackArea.classList.add('incorrect-feedback');
+                    const correctOption = questionData.Options.find(o => o.en === questionData.Answer);
+                    feedbackArea.innerHTML = `
+                        <h4>Sai rồi! Đáp án đúng là:</h4>
+                        <p><strong>${correctOption[lang]}</strong></p>
+                        <h4>Giải thích:</h4><p>${questionData.Explanation}</p>
+                        <h4>Mẹo ghi nhớ:</h4><p><em>${questionData.Mnemonic || 'Không có mẹo.'}</em></p>
+                    `;
+                }
+
+                prevBtn.disabled = qIndex === 0;
+                nextBtn.textContent = (qIndex === appState.quiz.questions.length - 1) ? (lang === 'vn' ? 'Hoàn thành' : 'Finish') : (lang === 'vn' ? 'Tiếp theo →' : 'Next →');
+
+                renderKeyTermsSidebar(questionData.Tags);
             }
-        }
 
-        function showScore() {
-            quizScreen.classList.add('hide');
-            scoreScreen.classList.remove('hide');
-            finalScoreEl.innerText = `Bạn đã trả lời đúng ${score} / 20 câu!`;
-        }
+            function renderKeyTermsSidebar(tags) {
+                const relevantTerms = studyData.KeyTerms.filter(term => term.tags.some(t => tags.includes(t)));
+                if (relevantTerms.length === 0) {
+                    keyTermsContent.innerHTML = `<p>Không có thuật ngữ nào liên quan.</p>`;
+                    return;
+                }
+                
+                keyTermsContent.innerHTML = relevantTerms.map((term, index) => {
+                    const lang = appState.termDefLang;
+                    return `
+                        <div class="key-term-item">
+                            <div class="key-term-header" data-index="${index}">
+                                <span class="key-term-title">${term.term_en}</span>
+                                <span class="key-term-toggle" id="term-toggle-${index}">+</span>
+                            </div>
+                            <div class="key-term-details hidden" id="term-details-${index}">
+                                <p><strong>Nghĩa:</strong> ${term.term_vn}</p>
+                                <p><strong>Chức năng:</strong> ${lang === 'vn' ? term.definition : term.function}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            function renderResultsPage() {
+                showPage('results');
+                const total = appState.quiz.questions.length;
+                const score = appState.quiz.score;
+                finalScoreEl.textContent = `${score} / ${total}`;
+                let message = '';
+                if (score === total) message = 'Xuất sắc! Bạn đã nắm vững kiến thức.';
+                else if (score >= total * 0.7) message = 'Làm tốt lắm! Hãy xem lại một vài câu sai.';
+                else message = 'Cần cố gắng hơn. Hãy xem kỹ lại các câu sai.';
+                feedbackMessageEl.textContent = message;
 
-        startBtn.addEventListener('click', startQuiz);
-        restartBtn.addEventListener('click', startQuiz);
-        submitBtn.addEventListener('click', checkAnswer);
-        nextBtn.addEventListener('click', handleNext);
+                const incorrectAnswers = [];
+                const tagErrorCount = {};
+                for (let i = 0; i < total; i++) {
+                    const answer = appState.quiz.userAnswers[i];
+                    if (answer && !answer.isCorrect) {
+                        const originalQIndex = appState.quiz.originalIndices[i];
+                        const qData = studyData.QuestionBank[originalQIndex];
+                        incorrectAnswers.push(qData);
+                        qData.Tags.forEach(tag => { tagErrorCount[tag] = (tagErrorCount[tag] || 0) + 1; });
+                    }
+                }
+
+                incorrectListEl.innerHTML = incorrectAnswers.length > 0 ? incorrectAnswers.map(qData => {
+                    const correctOption = qData.Options.find(o => o.en === qData.Answer);
+                    return `<div class="incorrect-answer"><p><strong>Câu hỏi:</strong> ${qData.Question.en}</p><p><strong>Đáp án đúng:</strong> ${correctOption.en}</p></div>`;
+                }).join('') : '<p>Bạn đã trả lời đúng tất cả!</p>';
+                
+                const sortedTags = Object.entries(tagErrorCount).sort((a, b) => b[1] - a[1]);
+                weakTagsListEl.innerHTML = sortedTags.length > 0 ? sortedTags.map(([tag, count]) => `<span class="tag">${tag}</span>`).join('') : '<p>Không có mảng kiến thức nào yếu rõ rệt.</p>';
+            }
+
+            function showPage(pageId) {
+                ['learning', 'quiz', 'results'].forEach(id => document.getElementById(`${id}-page`).classList.add('hidden'));
+                document.getElementById(`${pageId}-page`).classList.remove('hidden');
+                appState.currentPage = pageId;
+                document.body.style.overflow = (pageId === 'quiz') ? 'hidden' : 'auto';
+            }
+            
+            function setSidebarState(isCollapsed) {
+                appState.isSidebarCollapsed = isCollapsed;
+                keyTermsSidebar.classList.toggle('collapsed', isCollapsed);
+                quizContent.classList.toggle('full-width', isCollapsed);
+                sidebarToggleTab.classList.toggle('visible', isCollapsed);
+                saveState();
+            }
+
+            // --- EVENT HANDLERS & LOGIC ---
+            function setupNewQuiz() {
+                appState.quiz = { ...defaultState.quiz };
+                const shuffled = [...appState.allQuestionsIndices].sort(() => 0.5 - Math.random());
+                appState.quiz.originalIndices = shuffled.slice(0, 10);
+                appState.quiz.questions = appState.quiz.originalIndices.map(i => studyData.QuestionBank[i]);
+                if(appState.quiz.questions.length === 0) { alert("Hết câu hỏi!"); return false; }
+                return true;
+            }
+            
+            startQuizBtn.addEventListener('click', () => { if(setupNewQuiz()) renderQuizPage(); saveState(); });
+            quizLangSwitchBtn.addEventListener('click', () => { appState.quizLang = appState.quizLang === 'vn' ? 'en' : 'vn'; renderQuizPage(); saveState(); });
+            learningLangSwitchBtn.addEventListener('click', () => { appState.learningLang = appState.learningLang === 'vn' ? 'en' : 'vn'; renderLearningPage(); saveState(); });
+            
+            optionsGrid.addEventListener('click', (e) => {
+                if (e.target.matches('.option-btn')) {
+                    const qIndex = appState.quiz.currentQuestionIndex;
+                    if (appState.quiz.userAnswers[qIndex]) return;
+                    const selectedIndex = parseInt(e.target.dataset.index);
+                    const questionData = studyData.QuestionBank[appState.quiz.originalIndices[qIndex]];
+                    const selectedOptionText = questionData.Options[selectedIndex].en;
+                    const isCorrect = selectedOptionText === questionData.Answer;
+                    appState.quiz.userAnswers[qIndex] = { selectedOption: selectedOptionText, isCorrect: isCorrect };
+                    if (isCorrect) appState.quiz.score++;
+                    renderQuizPage();
+                    saveState();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (appState.quiz.currentQuestionIndex < appState.quiz.questions.length - 1) appState.quiz.currentQuestionIndex++;
+                else appState.quiz.isFinished = true;
+                renderQuizPage(); saveState();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (appState.quiz.currentQuestionIndex > 0) { appState.quiz.currentQuestionIndex--; renderQuizPage(); saveState(); }
+            });
+
+            retakeQuizBtn.addEventListener('click', () => { if(setupNewQuiz()) renderQuizPage(); saveState(); });
+            backToLearningBtn.addEventListener('click', () => { renderLearningPage(); saveState(); });
+            
+            sidebarHideBtn.addEventListener('click', () => setSidebarState(true));
+            sidebarToggleTab.addEventListener('click', () => setSidebarState(false));
+
+            termLangSwitchBtn.addEventListener('click', () => {
+                appState.termDefLang = appState.termDefLang === 'vn' ? 'en' : 'vn';
+                renderKeyTermsSidebar(studyData.QuestionBank[appState.quiz.originalIndices[appState.quiz.currentQuestionIndex]].Tags);
+                saveState();
+            });
+
+            keyTermsContent.addEventListener('click', (e) => {
+                const header = e.target.closest('.key-term-header');
+                if (header) {
+                    const index = header.dataset.index;
+                    const details = document.getElementById(`term-details-${index}`);
+                    const toggle = document.getElementById(`term-toggle-${index}`);
+                    details.classList.toggle('hidden');
+                    toggle.textContent = details.classList.contains('hidden') ? '+' : '−';
+                }
+            });
+
+            function init() {
+                loadState();
+                setSidebarState(appState.isSidebarCollapsed); // Apply saved sidebar state
+                switch (appState.currentPage) {
+                    case 'quiz': (appState.quiz.questions.length === 0) ? renderLearningPage() : renderQuizPage(); break;
+                    case 'results': renderResultsPage(); break;
+                    default: renderLearningPage(); break;
+                }
+            }
+            
+            init();
+        });
     </script>
-
 </body>
 </html>
